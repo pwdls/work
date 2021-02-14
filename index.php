@@ -25,7 +25,7 @@ if (!empty($type) && !empty($data)) {
             $pathToFileNew = $DOCUMENT_ROOT . '/file/' . mb_substr($guid, 0, 2) . '/' . $guid . '.json';
 
             if (!copy($pathToFile, $pathToFileNew)) {
-                echo '{"result":997,"data":""}';
+                echo '{"result":996,"data":""}';
                 exit();
             } else {
                 echo '{"result":0,"data":{"GUID":"' . $guid . '"}}';
