@@ -1,8 +1,8 @@
 <?php
-$type = filter_input(POST, '$type');
-$priority = filter_input(POST, '$type');
-$data = filter_input(POST, 'data');
-echo $get = filter_input(GET, 'grte');
+$type = filter_input(INPUT_POST, '$type');
+$priority = filter_input(INPUT_POST, '$type');
+$data = filter_input(INPUT_POST, 'data');
+$get = filter_input(INPUT_GET, 'grte');
 $DOCUMENT_ROOT = filter_input(INPUT_SERVER,'DOCUMENT_ROOT');
 
 function dump($data){
