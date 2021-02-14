@@ -19,6 +19,8 @@ if(!empty($type) && !empty($data)){
 
         $pathToFile = DOCUMENT_ROOT . '/file/' . $foo['request'] . '.json';
 
+        dump($pathToFile);
+
         if (file_exists($pathToFile)) {
             $GetContentFile = file_get_contents($pathToFile);
             echo $GetContentFile;
