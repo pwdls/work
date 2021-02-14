@@ -1,0 +1,917 @@
+{
+  "result": 0,
+  "data": [
+    {
+      "fromCodeLocation": "100001",
+      "toCodeLocation": "100035",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124543"
+    },
+    {
+      "fromCodeLocation": "100016",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124544"
+    },
+    {
+      "fromCodeLocation": "10002",
+      "toCodeLocation": "100069",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124545"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100073",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124546"
+    },
+    {
+      "fromCodeLocation": "100035",
+      "toCodeLocation": "100088",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124547"
+    },
+    {
+      "fromCodeLocation": "100054",
+      "toCodeLocation": "100105",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124548"
+    },
+    {
+      "fromCodeLocation": "100069",
+      "toCodeLocation": "",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124549"
+    },
+    {
+      "fromCodeLocation": "100073",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124550"
+    },
+    {
+      "fromCodeLocation": "100088",
+      "toCodeLocation": "100406",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124551"
+    },
+    {
+      "fromCodeLocation": "100105",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124552"
+    },
+    {
+      "fromCodeLocation": "100209",
+      "toCodeLocation": "100514",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124553"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124554"
+    },
+    {
+      "fromCodeLocation": "100406",
+      "toCodeLocation": "100707",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124555"
+    },
+    {
+      "fromCodeLocation": "100500",
+      "toCodeLocation": "100730",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124556"
+    },
+    {
+      "fromCodeLocation": "100514",
+      "toCodeLocation": "100035",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124557"
+    },
+    {
+      "fromCodeLocation": "100603",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124558"
+    },
+    {
+      "fromCodeLocation": "100707",
+      "toCodeLocation": "",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124559"
+    },
+    {
+      "fromCodeLocation": "100730",
+      "toCodeLocation": "100073",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124560"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100088",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124561"
+    },
+    {
+      "fromCodeLocation": "100815",
+      "toCodeLocation": "100105",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124562"
+    },
+    {
+      "fromCodeLocation": "101502",
+      "toCodeLocation": "100209",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124563"
+    },
+    {
+      "fromCodeLocation": "101517",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124564"
+    },
+    {
+      "fromCodeLocation": "101521",
+      "toCodeLocation": "",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124565"
+    },
+    {
+      "fromCodeLocation": "101536",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124566"
+    },
+    {
+      "fromCodeLocation": "101540",
+      "toCodeLocation": "100514",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124567"
+    },
+    {
+      "fromCodeLocation": "101706",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124568"
+    },
+    {
+      "fromCodeLocation": "101803",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124569"
+    },
+    {
+      "fromCodeLocation": "",
+      "toCodeLocation": "100730",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124570"
+    },
+    {
+      "fromCodeLocation": "101911",
+      "toCodeLocation": "102007",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124571"
+    },
+    {
+      "fromCodeLocation": "102007",
+      "toCodeLocation": "102007",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124572"
+    },
+    {
+      "fromCodeLocation": "100001",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124573"
+    },
+    {
+      "fromCodeLocation": "100016",
+      "toCodeLocation": "100406",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124574"
+    },
+    {
+      "fromCodeLocation": "10002",
+      "toCodeLocation": "100500",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124575"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100514",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124576"
+    },
+    {
+      "fromCodeLocation": "100035",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124577"
+    },
+    {
+      "fromCodeLocation": "100054",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124578"
+    },
+    {
+      "fromCodeLocation": "100069",
+      "toCodeLocation": "100730",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124579"
+    },
+    {
+      "fromCodeLocation": "100073",
+      "toCodeLocation": "100035",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124580"
+    },
+    {
+      "fromCodeLocation": "100088",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124581"
+    },
+    {
+      "fromCodeLocation": "100105",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124582"
+    },
+    {
+      "fromCodeLocation": "100209",
+      "toCodeLocation": "100514",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124583"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124584"
+    },
+    {
+      "fromCodeLocation": "100406",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124585"
+    },
+    {
+      "fromCodeLocation": "100500",
+      "toCodeLocation": "100730",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124586"
+    },
+    {
+      "fromCodeLocation": "100514",
+      "toCodeLocation": "102007",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124587"
+    },
+    {
+      "fromCodeLocation": "100603",
+      "toCodeLocation": "102007",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124588"
+    },
+    {
+      "fromCodeLocation": "100707",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124589"
+    },
+    {
+      "fromCodeLocation": "100730",
+      "toCodeLocation": "100406",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124590"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100500",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124591"
+    },
+    {
+      "fromCodeLocation": "100815",
+      "toCodeLocation": "100514",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124592"
+    },
+    {
+      "fromCodeLocation": "101502",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124593"
+    },
+    {
+      "fromCodeLocation": "101517",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124594"
+    },
+    {
+      "fromCodeLocation": "101521",
+      "toCodeLocation": "100730",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124595"
+    },
+    {
+      "fromCodeLocation": "101536",
+      "toCodeLocation": "100035",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124596"
+    },
+    {
+      "fromCodeLocation": "101540",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124597"
+    },
+    {
+      "fromCodeLocation": "101706",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "4",
+      "price": "124598"
+    },
+    {
+      "fromCodeLocation": "101803",
+      "toCodeLocation": "100514",
+      "isoCode": "22G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "2",
+      "price": "124599"
+    },
+    {
+      "fromCodeLocation": "",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124600"
+    },
+    {
+      "fromCodeLocation": "101911",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "1",
+      "price": "124601"
+    },
+    {
+      "fromCodeLocation": "102007",
+      "toCodeLocation": "100730",
+      "isoCode": "45G1",
+      "date": "2021-03-05T00:00:00",
+      "count": "3",
+      "price": "124602"
+    },
+    {
+      "fromCodeLocation": "100001",
+      "toCodeLocation": "100035",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "4",
+      "price": "124603"
+    },
+    {
+      "fromCodeLocation": "100016",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "4",
+      "price": "124604"
+    },
+    {
+      "fromCodeLocation": "10002",
+      "toCodeLocation": "100069",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "2",
+      "price": "124605"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100073",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124606"
+    },
+    {
+      "fromCodeLocation": "100035",
+      "toCodeLocation": "100088",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "1",
+      "price": "124607"
+    },
+    {
+      "fromCodeLocation": "100054",
+      "toCodeLocation": "100105",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124608"
+    },
+    {
+      "fromCodeLocation": "100069",
+      "toCodeLocation": "",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "4",
+      "price": "124609"
+    },
+    {
+      "fromCodeLocation": "100073",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "2",
+      "price": "124610"
+    },
+    {
+      "fromCodeLocation": "100088",
+      "toCodeLocation": "100406",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124611"
+    },
+    {
+      "fromCodeLocation": "100105",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "2",
+      "price": "124612"
+    },
+    {
+      "fromCodeLocation": "100209",
+      "toCodeLocation": "100514",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124613"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "1",
+      "price": "124614"
+    },
+    {
+      "fromCodeLocation": "100406",
+      "toCodeLocation": "100707",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124615"
+    },
+    {
+      "fromCodeLocation": "100500",
+      "toCodeLocation": "100730",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "2",
+      "price": "124616"
+    },
+    {
+      "fromCodeLocation": "100514",
+      "toCodeLocation": "100035",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124617"
+    },
+    {
+      "fromCodeLocation": "100603",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "1",
+      "price": "124618"
+    },
+    {
+      "fromCodeLocation": "100707",
+      "toCodeLocation": "",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124619"
+    },
+    {
+      "fromCodeLocation": "100730",
+      "toCodeLocation": "100073",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "4",
+      "price": "124620"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100088",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124621"
+    },
+    {
+      "fromCodeLocation": "100815",
+      "toCodeLocation": "100105",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "4",
+      "price": "124622"
+    },
+    {
+      "fromCodeLocation": "101502",
+      "toCodeLocation": "100209",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "2",
+      "price": "124623"
+    },
+    {
+      "fromCodeLocation": "101517",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124624"
+    },
+    {
+      "fromCodeLocation": "101521",
+      "toCodeLocation": "",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "1",
+      "price": "124625"
+    },
+    {
+      "fromCodeLocation": "101536",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124626"
+    },
+    {
+      "fromCodeLocation": "101540",
+      "toCodeLocation": "100514",
+      "isoCode": "22G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "4",
+      "price": "124627"
+    },
+    {
+      "fromCodeLocation": "101706",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "3",
+      "price": "124628"
+    },
+    {
+      "fromCodeLocation": "101803",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-05-05T00:00:00",
+      "count": "1",
+      "price": "124629"
+    },
+    {
+      "fromCodeLocation": "100001",
+      "toCodeLocation": "100035",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124630"
+    },
+    {
+      "fromCodeLocation": "100016",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "2",
+      "price": "124631"
+    },
+    {
+      "fromCodeLocation": "10002",
+      "toCodeLocation": "100069",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124632"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100073",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "1",
+      "price": "124633"
+    },
+    {
+      "fromCodeLocation": "100035",
+      "toCodeLocation": "100088",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124634"
+    },
+    {
+      "fromCodeLocation": "100054",
+      "toCodeLocation": "100105",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "2",
+      "price": "124635"
+    },
+    {
+      "fromCodeLocation": "100069",
+      "toCodeLocation": "",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124636"
+    },
+    {
+      "fromCodeLocation": "100073",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "1",
+      "price": "124637"
+    },
+    {
+      "fromCodeLocation": "100088",
+      "toCodeLocation": "100406",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124638"
+    },
+    {
+      "fromCodeLocation": "100105",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "4",
+      "price": "124639"
+    },
+    {
+      "fromCodeLocation": "100209",
+      "toCodeLocation": "100514",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "2",
+      "price": "124640"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124641"
+    },
+    {
+      "fromCodeLocation": "100406",
+      "toCodeLocation": "100707",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "1",
+      "price": "124642"
+    },
+    {
+      "fromCodeLocation": "100500",
+      "toCodeLocation": "100730",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124643"
+    },
+    {
+      "fromCodeLocation": "100514",
+      "toCodeLocation": "100035",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "4",
+      "price": "124644"
+    },
+    {
+      "fromCodeLocation": "100603",
+      "toCodeLocation": "100054",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "1",
+      "price": "124645"
+    },
+    {
+      "fromCodeLocation": "100707",
+      "toCodeLocation": "",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124646"
+    },
+    {
+      "fromCodeLocation": "100730",
+      "toCodeLocation": "100073",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "2",
+      "price": "124647"
+    },
+    {
+      "fromCodeLocation": "100302",
+      "toCodeLocation": "100088",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124648"
+    },
+    {
+      "fromCodeLocation": "100815",
+      "toCodeLocation": "100105",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "1",
+      "price": "124649"
+    },
+    {
+      "fromCodeLocation": "101502",
+      "toCodeLocation": "100209",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124650"
+    },
+    {
+      "fromCodeLocation": "101517",
+      "toCodeLocation": "100302",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "4",
+      "price": "124651"
+    },
+    {
+      "fromCodeLocation": "101521",
+      "toCodeLocation": "",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "2",
+      "price": "124652"
+    },
+    {
+      "fromCodeLocation": "101536",
+      "toCodeLocation": "100500",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124653"
+    },
+    {
+      "fromCodeLocation": "101540",
+      "toCodeLocation": "100514",
+      "isoCode": "22G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "1",
+      "price": "124654"
+    },
+    {
+      "fromCodeLocation": "101706",
+      "toCodeLocation": "100603",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "3",
+      "price": "124655"
+    },
+    {
+      "fromCodeLocation": "101803",
+      "toCodeLocation": "100707",
+      "isoCode": "45G1",
+      "date": "2021-07-05T00:00:00",
+      "count": "4",
+      "price": "124656"
+    }
+  ]
+}
