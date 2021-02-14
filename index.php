@@ -2,7 +2,7 @@
 $type = filter_input(POST, '$type');
 $priority = filter_input(POST, '$type');
 $data = filter_input(POST, 'data');
-$get = filter_input(GET, 'grte');
+echo $get = filter_input(GET, 'grte');
 $DOCUMENT_ROOT = filter_input(INPUT_SERVER,'DOCUMENT_ROOT');
 
 function dump($data){
