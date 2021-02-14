@@ -20,7 +20,7 @@ if (!empty($type) && !empty($data)) {
     if (!empty($foo->request) || $type == 'getResult') {
 
         if ($type == 'execAsync') {
-            $guid = com_create_guid();
+            $guid = 'qweqweqweqweqwetest'; //com_create_guid();
             $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
             $pathToFileNew = $DOCUMENT_ROOT . '/file/' . mb_substr($guid, 0, 2) . '/' . $guid . '.json';
 
