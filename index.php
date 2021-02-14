@@ -22,7 +22,7 @@ if (!empty($type) && !empty($data)) {
         if ($type == 'execAsync') {
             $guid = 'qweqweqweqweqwetest'; //com_create_guid();
             $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
-            $pathToFileNew = $DOCUMENT_ROOT . '/file/' . mb_substr($guid, 0, 2) . '/' . $guid . '.json';
+            $pathToFileNew = $DOCUMENT_ROOT . '/file/hlam/' . $guid . '.json';
 
             if (!copy($pathToFile, $pathToFileNew)) {
                 echo '{"result":996,"data":""}';
@@ -33,7 +33,7 @@ if (!empty($type) && !empty($data)) {
         } elseif ($type == 'getResult' || $type == 'execSync') {
 
             if ($type == 'getResult') {
-                $pathToFile = $DOCUMENT_ROOT . '/file/' . mb_substr($foo->data->GUID, 0, 2) . '/' . $foo->data->GUID . '.json';
+                $pathToFile = $DOCUMENT_ROOT . '/file/hlam/' . $foo->data->GUID . '.json';
             } else {
                 $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
             }
