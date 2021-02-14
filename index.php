@@ -15,9 +15,9 @@ if(!empty($type) && !empty($data)){
     $foo = json_decode($data);
     dump($foo);
 
-    if(!empty($foo['request'])){
+    if(!empty($foo->request)){
 
-        $pathToFile = DOCUMENT_ROOT . '/file/' . $foo['request'] . '.json';
+        $pathToFile = DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
 
         dump($pathToFile);
 
