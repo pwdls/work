@@ -3,27 +3,50 @@ $type = filter_input(INPUT_POST, 'type');
 $priority = filter_input(INPUT_POST, '$priority');
 $data = filter_input(INPUT_POST, 'data');
 $get = filter_input(INPUT_GET, 'grte');
-$DOCUMENT_ROOT = filter_input(INPUT_SERVER,'DOCUMENT_ROOT');
+$DOCUMENT_ROOT = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT');
 
-function dump($data){
+function dump($data)
+{
     echo '<pre>';
     var_dump($data);
     echo '</pre>';
 }
 
-if(!empty($type) && !empty($data)){
+if (!empty($type) && !empty($data)) {
+
     $foo = json_decode($data);
-    dump($foo);
+    //dump($foo);
 
-    if(!empty($foo->request)){
+    if (!empty($foo->request) || $type == 'getResult') {
 
-        $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
+        if ($type == 'execAsync') {
+            $guid = com_create_guid();
+            $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
+            $pathToFileNew = $DOCUMENT_ROOT . '/file/' . mb_substr($guid, 0, 2) . '/' . $guid . '.json';
 
-        dump($pathToFile);
+            if (!copy($pathToFile, $pathToFileNew)) {
+                echo '{"result":997,"data":""}';
+                exit();
+            } else {
+                echo '{"result":0,"data":{"GUID":"' . $guid . '"}}';
+            }
+        } elseif ($type == 'getResult' || $type == 'execSync') {
 
-        if (file_exists($pathToFile)) {
-            $GetContentFile = file_get_contents($pathToFile);
-            echo $GetContentFile;
+            if ($type == 'getResult') {
+                $pathToFile = $DOCUMENT_ROOT . '/file/' . mb_substr($foo->data->GUID, 0, 2) . '/' . $foo->data->GUID . '.json';
+            } else {
+                $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
+            }
+            //dump($pathToFile);
+
+            if (file_exists($pathToFile)) {
+                $GetContentFile = file_get_contents($pathToFile);
+                echo $GetContentFile;
+            } else {
+                echo '{"result":997,"data":""}';
+            }
+        } else {
+            echo '{"result":998,"data":""}';
         }
     }
 } elseif ($get == 'qwerdawe') {
