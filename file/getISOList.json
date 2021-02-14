@@ -1,0 +1,41 @@
+{
+  "result": 0,
+  "data": [
+    {
+      "code": "45G1",
+      "name": "40HC"
+    },
+    {
+      "code": "42G1",
+      "name": "40DC"
+    },
+    {
+      "code": "42R1",
+      "name": "40RFH"
+    },
+    {
+      "code": "22G1",
+      "name": "20DC"
+    },
+    {
+      "code": "4EG1",
+      "name": "40PW"
+    },
+    {
+      "code": "L5G1",
+      "name": "45HC"
+    },
+    {
+      "code": "",
+      "name": "20TK"
+    },
+    {
+      "code": "45R1",
+      "name": "45RF"
+    },
+    {
+      "code": "",
+      "name": "20DC40HC"
+    }
+  ]
+}
