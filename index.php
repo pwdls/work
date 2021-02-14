@@ -12,6 +12,15 @@ function dump($data)
     echo '</pre>';
 }
 
+function GUID()
+{
+    if (function_exists('com_create_guid') === true)
+    {
+        return trim(com_create_guid(), '{}');
+    }
+    return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+}
+
 if (!empty($type) && !empty($data)) {
 
     $foo = json_decode($data);
@@ -20,7 +29,7 @@ if (!empty($type) && !empty($data)) {
     if (!empty($foo->request) || $type == 'getResult') {
 
         if ($type == 'execAsync') {
-            $guid = 'qweqweqweqweqwetest'; //com_create_guid();
+            $guid = GUID();
             $pathToFile = $DOCUMENT_ROOT . '/file/' . $foo->request . '.json';
             $pathToFileNew = $DOCUMENT_ROOT . '/file/hlam/' . $guid . '.json';
 
