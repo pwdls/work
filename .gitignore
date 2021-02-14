@@ -1,0 +1,16 @@
+*.[oa]
+*~
+img/
+log/
+*.swp
+*.txt
+*.csv
+*.xls
+*.xlsx
+*.xml
+*.iml
+.*
+*--*
+!.gitignore
+robots.php
+temp/
