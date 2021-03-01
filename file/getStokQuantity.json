@@ -1,0 +1,55 @@
+{
+  "result": 0,
+  "data": [
+    {
+      "codeStock": "1",
+      "codeISO": "42G1",
+      "quantity": "15"
+    },
+    {
+      "codeStock": "1",
+      "codeISO": "22G1",
+      "quantity": "3"
+    },
+    {
+      "codeStock": "2",
+      "codeISO": "42G1",
+      "quantity": "10"
+    },
+    {
+      "codeStock": "2",
+      "codeISO": "22G1",
+      "quantity": "2"
+    },
+    {
+      "codeStock": "3",
+      "codeISO": "42G1",
+      "quantity": "2"
+    },
+    {
+      "codeStock": "3",
+      "codeISO": "22G1",
+      "quantity": "15"
+    },
+    {
+      "codeStock": "4",
+      "codeISO": "42G1",
+      "quantity": "3"
+    },
+    {
+      "codeStock": "4",
+      "codeISO": "22G1",
+      "quantity": "15"
+    },
+    {
+      "codeStock": "5",
+      "codeISO": "42G1",
+      "quantity": "0"
+    },
+    {
+      "codeStock": "5",
+      "codeISO": "22G1",
+      "quantity": "0"
+    }
+  ]
+}

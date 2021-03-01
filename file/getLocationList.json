@@ -3,153 +3,1353 @@
   "data": [
     {
       "code": "1",
-      "name": "Калининград-Сортировочный",
-      "zdcode": "100001"
+      "name": "Сещинская",
+      "zdcode": "178307",
+      "deletionMark": 0
     },
     {
       "code": "2",
-      "name": "Калининград-Пассажирский",
-      "zdcode": "100016"
+      "name": "Оп 222 км",
+      "zdcode": "178311",
+      "deletionMark": 0
     },
     {
       "code": "3",
-      "name": "Петрозаводск",
-      "zdcode": "10002"
+      "name": "Дубровка",
+      "zdcode": "178400",
+      "deletionMark": 0
     },
     {
       "code": "4",
-      "name": "Киевская",
-      "zdcode": ""
+      "name": "Рековичи",
+      "zdcode": "178415",
+      "deletionMark": 0
     },
     {
       "code": "5",
-      "name": "Калининград-мамоновский",
-      "zdcode": "100035"
+      "name": "Олсуфьево",
+      "zdcode": "178420",
+      "deletionMark": 0
     },
     {
       "code": "6",
-      "name": "Голубево",
-      "zdcode": "100054"
+      "name": "Оп 193 км",
+      "zdcode": "178434",
+      "deletionMark": 0
     },
     {
       "code": "7",
-      "name": "Светлое",
-      "zdcode": "100069"
+      "name": "Жуковка",
+      "zdcode": "178504",
+      "deletionMark": 0
     },
     {
       "code": "8",
-      "name": "Остановочный пункт 1305 км",
-      "zdcode": "100073"
+      "name": "Оп 7 км",
+      "zdcode": "178519",
+      "deletionMark": 0
     },
     {
       "code": "9",
-      "name": "Остановочный пункт 1307 км",
-      "zdcode": "100088"
+      "name": "Красная",
+      "zdcode": "178523",
+      "deletionMark": 0
     },
     {
       "code": "10",
-      "name": "Калининград-Сортировочный (эксп.)",
-      "zdcode": "100105"
+      "name": "Белоглавая",
+      "zdcode": "178538",
+      "deletionMark": 0
     },
     {
       "code": "11",
-      "name": "Пионерский Курорт (эксп.)",
-      "zdcode": "100209"
+      "name": "Оп 26 км",
+      "zdcode": "178542",
+      "deletionMark": 0
     },
     {
-      "code": "",
-      "name": "",
-      "zdcode": "100302"
+      "code": "12",
+      "name": "Акуличи",
+      "zdcode": "178557",
+      "deletionMark": 0
     },
     {
       "code": "13",
-      "name": "Нестеров (эксп.)",
-      "zdcode": "100406"
+      "name": "Клетня",
+      "zdcode": "178701",
+      "deletionMark": 0
     },
     {
       "code": "14",
-      "name": "Нестеров",
-      "zdcode": "100500"
+      "name": "Тросна",
+      "zdcode": "178805",
+      "deletionMark": 0
     },
     {
       "code": "15",
-      "name": "Дивное-новое",
-      "zdcode": "100514"
+      "name": "Оп 176 км",
+      "zdcode": "178815",
+      "deletionMark": 0
     },
     {
       "code": "16",
-      "name": "Краснолесье",
-      "zdcode": "100603"
+      "name": "Ржаница",
+      "zdcode": "178909",
+      "deletionMark": 0
     },
     {
       "code": "17",
-      "name": "Гусев",
-      "zdcode": "100707"
+      "name": "Эдазия",
+      "zdcode": "178913",
+      "deletionMark": 0
     },
     {
       "code": "18",
-      "name": "Веселовка",
-      "zdcode": "100730"
+      "name": "Чернетово",
+      "zdcode": "178928",
+      "deletionMark": 0
     },
     {
       "code": "19",
-      "name": "Черняховск",
-      "zdcode": ""
+      "name": "Пл 162 км",
+      "zdcode": "178932",
+      "deletionMark": 0
     },
     {
       "code": "20",
-      "name": "Пастухово-новое",
-      "zdcode": "100815"
+      "name": "Сельцо",
+      "zdcode": "179009",
+      "deletionMark": 0
     },
     {
       "code": "21",
-      "name": "Угрюмово-Новое",
-      "zdcode": "101502"
+      "name": "Хотылево",
+      "zdcode": "179013",
+      "deletionMark": 0
     },
     {
       "code": "22",
-      "name": "Остановочный пункт 9 км",
-      "zdcode": "101517"
+      "name": "Нетьинка",
+      "zdcode": "179028",
+      "deletionMark": 0
     },
     {
-      "code": "",
-      "name": "Остановочный пункт 8 км",
-      "zdcode": "101521"
+      "code": "23",
+      "name": "Бордавичи",
+      "zdcode": "179032",
+      "deletionMark": 0
     },
     {
       "code": "24",
-      "name": "",
-      "zdcode": "101536"
+      "name": "Оп 147 км",
+      "zdcode": "179047",
+      "deletionMark": 0
     },
     {
       "code": "25",
-      "name": "Остановочный пункт 4 км",
-      "zdcode": "101540"
+      "name": "Фасонолитейн",
+      "zdcode": "179051",
+      "deletionMark": 0
     },
     {
       "code": "26",
-      "name": "Знаменск",
-      "zdcode": "101706"
+      "name": "Орджоникидзе",
+      "zdcode": "179102",
+      "deletionMark": 0
     },
     {
       "code": "27",
-      "name": "Гвардейск",
-      "zdcode": "101803"
+      "name": "Кр.прфинтерн",
+      "zdcode": "179117",
+      "deletionMark": 0
     },
     {
       "code": "28",
-      "name": "Озерки-Новые",
-      "zdcode": ""
+      "name": "Самара-радиц",
+      "zdcode": "179121",
+      "deletionMark": 0
     },
     {
       "code": "29",
-      "name": "Комсомольск-Западный",
-      "zdcode": "101911"
+      "name": "Мальцевская",
+      "zdcode": "179136",
+      "deletionMark": 0
     },
     {
       "code": "30",
-      "name": "Шиповка (эксп.)",
-      "zdcode": "102007"
+      "name": "Бекасово-срт",
+      "zdcode": "180006",
+      "deletionMark": 0
+    },
+    {
+      "code": "31",
+      "name": "Бекасово 1",
+      "zdcode": "180010",
+      "deletionMark": 0
+    },
+    {
+      "code": "32",
+      "name": "Пос-киевский",
+      "zdcode": "180025",
+      "deletionMark": 0
+    },
+    {
+      "code": "33",
+      "name": "Бекасово-цен",
+      "zdcode": "180031",
+      "deletionMark": 0
+    },
+    {
+      "code": "34",
+      "name": "Зосм.пустынь",
+      "zdcode": "180044",
+      "deletionMark": 0
+    },
+    {
+      "code": "35",
+      "name": "Пожитково",
+      "zdcode": "180059",
+      "deletionMark": 0
+    },
+    {
+      "code": "36",
+      "name": "Оп 221 км",
+      "zdcode": "180063",
+      "deletionMark": 0
+    },
+    {
+      "code": "37",
+      "name": "Акулово",
+      "zdcode": "180108",
+      "deletionMark": 0
+    },
+    {
+      "code": "38",
+      "name": "Оп 214 км",
+      "zdcode": "180082",
+      "deletionMark": 0
+    },
+    {
+      "code": "39",
+      "name": "Очаково 1",
+      "zdcode": "180203",
+      "deletionMark": 0
+    },
+    {
+      "code": "40",
+      "name": "Матвеевское",
+      "zdcode": "180218",
+      "deletionMark": 0
+    },
+    {
+      "code": "41",
+      "name": "Востряково",
+      "zdcode": "180222",
+      "deletionMark": 0
+    },
+    {
+      "code": "42",
+      "name": "Солнечная",
+      "zdcode": "180504",
+      "deletionMark": 0
+    },
+    {
+      "code": "43",
+      "name": "Переделкино",
+      "zdcode": "180519",
+      "deletionMark": 0
+    },
+    {
+      "code": "44",
+      "name": "Мичуринец",
+      "zdcode": "180523",
+      "deletionMark": 0
+    },
+    {
+      "code": "45",
+      "name": "Оп 25 км",
+      "zdcode": "222321",
+      "deletionMark": 0
+    },
+    {
+      "code": "46",
+      "name": "Свеженькая",
+      "zdcode": "222406",
+      "deletionMark": 0
+    },
+    {
+      "code": "47",
+      "name": "Известь",
+      "zdcode": "222500",
+      "deletionMark": 0
+    },
+    {
+      "code": "48",
+      "name": "Выша",
+      "zdcode": "222603",
+      "deletionMark": 0
+    },
+    {
+      "code": "49",
+      "name": "Рязань 2",
+      "zdcode": "222800",
+      "deletionMark": 0
+    },
+    {
+      "code": "50",
+      "name": "Бп 204 км",
+      "zdcode": "222815",
+      "deletionMark": 0
+    },
+    {
+      "code": "51",
+      "name": "Пл 210 км",
+      "zdcode": "222829",
+      "deletionMark": 0
+    },
+    {
+      "code": "52",
+      "name": "Стенькино 1",
+      "zdcode": "222834",
+      "deletionMark": 0
+    },
+    {
+      "code": "53",
+      "name": "Оп 216 км",
+      "zdcode": "222849",
+      "deletionMark": 0
+    },
+    {
+      "code": "54",
+      "name": "Рязань-ока-п",
+      "zdcode": "222904",
+      "deletionMark": 0
+    },
+    {
+      "code": "55",
+      "name": "Стенькино 2",
+      "zdcode": "223108",
+      "deletionMark": 0
+    },
+    {
+      "code": "56",
+      "name": "Денежниково",
+      "zdcode": "223201",
+      "deletionMark": 0
+    },
+    {
+      "code": "57",
+      "name": "Пл 226 км",
+      "zdcode": "223216",
+      "deletionMark": 0
+    },
+    {
+      "code": "58",
+      "name": "Шевцово",
+      "zdcode": "223220",
+      "deletionMark": 0
+    },
+    {
+      "code": "59",
+      "name": "Старожилово",
+      "zdcode": "223305",
+      "deletionMark": 0
+    },
+    {
+      "code": "60",
+      "name": "Хрущево",
+      "zdcode": "223409",
+      "deletionMark": 0
+    },
+    {
+      "code": "61",
+      "name": "Чемодановка",
+      "zdcode": "223502",
+      "deletionMark": 0
+    },
+    {
+      "code": "62",
+      "name": "Биркино",
+      "zdcode": "223625",
+      "deletionMark": 0
+    },
+    {
+      "code": "63",
+      "name": "Оп 282 км",
+      "zdcode": "223610",
+      "deletionMark": 0
+    },
+    {
+      "code": "64",
+      "name": "Кораблино",
+      "zdcode": "223705",
+      "deletionMark": 0
+    },
+    {
+      "code": "65",
+      "name": "Пл 293 км",
+      "zdcode": "223714",
+      "deletionMark": 0
+    },
+    {
+      "code": "66",
+      "name": "Подвислово",
+      "zdcode": "223729",
+      "deletionMark": 0
+    },
+    {
+      "code": "67",
+      "name": "Оп 303 км",
+      "zdcode": "223733",
+      "deletionMark": 0
+    },
+    {
+      "code": "68",
+      "name": "Пл 308 км",
+      "zdcode": "223748",
+      "deletionMark": 0
+    },
+    {
+      "code": "69",
+      "name": "Пост 315 км",
+      "zdcode": "223818",
+      "deletionMark": 0
+    },
+    {
+      "code": "70",
+      "name": "Ряжск 2",
+      "zdcode": "223822",
+      "deletionMark": 0
+    },
+    {
+      "code": "71",
+      "name": "Узловая 1",
+      "zdcode": "224204",
+      "deletionMark": 0
+    },
+    {
+      "code": "72",
+      "name": "Руднево",
+      "zdcode": "224219",
+      "deletionMark": 0
+    },
+    {
+      "code": "73",
+      "name": "Узловая 2",
+      "zdcode": "224308",
+      "deletionMark": 0
+    },
+    {
+      "code": "74",
+      "name": "Бп 217 км",
+      "zdcode": "224312",
+      "deletionMark": 0
+    },
+    {
+      "code": "75",
+      "name": "Узловая 3",
+      "zdcode": "224401",
+      "deletionMark": 0
+    },
+    {
+      "code": "76",
+      "name": "Полунино",
+      "zdcode": "224524",
+      "deletionMark": 0
+    },
+    {
+      "code": "77",
+      "name": "Прилесье",
+      "zdcode": "224515",
+      "deletionMark": 0
+    },
+    {
+      "code": "78",
+      "name": "Жданка",
+      "zdcode": "224609",
+      "deletionMark": 0
+    },
+    {
+      "code": "79",
+      "name": "Оп 255 км",
+      "zdcode": "224613",
+      "deletionMark": 0
+    },
+    {
+      "code": "80",
+      "name": "Товарково",
+      "zdcode": "224702",
+      "deletionMark": 0
+    },
+    {
+      "code": "81",
+      "name": "Оп 268 км",
+      "zdcode": "224717",
+      "deletionMark": 0
+    },
+    {
+      "code": "82",
+      "name": "Малевка",
+      "zdcode": "224721",
+      "deletionMark": 0
+    },
+    {
+      "code": "83",
+      "name": "Оп 278 км",
+      "zdcode": "224736",
+      "deletionMark": 0
+    },
+    {
+      "code": "84",
+      "name": "Волово",
+      "zdcode": "224806",
+      "deletionMark": 0
+    },
+    {
+      "code": "85",
+      "name": "Оп 290 км",
+      "zdcode": "224810",
+      "deletionMark": 0
+    },
+    {
+      "code": "86",
+      "name": "Оп 293 км",
+      "zdcode": "224825",
+      "deletionMark": 0
+    },
+    {
+      "code": "87",
+      "name": "Оп 771 км",
+      "zdcode": "250069",
+      "deletionMark": 0
+    },
+    {
+      "code": "88",
+      "name": "Нов.аракчино",
+      "zdcode": "250124",
+      "deletionMark": 0
+    },
+    {
+      "code": "89",
+      "name": "Старое аракч",
+      "zdcode": "250116",
+      "deletionMark": 0
+    },
+    {
+      "code": "90",
+      "name": "Лагерная",
+      "zdcode": "250209",
+      "deletionMark": 0
+    },
+    {
+      "code": "91",
+      "name": "Лагерная",
+      "zdcode": "250213",
+      "deletionMark": 0
+    },
+    {
+      "code": "92",
+      "name": "Адмирал.слоб",
+      "zdcode": "250228",
+      "deletionMark": 0
+    },
+    {
+      "code": "93",
+      "name": "Казань",
+      "zdcode": "250302",
+      "deletionMark": 0
+    },
+    {
+      "code": "94",
+      "name": "Казань-перев",
+      "zdcode": "250406",
+      "deletionMark": 0
+    },
+    {
+      "code": "95",
+      "name": "Вахитово",
+      "zdcode": "250707",
+      "deletionMark": 0
+    },
+    {
+      "code": "96",
+      "name": "Ометьево",
+      "zdcode": "250800",
+      "deletionMark": 0
+    },
+    {
+      "code": "97",
+      "name": "Новаторов",
+      "zdcode": "250815",
+      "deletionMark": 0
+    },
+    {
+      "code": "98",
+      "name": "Компресорный",
+      "zdcode": "250820",
+      "deletionMark": 0
+    },
+    {
+      "code": "99",
+      "name": "Восстание",
+      "zdcode": "250904",
+      "deletionMark": 0
+    },
+    {
+      "code": "100",
+      "name": "Восстан-пас",
+      "zdcode": "250919",
+      "deletionMark": 0
+    },
+    {
+      "code": "101",
+      "name": "Оп 795 км",
+      "zdcode": "250923",
+      "deletionMark": 0
+    },
+    {
+      "code": "102",
+      "name": "Левченко",
+      "zdcode": "250938",
+      "deletionMark": 0
+    },
+    {
+      "code": "103",
+      "name": "Дербышки",
+      "zdcode": "251004",
+      "deletionMark": 0
+    },
+    {
+      "code": "104",
+      "name": "Пл 804 км",
+      "zdcode": "251019",
+      "deletionMark": 0
+    },
+    {
+      "code": "105",
+      "name": "Оп 807 км",
+      "zdcode": "251023",
+      "deletionMark": 0
+    },
+    {
+      "code": "106",
+      "name": "Васильево",
+      "zdcode": "251108",
+      "deletionMark": 0
+    },
+    {
+      "code": "107",
+      "name": "Атлашкино",
+      "zdcode": "251112",
+      "deletionMark": 0
+    },
+    {
+      "code": "108",
+      "name": "Оп 766 км",
+      "zdcode": "251127",
+      "deletionMark": 0
+    },
+    {
+      "code": "109",
+      "name": "Зеленый дол",
+      "zdcode": "251201",
+      "deletionMark": 0
+    },
+    {
+      "code": "110",
+      "name": "Гари",
+      "zdcode": "251216",
+      "deletionMark": 0
+    },
+    {
+      "code": "111",
+      "name": "Паратск",
+      "zdcode": "251305",
+      "deletionMark": 0
+    },
+    {
+      "code": "112",
+      "name": "Марбумкомбин",
+      "zdcode": "251413",
+      "deletionMark": 0
+    },
+    {
+      "code": "113",
+      "name": "Краснозарин.",
+      "zdcode": "251428",
+      "deletionMark": 0
+    },
+    {
+      "code": "114",
+      "name": "Волжск",
+      "zdcode": "251502",
+      "deletionMark": 0
+    },
+    {
+      "code": "115",
+      "name": "Помары",
+      "zdcode": "251606",
+      "deletionMark": 0
+    },
+    {
+      "code": "116",
+      "name": "Яльчевский",
+      "zdcode": "251610",
+      "deletionMark": 0
+    },
+    {
+      "code": "117",
+      "name": "Пл 32 км",
+      "zdcode": "251625",
+      "deletionMark": 0
+    },
+    {
+      "code": "118",
+      "name": "Илеть",
+      "zdcode": "251630",
+      "deletionMark": 0
+    },
+    {
+      "code": "119",
+      "name": "Пл 43 км",
+      "zdcode": "251714",
+      "deletionMark": 0
+    },
+    {
+      "code": "120",
+      "name": "Шелангер",
+      "zdcode": "251803",
+      "deletionMark": 0
+    },
+    {
+      "code": "121",
+      "name": "Суслонгер",
+      "zdcode": "251907",
+      "deletionMark": 0
+    },
+    {
+      "code": "122",
+      "name": "Кундыш",
+      "zdcode": "252007",
+      "deletionMark": 0
+    },
+    {
+      "code": "123",
+      "name": "Сурок",
+      "zdcode": "252100",
+      "deletionMark": 0
+    },
+    {
+      "code": "124",
+      "name": "Пемба",
+      "zdcode": "252219",
+      "deletionMark": 0
+    },
+    {
+      "code": "125",
+      "name": "Куяр",
+      "zdcode": "252312",
+      "deletionMark": 0
+    },
+    {
+      "code": "126",
+      "name": "Йошкар-ола",
+      "zdcode": "252401",
+      "deletionMark": 0
+    },
+    {
+      "code": "127",
+      "name": "Оп 108 км",
+      "zdcode": "252416",
+      "deletionMark": 0
+    },
+    {
+      "code": "128",
+      "name": "Ратмировичи",
+      "zdcode": "147402",
+      "deletionMark": 0
+    },
+    {
+      "code": "129",
+      "name": "Заозерщина",
+      "zdcode": "147417",
+      "deletionMark": 0
+    },
+    {
+      "code": "130",
+      "name": "Черные броды",
+      "zdcode": "147421",
+      "deletionMark": 0
+    },
+    {
+      "code": "131",
+      "name": "Мошны",
+      "zdcode": "147436",
+      "deletionMark": 0
+    },
+    {
+      "code": "132",
+      "name": "Орсичи",
+      "zdcode": "147440",
+      "deletionMark": 0
+    },
+    {
+      "code": "133",
+      "name": "Брожа",
+      "zdcode": "147493",
+      "deletionMark": 0
+    },
+    {
+      "code": "134",
+      "name": "Глебова рудн",
+      "zdcode": "147510",
+      "deletionMark": 0
+    },
+    {
+      "code": "135",
+      "name": "Красный брод",
+      "zdcode": "147602",
+      "deletionMark": 0
+    },
+    {
+      "code": "136",
+      "name": "Туголица",
+      "zdcode": "147614",
+      "deletionMark": 0
+    },
+    {
+      "code": "137",
+      "name": "Березина",
+      "zdcode": "147703",
+      "deletionMark": 0
+    },
+    {
+      "code": "138",
+      "name": "Бабино",
+      "zdcode": "147718",
+      "deletionMark": 0
+    },
+    {
+      "code": "139",
+      "name": "Савичи",
+      "zdcode": "147722",
+      "deletionMark": 0
+    },
+    {
+      "code": "140",
+      "name": "Малинники",
+      "zdcode": "147737",
+      "deletionMark": 0
+    },
+    {
+      "code": "141",
+      "name": "Телуша",
+      "zdcode": "147807",
+      "deletionMark": 0
+    },
+    {
+      "code": "142",
+      "name": "Микуличи",
+      "zdcode": "147811",
+      "deletionMark": 0
+    },
+    {
+      "code": "143",
+      "name": "Омельня",
+      "zdcode": "147826",
+      "deletionMark": 0
+    },
+    {
+      "code": "144",
+      "name": "Данилов мост",
+      "zdcode": "147830",
+      "deletionMark": 0
+    },
+    {
+      "code": "145",
+      "name": "Кр.берег",
+      "zdcode": "148034",
+      "deletionMark": 0
+    },
+    {
+      "code": "146",
+      "name": "Казимирово",
+      "zdcode": "148015",
+      "deletionMark": 0
+    },
+    {
+      "code": "147",
+      "name": "Малевичи",
+      "zdcode": "148027",
+      "deletionMark": 0
+    },
+    {
+      "code": "148",
+      "name": "Калий1",
+      "zdcode": "148208",
+      "deletionMark": 0
+    },
+    {
+      "code": "149",
+      "name": "Строитель",
+      "zdcode": "148212",
+      "deletionMark": 0
+    },
+    {
+      "code": "150",
+      "name": "Солигорск",
+      "zdcode": "148227",
+      "deletionMark": 0
+    },
+    {
+      "code": "151",
+      "name": "Шахтерский",
+      "zdcode": "148231",
+      "deletionMark": 0
+    },
+    {
+      "code": "152",
+      "name": "Калий3",
+      "zdcode": "148301",
+      "deletionMark": 0
+    },
+    {
+      "code": "153",
+      "name": "Глядки",
+      "zdcode": "148316",
+      "deletionMark": 0
+    },
+    {
+      "code": "154",
+      "name": "Новогорки",
+      "zdcode": "148320",
+      "deletionMark": 0
+    },
+    {
+      "code": "155",
+      "name": "Калий4",
+      "zdcode": "148509",
+      "deletionMark": 0
+    },
+    {
+      "code": "156",
+      "name": "Слуцк",
+      "zdcode": "148602",
+      "deletionMark": 0
+    },
+    {
+      "code": "157",
+      "name": "Новодворцы",
+      "zdcode": "148617",
+      "deletionMark": 0
+    },
+    {
+      "code": "158",
+      "name": "Некраши",
+      "zdcode": "148621",
+      "deletionMark": 0
+    },
+    {
+      "code": "159",
+      "name": "Заградье",
+      "zdcode": "148636",
+      "deletionMark": 0
+    },
+    {
+      "code": "160",
+      "name": "Повстынь",
+      "zdcode": "148640",
+      "deletionMark": 0
+    },
+    {
+      "code": "161",
+      "name": "Безверховичи",
+      "zdcode": "148655",
+      "deletionMark": 0
+    },
+    {
+      "code": "162",
+      "name": "Уречье",
+      "zdcode": "149003",
+      "deletionMark": 0
+    },
+    {
+      "code": "163",
+      "name": "Оточка",
+      "zdcode": "149018",
+      "deletionMark": 0
+    },
+    {
+      "code": "164",
+      "name": "Верхутино",
+      "zdcode": "149022",
+      "deletionMark": 0
+    },
+    {
+      "code": "165",
+      "name": "Пасека",
+      "zdcode": "149037",
+      "deletionMark": 0
+    },
+    {
+      "code": "166",
+      "name": "Стар.дороги",
+      "zdcode": "149107",
+      "deletionMark": 0
+    },
+    {
+      "code": "167",
+      "name": "Александровк",
+      "zdcode": "149111",
+      "deletionMark": 0
+    },
+    {
+      "code": "168",
+      "name": "Фаличи",
+      "zdcode": "149126",
+      "deletionMark": 0
+    },
+    {
+      "code": "169",
+      "name": "Ульяновка",
+      "zdcode": "149130",
+      "deletionMark": 0
+    },
+    {
+      "code": "170",
+      "name": "Дараганово",
+      "zdcode": "149234",
+      "deletionMark": 0
+    },
+    {
+      "code": "171",
+      "name": "Гряда",
+      "zdcode": "149215",
+      "deletionMark": 0
+    },
+    {
+      "code": "172",
+      "name": "Деревцы",
+      "zdcode": "149222",
+      "deletionMark": 0
+    },
+    {
+      "code": "173",
+      "name": "Еремино",
+      "zdcode": "150015",
+      "deletionMark": 0
+    },
+    {
+      "code": "174",
+      "name": "Светоч",
+      "zdcode": "150024",
+      "deletionMark": 0
+    },
+    {
+      "code": "175",
+      "name": "Внуково",
+      "zdcode": "180608",
+      "deletionMark": 0
+    },
+    {
+      "code": "176",
+      "name": "Чисмена",
+      "zdcode": "197505",
+      "deletionMark": 0
+    },
+    {
+      "code": "177",
+      "name": "Матренино",
+      "zdcode": "197511",
+      "deletionMark": 0
+    },
+    {
+      "code": "178",
+      "name": "Дубосеково",
+      "zdcode": "197524",
+      "deletionMark": 0
+    },
+    {
+      "code": "179",
+      "name": "Благовещенск",
+      "zdcode": "197613",
+      "deletionMark": 0
+    },
+    {
+      "code": "180",
+      "name": "Бухолово",
+      "zdcode": "197628",
+      "deletionMark": 0
+    },
+    {
+      "code": "181",
+      "name": "Шаховская",
+      "zdcode": "197702",
+      "deletionMark": 0
+    },
+    {
+      "code": "182",
+      "name": "Поварово 3",
+      "zdcode": "197064",
+      "deletionMark": 0
+    },
+    {
+      "code": "183",
+      "name": "Мос-срт-киев",
+      "zdcode": "197907",
+      "deletionMark": 0
+    },
+    {
+      "code": "184",
+      "name": "Мос-пас-киев",
+      "zdcode": "198103",
+      "deletionMark": 0
+    },
+    {
+      "code": "185",
+      "name": "П.з.бадаева",
+      "zdcode": "198118",
+      "deletionMark": 0
+    },
+    {
+      "code": "186",
+      "name": "Мос-тов-смол",
+      "zdcode": "198207",
+      "deletionMark": 0
+    },
+    {
+      "code": "187",
+      "name": "Беговая",
+      "zdcode": "198211",
+      "deletionMark": 0
+    },
+    {
+      "code": "188",
+      "name": "Тестовская",
+      "zdcode": "198226",
+      "deletionMark": 0
+    },
+    {
+      "code": "189",
+      "name": "Мос-пас-смол",
+      "zdcode": "198230",
+      "deletionMark": 0
+    },
+    {
+      "code": "190",
+      "name": "Канатчиково",
+      "zdcode": "198372",
+      "deletionMark": 0
+    },
+    {
+      "code": "191",
+      "name": "Воробьев.гор",
+      "zdcode": "198419",
+      "deletionMark": 0
+    },
+    {
+      "code": "192",
+      "name": "Кутузово",
+      "zdcode": "198423",
+      "deletionMark": 0
+    },
+    {
+      "code": "193",
+      "name": "Пресня",
+      "zdcode": "198508",
+      "deletionMark": 0
+    },
+    {
+      "code": "194",
+      "name": "Серебр.бор",
+      "zdcode": "198616",
+      "deletionMark": 0
+    },
+    {
+      "code": "195",
+      "name": "Лихоборы",
+      "zdcode": "198813",
+      "deletionMark": 0
+    },
+    {
+      "code": "196",
+      "name": "Владыкино-м",
+      "zdcode": "198917",
+      "deletionMark": 0
+    },
+    {
+      "code": "197",
+      "name": "Ростокино",
+      "zdcode": "199017",
+      "deletionMark": 0
+    },
+    {
+      "code": "198",
+      "name": "Белокаменная",
+      "zdcode": "199110",
+      "deletionMark": 0
+    },
+    {
+      "code": "199",
+      "name": "Черкизово",
+      "zdcode": "199208",
+      "deletionMark": 0
+    },
+    {
+      "code": "200",
+      "name": "Лефортово",
+      "zdcode": "199303",
+      "deletionMark": 0
+    },
+    {
+      "code": "201",
+      "name": "Андроновка",
+      "zdcode": "199318",
+      "deletionMark": 0
+    },
+    {
+      "code": "202",
+      "name": "Мос-ю.пор(э)",
+      "zdcode": "199905",
+      "deletionMark": 0
+    },
+    {
+      "code": "203",
+      "name": "Угрешская",
+      "zdcode": "199515",
+      "deletionMark": 0
+    },
+    {
+      "code": "204",
+      "name": "Кожухово",
+      "zdcode": "199619",
+      "deletionMark": 0
+    },
+    {
+      "code": "205",
+      "name": "Бойня",
+      "zdcode": "199712",
+      "deletionMark": 0
+    },
+    {
+      "code": "206",
+      "name": "Новопролетар",
+      "zdcode": "199801",
+      "deletionMark": 0
+    },
+    {
+      "code": "207",
+      "name": "Оп 5 км",
+      "zdcode": "200017",
+      "deletionMark": 0
+    },
+    {
+      "code": "208",
+      "name": "Рижский пост",
+      "zdcode": "200021",
+      "deletionMark": 0
+    },
+    {
+      "code": "209",
+      "name": "Деповская",
+      "zdcode": "200036",
+      "deletionMark": 0
+    },
+    {
+      "code": "210",
+      "name": "Пост-бр-южн",
+      "zdcode": "200064",
+      "deletionMark": 0
+    },
+    {
+      "code": "211",
+      "name": "Оп 387 км",
+      "zdcode": "200074",
+      "deletionMark": 0
+    },
+    {
+      "code": "212",
+      "name": "Стяжное",
+      "zdcode": "200089",
+      "deletionMark": 0
+    },
+    {
+      "code": "213",
+      "name": "Брянск-орл.",
+      "zdcode": "200106",
+      "deletionMark": 0
+    },
+    {
+      "code": "214",
+      "name": "Урицкий",
+      "zdcode": "200110",
+      "deletionMark": 0
+    },
+    {
+      "code": "215",
+      "name": "Оп 375 км",
+      "zdcode": "200125",
+      "deletionMark": 0
+    },
+    {
+      "code": "216",
+      "name": "Оп 225 км",
+      "zdcode": "200130",
+      "deletionMark": 0
+    },
+    {
+      "code": "217",
+      "name": "Караси",
+      "zdcode": "224929",
+      "deletionMark": 0
+    },
+    {
+      "code": "218",
+      "name": "Оп 305 км",
+      "zdcode": "224914",
+      "deletionMark": 0
+    },
+    {
+      "code": "219",
+      "name": "Турдей",
+      "zdcode": "225006",
+      "deletionMark": 0
+    },
+    {
+      "code": "220",
+      "name": "Оп 313 км",
+      "zdcode": "225014",
+      "deletionMark": 0
+    },
+    {
+      "code": "221",
+      "name": "Непрядва",
+      "zdcode": "225118",
+      "deletionMark": 0
+    },
+    {
+      "code": "222",
+      "name": "М. андреевка",
+      "zdcode": "225207",
+      "deletionMark": 0
+    },
+    {
+      "code": "223",
+      "name": "Оп 325 км",
+      "zdcode": "225211",
+      "deletionMark": 0
+    },
+    {
+      "code": "224",
+      "name": "Бурелом",
+      "zdcode": "225226",
+      "deletionMark": 0
+    },
+    {
+      "code": "225",
+      "name": "Оп 332 км",
+      "zdcode": "225230",
+      "deletionMark": 0
     }
   ]
 }
