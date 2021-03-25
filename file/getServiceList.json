@@ -1,0 +1,95 @@
+{
+  "result": 0,
+  "data": [
+    {
+      "code": "1",
+      "name": "Услуга 1",
+      "fullName": "Полное название услуги 1",
+      "deletionMark": "0"
+    },
+    {
+      "code": "2",
+      "name": "Услуга 2",
+      "fullName": "Полное название услуги 2",
+      "deletionMark": "0"
+    },
+    {
+      "code": "3",
+      "name": "Услуга 3",
+      "fullName": "Полное название услуги 3",
+      "deletionMark": "0"
+    },
+    {
+      "code": "4",
+      "name": "Услуга 4",
+      "fullName": "Полное название услуги 4",
+      "deletionMark": "0"
+    },
+    {
+      "code": "5",
+      "name": "Услуга 5",
+      "fullName": "Полное название услуги 5",
+      "deletionMark": "0"
+    },
+    {
+      "code": "6",
+      "name": "Услуга 6",
+      "fullName": "Полное название услуги 6",
+      "deletionMark": "0"
+    },
+    {
+      "code": "7",
+      "name": "Услуга 7",
+      "fullName": "Полное название услуги 7",
+      "deletionMark": "0"
+    },
+    {
+      "code": "8",
+      "name": "Услуга 8",
+      "fullName": "Полное название услуги 8",
+      "deletionMark": "0"
+    },
+    {
+      "code": "9",
+      "name": "Услуга 9",
+      "fullName": "Полное название услуги 9",
+      "deletionMark": "0"
+    },
+    {
+      "code": "10",
+      "name": "Услуга 10",
+      "fullName": "Полное название услуги 10",
+      "deletionMark": "0"
+    },
+    {
+      "code": "11",
+      "name": "Услуга 11",
+      "fullName": "Полное название услуги 11",
+      "deletionMark": "0"
+    },
+    {
+      "code": "12",
+      "name": "Услуга 12",
+      "fullName": "Полное название услуги 12",
+      "deletionMark": "0"
+    },
+    {
+      "code": "13",
+      "name": "Услуга 13",
+      "fullName": "Полное название услуги 13",
+      "deletionMark": "0"
+    },
+    {
+      "code": "14",
+      "name": "Услуга 14",
+      "fullName": "Полное название услуги 14",
+      "deletionMark": "0"
+    },
+    {
+      "code": "15",
+      "name": "Услуга 15",
+      "fullName": "Полное название услуги 15",
+      "deletionMark": "0"
+    }
+  ]
+}
