@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
-$error = 1;
+$error = 0;
 
 phpinfo();
 
