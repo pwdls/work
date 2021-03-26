@@ -17,9 +17,24 @@ class postRequest implements interfaceEvrosib
         $this->data->GUID = Gribov::GUID();
         $this->data->status = 2;
         $this->data->orderPrice = mt_rand(1000, 1000000);
-        $this->data->from_datetime = str_replace('T', ' ', $this->data->from_datetime);
-        $this->data->avtodovoz_date = str_replace('T', ' ', $this->data->avtodovoz_date);
-        $this->data->avtovivoz_date = str_replace('T', ' ', $this->data->avtovivoz_date);
+    }
+
+    private function createService(){
+        $mas = array();
+        for($i = 1; $i <= 15 ; $i++){
+            $required = mt_rand(0, 1);
+            $price = mt_rand(1, 100000);
+            $mas[] = 'INSERT INTO service'
+                        . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
+                        . ' VALUES ('
+                        . '"' . $this->data->GUID . '", '
+                        . '"' . $i . '", '
+                        . '"' . $required . '", '
+                        . '"' . $required . '", '
+                        . '"' . $price . '" '
+                        . ');';
+        }
+        GribovMySQL::getMySQL($mas);
     }
 
     private function addRequest()
@@ -35,12 +50,11 @@ class postRequest implements interfaceEvrosib
             . "`avtovivoz_location`, `avtovivoz_date`) "
             . "VALUES "
             . "('" . $this->data->GUID . "', '" . $this->data->version . "', '" . $this->data->status . "', '" . $this->data->orderPrice . "', "
-            . "('" . $this->data->other_fio . "', '" . $this->data->GUIDPartner . "', '" . $this->data->other_tel . "', '" . $this->data->other_email . "', "
-            . "('" . $this->data->from_datetime . "', '" . $this->data->from_location . "', '" . $this->data->to_location . "', '" . json_encode($this->data->containers) . "', "
-            . "('" . $this->data->other_longdescription . "', '" . $this->data->driver_fio . "', '" . $this->data->passport . "', '" . $this->data->driver_reg . "', "
-            . "('" . $this->data->avtodovoz . "', '" . $this->data->avtodovoz_location . "', '" . $this->data->other_fio . "', '" . $this->data->other_fio . "', "
-            . "('" . $this->data->other_fio . "', '" . $this->data->other_fio . "', '" . $this->data->avtodovoz_date . "', '" . $this->data->avtovivoz . "', "
-            . "('" . $this->data->avtovivoz_location . "', '" . $this->data->avtovivoz_date . "');";
+            . "'" . $this->data->other_fio . "', '" . $this->data->GUIDPartner . "', '" . $this->data->other_tel . "', '" . $this->data->other_email . "', "
+            . "'" . $this->data->from_datetime . "', '" . $this->data->from_location . "', '" . $this->data->to_location . "', '" . json_encode($this->data->containers) . "', "
+            . "'" . $this->data->other_longdescription . "', '" . $this->data->driver_fio . "', '" . $this->data->passport . "', '" . $this->data->driver_reg . "', "
+            . "'" . $this->data->avtodovoz . "', '" . $this->data->avtodovoz_location . "', '" . $this->data->avtodovoz_date . "', '" . $this->data->avtovivoz . "', "
+            . "'" . $this->data->avtovivoz_location . "', '" . $this->data->avtovivoz_date . "');";
 
         GribovMySQL::getMySQL($query);
     }
@@ -52,11 +66,11 @@ class postRequest implements interfaceEvrosib
         $result = array(
             'result' => 0,
             'data' => array(
-                'GUID' => $arr[0]['GUID'],
-                'version' => $arr[0]['version'],
-                'DocumentId' => $arr[0]['DocumentId'],
-                'OrderStatus' => $arr[0]['OrderStatus'],
-                'OrderPrice' => $arr[0]['OrderPrice']
+                'GUID' => $arr[0][0],
+                'version' => $arr[0][1],
+                'DocumentId' => $arr[0][2],
+                'OrderStatus' => $arr[0][3],
+                'OrderPrice' => $arr[0][4]
             )
         );
 
@@ -67,6 +81,7 @@ class postRequest implements interfaceEvrosib
     {
         $this->addRequest();
         $this->getRequest();
+        $this->createService();
     }
 
     public function getResult(): string

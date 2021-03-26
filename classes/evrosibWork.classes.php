@@ -39,13 +39,8 @@ class evrosibWork
 
     private function execSync()
     {
-        Gribov::dump($this->data);
-
         if (class_exists($this->data->request)) {
             $do = new $this->data->request($this->data->data);
-
-            Gribov::dump($do);
-
             $this->result = $do->getResult();
         } else {
             $pathToFile = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '\\file\\' . $this->data->request . '.json';
@@ -68,21 +63,18 @@ class evrosibWork
 
     public function result(): string
     {
-        if (!empty($this->data->request) || $this->type == 'getResult') {
-
-            switch ($this->type) {
-                case 'execAsync':
-                    $this->execAsync();
-                    break;
-                case 'getResult':
-                    $this->getResult();
-                    break;
-                case 'execSync':
-                    $this->execSync();
-                    break;
-                default:
-                    $this->result = '{"result":998,"data":""}';
-            }
+        switch ($this->type) {
+            case 'execAsync':
+                $this->execAsync();
+                break;
+            case 'getResult':
+                $this->getResult();
+                break;
+            case 'execSync':
+                $this->execSync();
+                break;
+            default:
+                $this->result = '{"result":998,"data":""}';
         }
         return $this->result;
     }
