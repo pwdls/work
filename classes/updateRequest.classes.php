@@ -37,11 +37,11 @@ class updateRequest implements interfaceEvrosib
             . ' avtovivoz = "' . $this->data->avtovivoz . '",'
             . ' avtovivoz_location = "' . $this->data->avtovivoz_location . '",'
             . ' avtovivoz_date = "' . $this->data->avtovivoz_date . '",'
-            . ' OrderStatus = "' . $this->data->OrderStatus . '",'
+            . ' OrderStatus = "' . $this->data->OrderStatus . '"'
             . ' WHERE GUID="' . $this->data->GUID . '";';
         $mas[] = 'UPDATE service SET'
-            . ''
-            . ' WHERE GUID="' . $this->data->GUID
+            . ' active = 1'
+            . ' WHERE requestGUID="' . $this->data->GUID
             . '" AND serviceID IN '
             . $this->data->inServicesActive
             . ';';
@@ -77,6 +77,7 @@ class updateRequest implements interfaceEvrosib
         if ($error == 0) {
             $this->correctData();
             $this->update();
+            $this->getRequest();
         } else {
             $this->error($error);
         }

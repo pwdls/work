@@ -82,6 +82,7 @@ class postRequest implements interfaceEvrosib
         $this->addRequest();
         $this->getRequest();
         $this->createService();
+        getInvoce::createInvoce($this->data);
     }
 
     public function getResult(): string
