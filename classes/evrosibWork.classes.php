@@ -43,7 +43,7 @@ class evrosibWork
             $do = new $this->data->request($this->data->data);
             $this->result = $do->getResult();
         } else {
-            $pathToFile = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '\\file\\' . $this->data->request . '.json';
+            $pathToFile = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/file/' . $this->data->request . '.json';
             $this->result = $this->getFileData($pathToFile);
         }
     }
