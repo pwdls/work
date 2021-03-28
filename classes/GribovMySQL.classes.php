@@ -10,10 +10,12 @@ class GribovMySQL
 
     private function __construct($id = 0)
     {
-        $this->host = 'localhost';
-        $this->db = 'evrosib';
-        $this->user = 'root';
-        $this->pass = '';
+        $cfg =include filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/mysql--conf.php';
+
+        $this->host = $cfg['host'];
+        $this->db = $cfg['db'];
+        $this->user = $cfg['user'];
+        $this->pass = $cfg['pass'];
 
         $this->mysql = new mysqli($this->host, $this->user, $this->pass, $this->db);
         if (!$this->mysql) {
