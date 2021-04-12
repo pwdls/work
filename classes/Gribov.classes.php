@@ -24,10 +24,10 @@ class Gribov
     static public function log($page, $type = 'NULL')
     {
         $dir = filter_input(INPUT_SERVER, "DOCUMENT_ROOT")
-            . 'log/' . date("Y-m-d")
+            . '/log/' . date("Y-m-d")
             . '/' . date("H");
         if (!file_exists($dir)) {
-            mkdir($dir);
+            mkdir($dir, 0755, true);
         }
         $filename = $dir . '/' . $type . '---' . date("i-s") . '.html';
 
