@@ -31,9 +31,7 @@ class Gribov
         }
         $filename = $dir . '/' . $type . '---' . date("i-s") . '.html';
 
-        $f_hdl = fopen($filename, 'w');
-        fwrite($f_hdl, $page);
-        fclose($f_hdl);
+        file_put_contents($filename, $page);
     }
 
     static public function randSTR()
