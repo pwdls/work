@@ -18,8 +18,18 @@ $get = filter_input(INPUT_GET, 'grte');
 
 if (!empty($type) && !empty($data)) {
 
+    ob_start();
+
+    Gribov::dump($_POST);
+
     $do = new evrosibWork($type, $priority, $data);
     $result = $do->result();
+
+    Gribov::dump($result);
+
+    $page = ob_get_contents();
+    ob_end_clean();
+    Gribov::log($page, $type);
 
 } elseif ($get == 'qwerdawe') {
     $result = "

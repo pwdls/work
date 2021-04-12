@@ -54,7 +54,7 @@ class evrosibWork
         $result = GribovMySQL::getMySQL($query);
         $json = json_decode($result[0]['data']);
 
-        $this->type = $result[0]['request'];
+       // $this->type = $result['request'];
         $this->dataJSON = json_encode($json);
         $this->data = $json;
 

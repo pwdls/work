@@ -16,12 +16,28 @@ class Gribov
         echo '<pre>';
         var_dump($data);
         echo '</pre>';
-        if($e){
+        if ($e) {
             exit();
         }
     }
 
-    static public function randSTR(){
+    static public function log($page, $type = 'NULL')
+    {
+        $dir = filter_input(INPUT_SERVER, "DOCUMENT_ROOT")
+            . 'log/' . date("Y-m-d")
+            . '/' . date("H");
+        if (!file_exists($dir)) {
+            mkdir($dir);
+        }
+        $filename = $dir . '/' . $type . '---' . date("i-s") . '.html';
+
+        $f_hdl = fopen($filename, 'w');
+        fwrite($f_hdl, $page);
+        fclose($f_hdl);
+    }
+
+    static public function randSTR()
+    {
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         return substr(str_shuffle($permitted_chars), 0, 10);
     }
