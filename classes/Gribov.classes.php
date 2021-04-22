@@ -29,7 +29,7 @@ class Gribov
         if (!file_exists($dir)) {
             mkdir($dir, 0755, true);
         }
-        $filename = $dir . '/' . $type . '---' . date("i-s") . '.html';
+        $filename = $dir . '/' . date("m-i-s") . '---' . $type . '.html';
 
         file_put_contents($filename, $page);
     }
