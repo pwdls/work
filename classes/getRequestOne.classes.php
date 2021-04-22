@@ -34,6 +34,7 @@ class getRequestOne
         return array(
             'GUID' => $re['GUID'],
             'GUIDPartner' => $re['GUIDPartner'],
+            'documentId' => $re['DocumentId'],
             'version' => $re['version'],
             'other_fio' => $re['other_fio'],
             'other_inn' => $re['other_inn'],
@@ -41,6 +42,7 @@ class getRequestOne
             'other_email' => $re['other_email'],
             'from_datetime' => $re['from_datetime'],
             'from_location' => $re['from_location'],
+            'to_location' => $re['to_location'],
             'containers' => json_decode($re['containers']),
             'other_longdescription' => $re['other_longdescription'],
             'driver_fio' => $re['driver_fio'],
