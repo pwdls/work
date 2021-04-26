@@ -19,20 +19,44 @@ class postRequest implements interfaceEvrosib
         $this->data->orderPrice = mt_rand(1000, 1000000);
     }
 
-    private function createService(){
+    private function createService($marker = 0)
+    {
         $mas = array();
-        for($i = 1; $i <= 15 ; $i++){
-            $required = mt_rand(0, 1);
-            $price = mt_rand(1, 100000);
+        if ($marker == 1) {
             $mas[] = 'INSERT INTO service'
-                        . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
-                        . ' VALUES ('
-                        . '"' . $this->data->GUID . '", '
-                        . '"' . $i . '", '
-                        . '"' . $required . '", '
-                        . '"' . $required . '", '
-                        . '"' . $price . '" '
-                        . ');';
+                . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
+                . ' VALUES ('
+                . '"' . $this->data->GUID . '", '
+                . '"' . 1 . '", '
+                . '"' . 0 . '", '
+                . '"' . 1 . '", '
+                . '"' . 10000 . '" '
+                . ');';
+        } elseif($marker == 2){
+            $mas[] = 'INSERT INTO service'
+                . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
+                . ' VALUES ('
+                . '"' . $this->data->GUID . '", '
+                . '"' . 2 . '", '
+                . '"' . 0 . '", '
+                . '"' . 1 . '", '
+                . '"' . 20000 . '" '
+                . ');';
+        }
+        else {
+            for ($i = 3; $i <= 15; $i++) {
+                $required = mt_rand(0, 1);
+                $price = mt_rand(1, 100000);
+                $mas[] = 'INSERT INTO service'
+                    . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
+                    . ' VALUES ('
+                    . '"' . $this->data->GUID . '", '
+                    . '"' . $i . '", '
+                    . '"' . $required . '", '
+                    . '"' . $required . '", '
+                    . '"' . $price . '" '
+                    . ');';
+            }
         }
         GribovMySQL::getMySQL($mas);
     }
@@ -40,6 +64,14 @@ class postRequest implements interfaceEvrosib
     private function addRequest()
     {
         $this->correctData();
+
+        if($this->data->avtovivoz){
+            $this->createService(1);
+        }
+
+        if($this->data->avtodovoz){
+            $this->createService(2);
+        }
 
         $query = "INSERT INTO request "
             . "(`GUID`, `version`, `OrderStatus`, `OrderРrice`, "
