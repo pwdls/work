@@ -31,6 +31,7 @@ if (!empty($type) && !empty($data)) {
 $result1 = json_decode($result);
 
     Gribov::dump($result);
+    Gribov::dump($logName);
 Gribov::dump($result1);
 
     $page = ob_get_contents();
