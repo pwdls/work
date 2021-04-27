@@ -45,7 +45,13 @@ class postRequest implements interfaceEvrosib
         }
         else {
             for ($i = 3; $i <= 15; $i++) {
-                $required = mt_rand(0, 1);
+                if($i <= 13){
+                    $required = mt_rand(0, 1);
+                    $active = $required ? 1 : mt_rand(0, 1);
+                } else {
+                    $required = 0;
+                    $active =1;
+                }
                 $price = mt_rand(1, 100000);
                 $mas[] = 'INSERT INTO service'
                     . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
@@ -53,7 +59,7 @@ class postRequest implements interfaceEvrosib
                     . '"' . $this->data->GUID . '", '
                     . '"' . $i . '", '
                     . '"' . $required . '", '
-                    . '"' . $required . '", '
+                    . '"' . $active . '", '
                     . '"' . $price . '" '
                     . ');';
             }
