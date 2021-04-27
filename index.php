@@ -28,11 +28,11 @@ if (!empty($type) && !empty($data)) {
 
 
     $result = $do->result();
-$result1 = json_decode($result);
+    $result1 = json_decode($result);
 
     Gribov::dump($result);
     Gribov::dump($logName);
-Gribov::dump($result1);
+    Gribov::dump($result1);
 
     $page = ob_get_contents();
     ob_end_clean();

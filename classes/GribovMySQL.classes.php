@@ -28,6 +28,8 @@ class GribovMySQL
 
     static public function getMySQL($mas, $id = 0)
     {
+        Gribov::dump($mas);
+
         $foo = new GribovMySQL($id);
         if (gettype($mas) == 'array') {
             $i = 1;
