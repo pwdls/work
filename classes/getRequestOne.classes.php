@@ -13,7 +13,7 @@ class getRequestOne
                 $result = "SELECT serviceID, price from service WHERE required = 1 and requestGUID = '" . $GUID . "';";
                 break;
             default:
-                $result = "SELECT serviceID, price from service WHERE requestGUID = " . $GUID . ";";
+                $result = "SELECT serviceID, price from service WHERE requestGUID = '" . $GUID . "';";
         }
         return $result;
     }
