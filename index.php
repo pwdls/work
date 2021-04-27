@@ -35,7 +35,7 @@ Gribov::dump($result1);
 
     $page = ob_get_contents();
     ob_end_clean();
-    Gribov::log($page, $type . '-' . $logName->data->request);
+    Gribov::log($page, $type . '-' . $logName->request);
 
 } elseif ($get == 'qwerdawe') {
     $result = "
