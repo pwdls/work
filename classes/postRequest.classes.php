@@ -23,7 +23,7 @@ class postRequest implements interfaceEvrosib
     {
 
         $mas = array();
-            for ($i = 3; $i <= 15; $i++) {
+            for ($i = 1; $i <= 15; $i++) {
                 switch ($i){
                     case 1:
                         $required = 1;
