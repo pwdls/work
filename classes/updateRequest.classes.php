@@ -44,6 +44,11 @@ class updateRequest implements interfaceEvrosib
             . ' OrderStatus = "' . $this->data->OrderStatus . '"'
             . ' WHERE GUID="' . $this->data->GUID . '";';
         $mas[] = 'UPDATE service SET'
+            . ' active = 0'
+            . ' WHERE requestGUID="' . $this->data->GUID
+            . '" AND required != 1'
+            . ';';
+        $mas[] = 'UPDATE service SET'
             . ' active = 1'
             . ' WHERE requestGUID="' . $this->data->GUID
             . '" AND serviceID IN '
