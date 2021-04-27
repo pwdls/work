@@ -56,7 +56,7 @@ class getRequestOne
             'avtovivoz_date' => $re['avtovivoz_date'],
             'OrderStatus' => $re['OrderStatus'],
             'servicesRequired' => getRequestOne::getServise($re['GUID'], 'required'),
-            'servicesAll' => getRequestOne::getServise($re['GUID']),
+            'servicesAll' => getRequestOne::getServise($re['GUID'], 'all'),
             'servicesActive' => getRequestOne::getServise($re['GUID'], 'active'),
             'managerComment' => 'коммепнтарий менеджера'
         );
