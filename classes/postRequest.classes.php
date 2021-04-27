@@ -79,6 +79,9 @@ class postRequest implements interfaceEvrosib
             $this->createService(2);
         }
 
+        $avtovivoz_date = ($this->data->avtovivoz_date == '') ? NULL : "'" . $this->data->avtovivoz_date . "'";
+        $avtodovoz_date = ($this->data->avtovivoz_date == '') ? NULL : "'" . $this->data->avtodovoz_date . "'";
+
         $query = "INSERT INTO request "
             . "(`GUID`, `version`, `OrderStatus`, `OrderРrice`, "
             . "`other_fio`, `GUIDPartner`, `other_tel`, `other_email`, "
@@ -91,8 +94,8 @@ class postRequest implements interfaceEvrosib
             . "'" . $this->data->other_fio . "', '" . $this->data->GUIDPartner . "', '" . $this->data->other_tel . "', '" . $this->data->other_email . "', "
             . "'" . $this->data->from_datetime . "', '" . $this->data->from_location . "', '" . $this->data->to_location . "', '" . json_encode($this->data->containers) . "', "
             . "'" . $this->data->other_longdescription . "', '" . $this->data->driver_fio . "', '" . $this->data->passport . "', '" . $this->data->driver_reg . "', "
-            . "'" . $this->data->avtodovoz . "', '" . $this->data->avtodovoz_location . "', '" . $this->data->avtodovoz_date . "', '" . $this->data->avtovivoz . "', "
-            . "'" . $this->data->avtovivoz_location . "', '" . $this->data->avtovivoz_date . "');";
+            . "'" . $this->data->avtodovoz . "', '" . $this->data->avtodovoz_location . "', " . $avtodovoz_date . ", '" . $this->data->avtovivoz . "', "
+            . "'" . $this->data->avtovivoz_location . "', " . $avtovivoz_date . ");";
 
         GribovMySQL::getMySQL($query);
     }
