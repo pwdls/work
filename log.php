@@ -15,7 +15,7 @@ if($key == 'r3sqeff432'){
     );
         $dir = scandir($urlFull);
         foreach ($dir as $d){
-            $foo = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . 'log/' . $url  . $d . '/';
+            $foo = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/log/' . $url  . $d . '/';
             if(is_dir($foo) && $d != '.' && $d != '..'){
                 $result['dir'][$d] = '?asdfeafe=r3sqeff432&dir=' . $url . $d;
             } elseif($d != '.' && $d != '..'){
