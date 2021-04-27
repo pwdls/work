@@ -19,38 +19,29 @@ class postRequest implements interfaceEvrosib
         $this->data->orderPrice = mt_rand(1000, 1000000);
     }
 
-    private function createService($marker = 0)
+    private function createService()
     {
+
         $mas = array();
-        if ($marker == 1) {
-            $mas[] = 'INSERT INTO service'
-                . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
-                . ' VALUES ('
-                . '"' . $this->data->GUID . '", '
-                . '"' . 1 . '", '
-                . '"' . 0 . '", '
-                . '"' . 1 . '", '
-                . '"' . 10000 . '" '
-                . ');';
-        } elseif($marker == 2){
-            $mas[] = 'INSERT INTO service'
-                . '(`requestGUID`, `serviceID`, `required`, `active`, `price`)'
-                . ' VALUES ('
-                . '"' . $this->data->GUID . '", '
-                . '"' . 2 . '", '
-                . '"' . 0 . '", '
-                . '"' . 1 . '", '
-                . '"' . 20000 . '" '
-                . ');';
-        }
-        else {
             for ($i = 3; $i <= 15; $i++) {
-                if($i <= 13){
-                    $required = mt_rand(0, 1);
-                    $active = $required ? 1 : mt_rand(0, 1);
-                } else {
-                    $required = 0;
-                    $active =1;
+                switch ($i){
+                    case 1:
+                        $required = 1;
+                        $active = 1;
+                        break;
+                    case 2:
+                        $required = 0;
+                        $active = $this->data->avtodovoz;
+                        break;
+                    case 15:
+                    case 14:
+                        $required = 0;
+                        $active = 1;
+                        break;
+                    default:
+                        $required = mt_rand(0, 1);
+                        $active = $required ? 1 : mt_rand(0, 1);
+                        break;
                 }
                 $price = mt_rand(1, 100000);
                 $mas[] = 'INSERT INTO service'
@@ -63,21 +54,13 @@ class postRequest implements interfaceEvrosib
                     . '"' . $price . '" '
                     . ');';
             }
-        }
+
         GribovMySQL::getMySQL($mas);
     }
 
     private function addRequest()
     {
         $this->correctData();
-
-        if($this->data->avtovivoz){
-            $this->createService(1);
-        }
-
-        if($this->data->avtodovoz){
-            $this->createService(2);
-        }
 
         $avtovivoz_date = ($this->data->avtovivoz_date == '') ? 'NULL' : "'" . $this->data->avtovivoz_date . "'";
         $avtodovoz_date = ($this->data->avtovivoz_date == '') ? 'NULL' : "'" . $this->data->avtodovoz_date . "'";
