@@ -3,33 +3,32 @@
 
 class getRequestOne
 {
-    static private function getServiseQuery($GUID, $type): string
+    static private function getServiceQuery($GUID, $type): string
     {
-        $result = '';
         switch ($type){
             case 'active':
-                $result = 'SELECT serviceID, price from service WHERE active = 1 and requestGUID = "' . $GUID . '";';
+                $result = "SELECT serviceID, price from service WHERE active = 1 and requestGUID = '" . $GUID . "';";
                 break;
             case 'required':
-                $result = 'SELECT serviceID, price from service WHERE required = 1 and requestGUID = "' . $GUID . '";';
+                $result = "SELECT serviceID, price from service WHERE required = 1 and requestGUID = '" . $GUID . "';";
                 break;
             default:
-                $result = 'SELECT serviceID, price from service WHERE requestGUID = "' . $GUID . '";';
+                $result = "SELECT serviceID, price from service WHERE requestGUID = " . $GUID . ";";
         }
         return $result;
     }
 
-    static private function getServise($GUID, $type = 0)
+    static private function getService($GUID, $type = 0): array
     {
         $result = array();
-        $res = GribovMySQL::getMySQL(getRequestOne::getServiseQuery($GUID, $type));
+        $res = GribovMySQL::getMySQL(getRequestOne::getServiceQuery($GUID, $type));
         foreach ($res as $re) {
             $result[$re['serviceID']] = $re['price'];
         }
         return $result;
     }
 
-    static public function getResult($re)
+    static public function getResult($re): array
     {
         return array(
             'GUID' => $re['GUID'],
@@ -55,9 +54,9 @@ class getRequestOne
             'avtovivoz_location' => $re['avtovivoz_location'],
             'avtovivoz_date' => $re['avtovivoz_date'],
             'OrderStatus' => $re['OrderStatus'],
-            'servicesRequired' => getRequestOne::getServise($re['GUID'], 'required'),
-            'servicesAll' => getRequestOne::getServise($re['GUID'], 'all'),
-            'servicesActive' => getRequestOne::getServise($re['GUID'], 'active'),
+            'servicesRequired' => getRequestOne::getService($re['GUID'], 'required'),
+            'servicesAll' => getRequestOne::getService($re['GUID'], 'all'),
+            'servicesActive' => getRequestOne::getService($re['GUID'], 'active'),
             'managerComment' => 'коммепнтарий менеджера'
         );
     }
