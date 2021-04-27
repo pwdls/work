@@ -14,6 +14,7 @@ class deleteAll implements interfaceEvrosib
             '1' => "DELETE from service WHERE true;",
             '2' => "DELETE from invoce WHERE true;",
             '3' => "DELETE from task WHERE true;",
+            '4' => "DELETE from invoce_service WHERE true;",
         );
         GribovMySQL::getMySQL($mas);
         return '';

@@ -1,14 +1,17 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
-$error = 0;
+$error = 1;
 
 ini_set('display_errors', $error);
 ini_set('display_startup_errors', $error);
 error_reporting(E_ALL);
 
 spl_autoload_register(function ($class_name) {
-    include_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/classes/' . $class_name . '.classes.php';
-    include_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/classes/' . $class_name . '.interface.php';
+    if(file_exists(filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/classes/' . $class_name . '.classes.php')){
+        include_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/classes/' . $class_name . '.classes.php';
+    } else {
+        include_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/classes/' . $class_name . '.interface.php';
+    }
 });
 
 $type = filter_input(INPUT_POST, 'type');

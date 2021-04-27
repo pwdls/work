@@ -30,8 +30,6 @@ class GribovMySQL
     {
         Gribov::dump($mas);
 
-        $result = 'FALSE';
-
         $foo = new GribovMySQL();
         if (gettype($mas) == 'array') {
             $i = 1;
@@ -47,6 +45,8 @@ class GribovMySQL
             while ($row = $res->fetch_array()) {
                 $result[] = $row;
             }
+        } else {
+            $result = 'FALSE';
         }
         return $result;
     }

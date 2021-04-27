@@ -11,62 +11,112 @@ class getInvoce implements interfaceEvrosib
         $this->data = $data;
     }
 
-    private static function createInvoiceQuery($data)
+    private function createInvoiceQuery($data)
     {
+        $GUID = Gribov::GUID();
         $query = "INSERT INTO invoce"
-            . " (`GUID`,`GUIDinvoce`,`dateOfPayment`,`paid`,"
-            . "`sum`,`document`,`closingDocuments`,`deletionMark`)"
+            . " (`GUID`,`GUIDinvoce`,`dateOfPayment`,`base`,"
+            . "`sum`,`document`,`closingDocuments`,`deletionMark`, `status`)"
             . " VALUES ("
             . "'" . $data["GUID"] . "',"
-            . "'" . Gribov::GUID() . "',"
+            . "'" . $GUID . "',"
             . "'" . $data["dateOfPayment"] . "',"
-            . $data["paid"] . ','
+            . $data["base"] . ','
             . "'" . mt_rand(1000, 1000000) . "',"
             . "'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',"
             . "'" . $data["closingDocuments"] . "',"
-            . "'0'"
+            . "'0',"
+            . "'" . $data["status"] . "'"
             . ");";
         GribovMySQL::getMySQL($query);
+        $this->invoiceService($data["GUID"], $GUID, $data['type']);
     }
 
-    private static function createInvoiceQueryNew($data)
+    private function invoiceService($GUID, $GUIDService, $type){
+        switch ($type){
+            case 1:
+                $query = "SELECT serviceID FROM service WHERE requestGUID = '" . $GUID . "' AND required = 1;";
+                $foo = GribovMySQL::getMySQL($query);
+                $mas = array();
+                foreach ($foo as $item) {
+                    $mas[] = "INSERT INTO invoce_service (`idInvoce`, `idService`) VALUES ('" . $GUIDService . "', '" . $item['serviceID'] . "');";
+                }
+                GribovMySQL::getMySQL($mas);
+                break;
+            case 13:
+                $query = "INSERT INTO invoce_service (`idInvoce`, `idService`) VALUES ('" . $GUIDService . "', 13);";
+                GribovMySQL::getMySQL($query);
+                break;
+            case 14:
+                $query = "INSERT INTO invoce_service (`idInvoce`, `idService`) VALUES ('" . $GUIDService . "', 14);";
+                GribovMySQL::getMySQL($query);
+                break;
+            case 15:
+                $query = "INSERT INTO invoce_service (`idInvoce`, `idService`) VALUES ('" . $GUIDService . "', 15);";
+                GribovMySQL::getMySQL($query);
+                break;
+        }
+
+    }
+
+    private function createInvoiceQuery14()
     {
         $mas = array(
-            "GUID" => $data->GUID,
-            "dateOfPayment" => $data->from_datetime,
-            "paid" => 0,
+            "GUID" => $this->data->GUID,
+            "dateOfPayment" => $this->data->from_datetime,
+            "base" => 0,
             "closingDocuments" => '',
+            "status" => 4,
+            "type" => 14,
         );
-        self::createInvoiceQuery($mas);
+        $this->createInvoiceQuery($mas);
     }
 
-    private static function createInvoiceQueryPaid($data)
+    private function createInvoiceQuery15()
     {
         $mas = array(
-            "GUID" => $data->GUID,
-            "dateOfPayment" => $data->from_datetime,
-            "paid" => 1,
-            "closingDocuments" => 'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',
+            "GUID" => $this->data->GUID,
+            "dateOfPayment" => $this->data->from_datetime,
+            "base" => 0,
+            "closingDocuments" => '/file/invoce.docx',
+            "status" => 4,
+            "type" => 15,
         );
-        self::createInvoiceQuery($mas);
+        $this->createInvoiceQuery($mas);
     }
 
-    private static function createInvoiceQueryClose($data)
+    private function createInvoiceQuery13()
     {
         $mas = array(
-            "GUID" => $data->GUID,
-            "dateOfPayment" => $data->from_datetime,
-            "paid" => 0,
-            "closingDocuments" => 'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',
+            "GUID" => $this->data->GUID,
+            "dateOfPayment" => $this->data->from_datetime,
+            "base" => 0,
+            "closingDocuments" => '',
+            "status" => 1,
+            "type" => 13,
         );
-        self::createInvoiceQuery($mas);
+        $this->createInvoiceQuery($mas);
     }
 
-    static public function createInvoce($data)
+    private function createInvoiceQueryBase()
     {
-        self::createInvoiceQueryNew($data);
-        self::createInvoiceQueryPaid($data);
-        self::createInvoiceQueryClose($data);
+        $mas = array(
+            "GUID" => $this->data->GUID,
+            "dateOfPayment" => $this->data->from_datetime,
+            "base" => 1,
+            "closingDocuments" => '',
+            "status" => 1,
+            "type" => 1,
+        );
+        $this->createInvoiceQuery($mas);
+    }
+
+    public function createInvoce()
+    {
+        $this->createInvoiceQueryBase();
+        $this->createInvoiceQuery13();
+        $this->createInvoiceQuery14();
+        $this->createInvoiceQuery15();
     }
 
     private function correctData()
@@ -75,15 +125,28 @@ class getInvoce implements interfaceEvrosib
         $this->data->inGUIDinvoce = '("' . implode('","', $this->data->GUIDinvoce) . '")';
     }
 
+    private function getServiceList($GUID){
+        $result = array();
+        $query = "SELECT idService from invoce_service WHERE idInvoce = '" . $GUID . "';";
+        $mas = GribovMySQL::getMySQL($query);
+        foreach ($mas as $value){
+            $result[] = $value['idService'];
+        }
+        return $result;
+    }
+
     private function createResultOne($re): array
     {
         return array(
             "GUID" => $re["GUID"],
             "GUIDinvoce" => $re["GUIDinvoce"],
             "number" => $re["id"],
+            "name" => $re["name"],
+            "status" => $re["status"],
             "date" => $re["date"],
+            "serviceList" => $this->getServiceList($re["GUIDinvoce"]),
             "dateOfPayment" => $re["dateOfPayment"],
-            "paid" => $re["paid"],
+            "base" => $re["paid"],
             "sum" => $re["sum"],
             "document" => $re["document"],
             "closingDocuments" => $re["closingDocuments"],

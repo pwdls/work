@@ -35,6 +35,7 @@ class postRequest implements interfaceEvrosib
                         break;
                     case 15:
                     case 14:
+                    case 13:
                         $required = 0;
                         $active = 1;
                         break;
@@ -85,7 +86,7 @@ class postRequest implements interfaceEvrosib
 
     private function getRequest()
     {
-        $query = 'SELECT GUID, version, DocumentId, OrderStatus, OrderРrice FROM request WHERE GUID ="' . $this->data->GUID . '";';
+        $query = "SELECT GUID, version, DocumentId, OrderStatus, OrderРrice FROM request WHERE GUID ='" . $this->data->GUID . "';";
         $arr = GribovMySQL::getMySQL($query);
         $result = array(
             'result' => 0,
@@ -106,7 +107,9 @@ class postRequest implements interfaceEvrosib
         $this->addRequest();
         $this->getRequest();
         $this->createService();
-        getInvoce::createInvoce($this->data);
+
+        $invoice = new getInvoce($this->data);
+        $invoice->createInvoce();
     }
 
     public function getResult(): string
