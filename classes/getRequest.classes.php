@@ -30,12 +30,12 @@ class getRequest implements interfaceEvrosib
 
     private function getRequest()
     {
-        $query = 'SELECT * FROM request WHERE '
-            . ' (GUIDPartner = "' . $this->data->user
-            . '" AND from_datetime BETWEEN "' . $this->data->dateFrom
-            . '" AND "' . $this->data->dateTo
-            . '") OR GUID IN (' . $this->data->inGUID
-            . ');';
+        $query = "SELECT * FROM request WHERE "
+            . " (GUIDPartner = '" . $this->data->user
+            . "' AND from_datetime BETWEEN '" . $this->data->dateFrom
+            . "' AND '" . $this->data->dateTo
+            . "') OR GUID IN (" . $this->data->inGUID
+            . ");";
         $res = GribovMySQL::getMySQL($query);
 
         $this->createResult($res);

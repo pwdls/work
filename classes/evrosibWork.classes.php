@@ -50,11 +50,11 @@ class evrosibWork
 
     private function getResult()
     {
-        $query = 'SELECT * FROM task WHERE GUID = "' . $this->data->data->GUID . '";';
+        $query = "SELECT * FROM task WHERE GUID = '" . $this->data->data->GUID . "';";
         $result = GribovMySQL::getMySQL($query);
         $json = json_decode($result[0]['data']);
 
-       // $this->type = $result['request'];
+        // $this->type = $result['request'];
         $this->dataJSON = json_encode($json);
         $this->data = $json;
 

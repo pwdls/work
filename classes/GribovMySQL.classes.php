@@ -8,7 +8,7 @@ class GribovMySQL
     private $pass;
     private $mysql;
 
-    private function __construct($id = 0)
+    private function __construct()
     {
         $cfg =include filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/mysql--conf.php';
 
@@ -26,11 +26,13 @@ class GribovMySQL
         }
     }
 
-    static public function getMySQL($mas, $id = 0)
+    static public function getMySQL($mas)
     {
         Gribov::dump($mas);
 
-        $foo = new GribovMySQL($id);
+        $result = 'FALSE';
+
+        $foo = new GribovMySQL();
         if (gettype($mas) == 'array') {
             $i = 1;
             while ($i <= count($mas)) {
@@ -45,8 +47,6 @@ class GribovMySQL
             while ($row = $res->fetch_array()) {
                 $result[] = $row;
             }
-        } else {
-            $result = 'FALSE';
         }
         return $result;
     }

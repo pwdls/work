@@ -11,25 +11,25 @@ class getInvoce implements interfaceEvrosib
         $this->data = $data;
     }
 
-    private function createInvoceQuery($data)
+    private static function createInvoiceQuery($data)
     {
-        $query = 'INSERT INTO invoce'
-            . ' (`GUID`,`GUIDinvoce`,`dateOfPayment`,`paid`,'
-            . '`sum`,`document`,`closingDocuments`,`deletionMark`)'
-            . ' VALUES ('
-            . '"' . $data["GUID"] . '",'
-            . '"' . Gribov::GUID() . '",'
-            . '"' . $data["dateOfPayment"] . '",'
+        $query = "INSERT INTO invoce"
+            . " (`GUID`,`GUIDinvoce`,`dateOfPayment`,`paid`,"
+            . "`sum`,`document`,`closingDocuments`,`deletionMark`)"
+            . " VALUES ("
+            . "'" . $data["GUID"] . "',"
+            . "'" . Gribov::GUID() . "',"
+            . "'" . $data["dateOfPayment"] . "',"
             . $data["paid"] . ','
-            . '"' . mt_rand(1000, 1000000) . '",'
-            . '"https://https://my-sweet-cherry-pie.ru/file/invoce.docx",'
-            . '"' . $data["closingDocuments"] . '",'
-            . '"0"'
-            . ');';
+            . "'" . mt_rand(1000, 1000000) . "',"
+            . "'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',"
+            . "'" . $data["closingDocuments"] . "',"
+            . "'0'"
+            . ");";
         GribovMySQL::getMySQL($query);
     }
 
-    private function createInvoceQueryNew($data)
+    private static function createInvoiceQueryNew($data)
     {
         $mas = array(
             "GUID" => $data->GUID,
@@ -37,10 +37,10 @@ class getInvoce implements interfaceEvrosib
             "paid" => 0,
             "closingDocuments" => '',
         );
-        self::createInvoceQuery($mas);
+        self::createInvoiceQuery($mas);
     }
 
-    private function createInvoceQueryPaid($data)
+    private static function createInvoiceQueryPaid($data)
     {
         $mas = array(
             "GUID" => $data->GUID,
@@ -48,10 +48,10 @@ class getInvoce implements interfaceEvrosib
             "paid" => 1,
             "closingDocuments" => 'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',
         );
-        self::createInvoceQuery($mas);
+        self::createInvoiceQuery($mas);
     }
 
-    private function createInvoceQueryClose($data)
+    private static function createInvoiceQueryClose($data)
     {
         $mas = array(
             "GUID" => $data->GUID,
@@ -59,14 +59,14 @@ class getInvoce implements interfaceEvrosib
             "paid" => 0,
             "closingDocuments" => 'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',
         );
-        self::createInvoceQuery($mas);
+        self::createInvoiceQuery($mas);
     }
 
     static public function createInvoce($data)
     {
-        self::createInvoceQueryNew($data);
-        self::createInvoceQueryPaid($data);
-        self::createInvoceQueryClose($data);
+        self::createInvoiceQueryNew($data);
+        self::createInvoiceQueryPaid($data);
+        self::createInvoiceQueryClose($data);
     }
 
     private function correctData()
@@ -75,7 +75,7 @@ class getInvoce implements interfaceEvrosib
         $this->data->inGUIDinvoce = '("' . implode('","', $this->data->GUIDinvoce) . '")';
     }
 
-    private function createResultOne($re)
+    private function createResultOne($re): array
     {
         return array(
             "GUID" => $re["GUID"],
@@ -105,16 +105,16 @@ class getInvoce implements interfaceEvrosib
 
     private function getRequest()
     {
-        $query = 'SELECT s1.* from invoce s1'
-            . ' LEFT JOIN request s2'
-            . ' ON s1.GUID = s2.GUID'
-            . ' WHERE'
-            . ' (s2.GUIDPartner = "' . $this->data->user
-            . '" AND s2.from_datetime BETWEEN "' . $this->data->dateFrom
-            . '" AND "' . $this->data->dateTo
-            . '") OR s2.GUID IN (' . $this->data->inGUID
-            . ') OR s1.GUIDinvoce IN (' . $this->data->inGUIDinvoce
-            . ');';
+        $query = "SELECT s1.* from invoce s1"
+            . " LEFT JOIN request s2"
+            . " ON s1.GUID = s2.GUID"
+            . " WHERE"
+            . " (s2.GUIDPartner = '" . $this->data->user
+            . "' AND s2.from_datetime BETWEEN '" . $this->data->dateFrom
+            . "' AND '" . $this->data->dateTo
+            . "') OR s2.GUID IN (" . $this->data->inGUID
+            . ") OR s1.GUIDinvoce IN (" . $this->data->inGUIDinvoce
+            . ");";
         $res = GribovMySQL::getMySQL($query);
 
         $this->createResult($res);
