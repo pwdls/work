@@ -12,7 +12,7 @@ class updateRequest implements interfaceEvrosib
 
     private function checkingVersionObject(): int
     {
-        $query = 'SELECT version FROM request WHERE GUID = "' . $this->data->GUID . '";';
+        $query = "SELECT version FROM request WHERE GUID='" . $this->data->GUID . "';";
         $res = GribovMySQL::getMySQL($query);
 
         if ($res[0]['version'] == $this->data->version) {
@@ -29,14 +29,18 @@ class updateRequest implements interfaceEvrosib
 
     private function update()
     {
+
+        $avtovivoz_date = ($this->data->avtovivoz == '0') ? 'NULL' : '"' . $this->data->avtovivoz_date . '"';
+        $avtodovoz_date = ($this->data->avtodovoz == '0') ? 'NULL' : '"' . $this->data->avtodovoz_date . '"';
+
         $mas = array();
         $mas[] = 'UPDATE request SET'
             . ' avtodovoz = "' . $this->data->avtodovoz . '",'
             . ' avtodovoz_location = "' . $this->data->avtodovoz_location . '",'
-            . ' avtodovoz_date = "' . $this->data->avtodovoz_date . '",'
+            . ' avtodovoz_date = ' . $avtodovoz_date . ','
             . ' avtovivoz = "' . $this->data->avtovivoz . '",'
             . ' avtovivoz_location = "' . $this->data->avtovivoz_location . '",'
-            . ' avtovivoz_date = "' . $this->data->avtovivoz_date . '",'
+            . ' avtovivoz_date = ' . $avtovivoz_date . ','
             . ' OrderStatus = "' . $this->data->OrderStatus . '"'
             . ' WHERE GUID="' . $this->data->GUID . '";';
         $mas[] = 'UPDATE service SET'
@@ -50,9 +54,7 @@ class updateRequest implements interfaceEvrosib
 
     private function checkingErrors(): int
     {
-        $result = 0;
-        $result = ($this->checkingVersionObject()) ? $result : 201;
-        return $result;
+        return ($this->checkingVersionObject()) ? 0 : 201;
     }
 
     private function correctData()
@@ -62,7 +64,7 @@ class updateRequest implements interfaceEvrosib
 
     private function getRequest()
     {
-        $query = 'SELECT * from request WHERE GUID = "' . $this->data->GUID . '";';
+        $query = "SELECT * from request WHERE GUID = '" . $this->data->GUID . "';";
         $res = GribovMySQL::getMySQL($query);
         $result = array(
             'result' => 0,
