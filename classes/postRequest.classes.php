@@ -62,8 +62,8 @@ class postRequest implements interfaceEvrosib
     {
         $this->correctData();
 
-        $avtovivoz_date = ($this->data->avtovivoz_date == '') ? 'NULL' : "'" . $this->data->avtovivoz_date . "'";
-        $avtodovoz_date = ($this->data->avtovivoz_date == '') ? 'NULL' : "'" . $this->data->avtodovoz_date . "'";
+        $avtovivoz_date = ($this->data->avtovivoz) ? 'NULL' : "'" . $this->data->avtovivoz_date . "'";
+        $avtodovoz_date = ($this->data->avtodovoz) ? 'NULL' : "'" . $this->data->avtodovoz_date . "'";
 
         $query = "INSERT INTO request "
             . "(`GUID`, `version`, `OrderStatus`, `OrderРrice`, "
