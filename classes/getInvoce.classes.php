@@ -23,8 +23,8 @@ class getInvoce implements interfaceEvrosib
             . "'" . $data["dateOfPayment"] . "',"
             . $data["base"] . ','
             . "'" . mt_rand(1000, 1000000) . "',"
-            . "'https://https://my-sweet-cherry-pie.ru/file/invoce.docx',"
-            . "'" . $data["closingDocuments"] . "',"
+            . "'https://my-sweet-cherry-pie.ru/file/invoce.docx',"
+            . "'https://my-sweet-cherry-pie.ru/file/invoce.docx',"
             . "'0',"
             . "'" . $data["status"] . "'"
             . ");";
