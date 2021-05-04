@@ -24,7 +24,7 @@ class getInvoce implements interfaceEvrosib
             . $data["base"] . ','
             . "'" . mt_rand(1000, 1000000) . "',"
             . "'https://my-sweet-cherry-pie.ru/file/invoce.docx',"
-            . "'https://my-sweet-cherry-pie.ru/file/invoce.docx',"
+            . "'" . $data["closingDocuments"] . "',"
             . "'0',"
             . "'" . $data["status"] . "'"
             . ");";
@@ -78,7 +78,7 @@ class getInvoce implements interfaceEvrosib
             "GUID" => $this->data->GUID,
             "dateOfPayment" => $this->data->from_datetime,
             "base" => 0,
-            "closingDocuments" => '/file/invoce.docx',
+            "closingDocuments" => 'https://my-sweet-cherry-pie.ru/file/invoce.docx',
             "status" => 4,
             "type" => 15,
         );
