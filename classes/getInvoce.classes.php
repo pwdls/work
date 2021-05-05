@@ -78,7 +78,7 @@ class getInvoce implements interfaceEvrosib
             "GUID" => $this->data->GUID,
             "dateOfPayment" => $this->data->from_datetime,
             "base" => 0,
-            "closingDocuments" => 'https://my-sweet-cherry-pie.ru/file/invoce.docx',
+            "closingDocuments" => 'https://my-sweet-cherry-pie.ru/file/closingDocument.docx',
             "status" => 4,
             "type" => 15,
         );
