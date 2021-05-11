@@ -110,6 +110,9 @@ class postRequest implements interfaceEvrosib
 
         $invoice = new getInvoce($this->data);
         $invoice->createInvoce();
+
+        $reliz = new getReliz($this->data);
+        $reliz->createReliz();
     }
 
     public function getResult(): string
