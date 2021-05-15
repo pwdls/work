@@ -26,6 +26,9 @@ class updateReliz implements interfaceEvrosib
     public function getResult(): string
     {
         $this->do();
-        return $this->result;
+
+        $reliz = new getReliz($this->data);
+
+        return $reliz->getResult();
     }
 }
