@@ -11,7 +11,8 @@ class getReliz implements interfaceEvrosib
         $this->data = $data;
     }
 
-    private function createRelizQuery(){
+    private function createRelizQuery()
+    {
         $GUIDreliz = Gribov::GUID();
         $query = "INSERT INTO reliz" .
             " (`GUID`, `documentId`, `GUIDreliz`, `containerNumber`," .
@@ -31,14 +32,17 @@ class getReliz implements interfaceEvrosib
         GribovMySQL::getMySQL($query);
     }
 
-    private function createRelizNull(){
+    private function createRelizNull()
+    {
         $this->data->containerNumber = '';
         $this->data->gettingFIO = '';
         $this->data->gettingPassport = '';
         $this->data->gettingAvto = '';
         $this->createRelizQuery();
     }
-    private function createRelizFull(){
+
+    private function createRelizFull()
+    {
         $this->data->containerNumber = '';
         $this->data->gettingFIO = 'Сидоров Сидор Сидорович';
         $this->data->gettingPassport = '1111 121212';
@@ -46,13 +50,15 @@ class getReliz implements interfaceEvrosib
         $this->createRelizQuery();
     }
 
-    private function correctData(){
+    private function correctData()
+    {
         $query = "SELECT DocumentId FROM request WHERE GUID = '" . $this->data->GUID . "';";
         $result = GribovMySQL::getMySQL($query);
         $this->data->documentId = $result[0]['DocumentId'];
     }
 
-    public function createReliz(){
+    public function createReliz()
+    {
         $this->correctData();
         $this->createRelizNull();
         $this->createRelizFull();
@@ -107,14 +113,28 @@ class getReliz implements interfaceEvrosib
         $this->createResult($res);
     }
 
-    private function do(){
+    private function do()
+    {
         $this->correctDataResult();
         $this->getRequest();
     }
 
-    private function correctDataResult(){
+    private function correctDataResult()
+    {
         $this->data->inGUID = '("' . implode('","', $this->data->GUID) . '")';
         $this->data->inGUIDreliz = '("' . implode('","', $this->data->GUIDreliz) . '")';
+    }
+
+    public function getResultOne(): srting
+    {
+        $query = "SELECT * FROM reliz" .
+            "WHERE GUIDreliz = '" .  $this->data->GUIDreliz ."'";
+        $re = GribovMySQL::getMySQL($query);
+
+        $result = $this->createResultOne($re[0]);
+        $this->result = json_encode($result);
+
+        return $this->result;
     }
 
     public function getResult(): string
