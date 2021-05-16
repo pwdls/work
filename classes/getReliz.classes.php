@@ -128,7 +128,7 @@ class getReliz implements interfaceEvrosib
     public function getResultOne(): srting
     {
         $query = "SELECT * FROM reliz" .
-            "WHERE GUIDreliz = '" .  $this->data->GUIDreliz ."'";
+            " WHERE GUIDreliz = '" .  $this->data->GUIDreliz ."'";
         $re = GribovMySQL::getMySQL($query);
 
         $result = $this->createResultOne($re[0]);
