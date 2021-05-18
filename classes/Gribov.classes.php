@@ -39,4 +39,18 @@ class Gribov
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         return substr(str_shuffle($permitted_chars), 0, 10);
     }
+
+    static public function curlPost($array, $url){
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $array);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $html = curl_exec($ch);
+        curl_close($ch);
+
+        return $html;
+    }
 }
