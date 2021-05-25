@@ -18,6 +18,22 @@ class evrosibWork
 
     private function execAsync()
     {
+            $this->execAsyncStandard();
+    }
+
+    private function execAsyncCurl()
+    {
+        $array = array(
+            'type' => filter_input(INPUT_POST, 'type'),
+            'priority' => filter_input(INPUT_POST, '$priority'),
+            'data' => filter_input(INPUT_POST, 'data'),
+        );
+
+        $this->result = Gribov::curlPost($array, $this->url);
+    }
+
+    private function execAsyncStandard()
+    {
         $guid = Gribov::GUID();
         $query = "insert into task (`GUID`, `data`) VALUES ('"
             . $guid
@@ -50,13 +66,14 @@ class evrosibWork
 
     private function getResult()
     {
-        $query = "SELECT * FROM task WHERE GUID = '" . $this->data->data->GUID . "';";
-        $result = GribovMySQL::getMySQL($query);
-        $json = json_decode($result[0]['data']);
 
-        // $this->type = $result['request'];
-        $this->dataJSON = json_encode($json);
-        $this->data = $json;
+            $query = "SELECT * FROM task WHERE GUID = '" . $this->data->data->GUID . "';";
+            $result = GribovMySQL::getMySQL($query);
+            $json = json_decode($result[0]['data']);
+
+            // $this->type = $result['request'];
+            $this->dataJSON = json_encode($json);
+            $this->data = $json;
 
         $this->execSync();
     }
