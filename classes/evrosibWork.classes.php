@@ -57,8 +57,8 @@ class evrosibWork
     private function execSync()
     {
 
-        if (class_exists($this->data->data->request)) {
-            $do = new $this->data->data->request($this->data->data);
+        if (class_exists($this->data->request)) {
+            $do = new $this->data->request($this->data->data);
             $this->result = $do->getResult();
         } else {
             $pathToFile = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/file/' . $this->data->request . '.json';
