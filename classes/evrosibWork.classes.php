@@ -11,6 +11,7 @@ class evrosibWork
     public function __construct($type, $priority, $data)
     {
         $this->data = json_decode($data);
+       // $this->data = $this->data->data;
         $this->dataJSON = $data;
         $this->priority = $priority;
         $this->type = $type;
@@ -55,8 +56,9 @@ class evrosibWork
 
     private function execSync()
     {
-        if (class_exists($this->data->request)) {
-            $do = new $this->data->request($this->data->data);
+
+        if (class_exists($this->data->data->request)) {
+            $do = new $this->data->data->request($this->data->data->data);
             $this->result = $do->getResult();
         } else {
             $pathToFile = filter_input(INPUT_SERVER, 'DOCUMENT_ROOT') . '/file/' . $this->data->request . '.json';
