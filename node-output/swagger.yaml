@@ -1,0 +1,2401 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "API Внешняя система => MDM",
+    "description" : "<p>Документация описывает механизм работы внешних систем с МДМ. То есть инициатором любого запроса является внешняя система</p> <p>Передача данных из МДМ во внешние систем, когда инициатором является МДМ описано в документации «<a href='https://app.swaggerhub.com/apis-docs/pwdls/MDMout/1.0.0' target='_blank'><b>API MDM => Внешняя система</b></a>»</p>",
+    "contact" : {
+      "name" : "Грибов Игорь",
+      "url" : "https://t.me/IgorGribov",
+      "email" : "gribov@kit-systems.ru"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://i1c.ddns.net:60380/TEST_KIT_MDM/hs/klass",
+    "description" : "Сервер для локального тестирования"
+  }, {
+    "url" : "http://dev1c:8080/MDM_Gribov_2541/hs/klass",
+    "description" : "Пока заглушка. Потом поменяем адрес, когда реализуем API и опубликуем сервис со стороны MDM."
+  }, {
+    "url" : "https://virtserver.swaggerhub.com/pwdls/MDM/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "security" : [ {
+    "basicAuth" : [ ]
+  } ],
+  "tags" : [ {
+    "name" : "Заявка",
+    "description" : "Работа с заявками. Единая точка входя для любых заявок. Изменени, Информация по заявке(кроме создания)"
+  }, {
+    "name" : "Номенклатура",
+    "description" : "Домен номенклатура"
+  }, {
+    "name" : "Классификаторы",
+    "description" : "Работа с классификаторами"
+  }, {
+    "name" : "Общероссийские классификаторы",
+    "description" : "Работа с общероссийскими классификаторами. Используются в рамках домена Номенклатура"
+  }, {
+    "name" : "Контрагенты",
+    "description" : "Домен Контрагенты. Будет полностью переписываться. Сейчас просто заглушка, так как используется в номенклатуре "
+  }, {
+    "name" : "Вспомогательные",
+    "description" : "Вспомогательные функции для работы с APi"
+  } ],
+  "paths" : {
+    "/nomenclature" : {
+      "post" : {
+        "tags" : [ "Номенклатура" ],
+        "summary" : "Создаем заявку на: добавление, изменение, удаление номенклатуры",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "Тело запроса для создания заявки",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/nomenclature_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "ГУИД созданной заявки",
+                  "format" : "uuid"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/nomenclature/{guid}" : {
+      "get" : {
+        "tags" : [ "Номенклатура" ],
+        "summary" : "Получаем номенклатуру по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/nomenclature"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/nomenclature/search" : {
+      "get" : {
+        "tags" : [ "Номенклатура" ],
+        "summary" : "Поиск номенклатуры",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "<p>Тип поиска</p><ul><li>0 - поиск по всем колонкам ИЛИ (Наименование номенклатурной позиции, Чертежное обозначение, Идентификатор в учетной системе, Корпоративный код номенклатуры, Полное наименование)</li><li>1 - поиск по \"Наименование номенклатурной позиции\"</li><li>2 - поиск по \"Чертежное обозначение\"</li><li>3 - поиск по \"Идентификатор в учетной системе\"</li><li>4 - поиск по \"Корпоративный код номенклатуры\"</li><li>5 - поиск по \"Полное наименование\"</li></ul>",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 0,
+            "enum" : [ 0, 1, 2, 3, 4, 5 ]
+          }
+        }, {
+          "name" : "data",
+          "in" : "query",
+          "description" : "Поисковой запрос",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "example" : "Болт"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/nomenclature2"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/basic-services/{guid}" : {
+      "get" : {
+        "tags" : [ "Номенклатура" ],
+        "summary" : "Получаем базовую услугу по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/basic-services"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/change-request/{guid}" : {
+      "get" : {
+        "tags" : [ "Заявка" ],
+        "summary" : "Получаем данные заявки по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/change-request"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/unified-classifier" : {
+      "get" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Получаем  массив всех категорий Единый классификатор",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/unified-classifier"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/unified-classifier/{guid}" : {
+      "get" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Получаем Единый классификатор по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/unified-classifier"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/eop" : {
+      "get" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Получаем  массив всех категорий классификатора Единый ограничительный перечень номенклатуры",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EOP"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/eop/{guid}" : {
+      "get" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Получаем Единый ограничительный перечень номенклатуры по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EOP"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/units" : {
+      "get" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Получаем  массив всех  Единицы измерения",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/units"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/units/{guid}" : {
+      "get" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Получаем Единицы измерения по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/units"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/okpd2" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех ОКПД2",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OKPD2"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/okpd2/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем ОКПД2 по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OKPD2"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/okved2" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех ОКВЕД2",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OKVED2"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/okved2/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем ОКВЕД2 по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OKVED2"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/tnved" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех ТНВЭД",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TNVED"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/tnved/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем ТНВЭД по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TNVED"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/partner" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить массив всех Контрагентов",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "applicatoin/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/partner"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/partner/{guid}" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить Контрагента по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "applicatoin/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/partner"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/ping" : {
+      "get" : {
+        "tags" : [ "Вспомогательные" ],
+        "summary" : "Проверка доступа и авторизации",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/list-of-changes/{type}" : {
+      "get" : {
+        "tags" : [ "Вспомогательные" ],
+        "summary" : "Проверка доступа и авторизации",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "path",
+          "description" : "Тип измененных объектов",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "enum" : [ "nomenclature", "basic-services", "unified-classifier", "eop", "units", "okpd2", "okved2", "tnved" ]
+          }
+        }, {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "string",
+                    "format" : "uuid"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "nomenclature" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "$ref" : "#/components/schemas/nomenclature-code"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "obsolete" : {
+            "type" : "boolean",
+            "description" : "Дополнительный признак информирования об устаревшей записи, завершившей свой жизненный цикл",
+            "nullable" : true,
+            "example" : false
+          },
+          "referencePosition" : {
+            "type" : "string",
+            "description" : "Эталонная позиция (заполненное значение после объединения записей в процессе дедубликиции)",
+            "format" : "uuid",
+            "nullable" : true,
+            "readOnly" : true,
+            "example" : "f7778c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "consolidatedRecord" : {
+            "type" : "boolean",
+            "description" : "Признак консолидированной эталонной позиции, с которой в учетных системах связывается несколько локальных записей для внутреннего учета",
+            "nullable" : true,
+            "example" : false
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/nomenclature-name"
+          },
+          "nameFull" : {
+            "$ref" : "#/components/schemas/nomenclature-fullName"
+          },
+          "namePurchasing" : {
+            "maxLength" : 500,
+            "type" : "string",
+            "description" : "Наименование номенклатуры, используемое для централизованных закупок. По умолчанию заполняется из полного наименования номенклатуры и может корректироваться",
+            "nullable" : true,
+            "example" : "Болт 1.1.М20 х 800. ВСт3пс2 ГОСТ 24379.1-2012 (Наименование для централизованных закупок)"
+          },
+          "nameSale" : {
+            "maxLength" : 500,
+            "type" : "string",
+            "description" : "Наименование номенклатуры, используемое для централизованных продаж. По умолчанию заполняется из полного наименования номенклатуры и может корректироваться",
+            "nullable" : true,
+            "example" : "Болт 1.1.М20 х 800. ВСт3пс2 ГОСТ 24379.1-2012 (Наименование для централизованных продаж)"
+          },
+          "ownershipSign" : {
+            "type" : "integer",
+            "description" : "Признак того, что данная номенклатура производится какой-либо БЕ Компании. 0 - Покупная, 1 - собственная",
+            "nullable" : true,
+            "example" : 0,
+            "enum" : [ 0, 1 ]
+          },
+          "analyticsPurchasable" : {
+            "type" : "string",
+            "description" : "Ссылка на собственную номенклатуру при смене признака принадлежности  («Собственная»/»Покупная») для связи в аналитических отчетах. Обязательно к заполнению при смене принадлежности номенклатуры и создании дубля ранее существовавшей номенклатурной позиции",
+            "format" : "uuid",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "baseUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-baseUnit"
+          },
+          "baseUnitCode" : {
+            "$ref" : "#/components/schemas/nomenclature-baseUnitCode"
+          },
+          "drawingDenotation" : {
+            "$ref" : "#/components/schemas/nomenclature-drawingDenotation"
+          },
+          "material" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Марка/Обозначение материала",
+            "nullable" : true,
+            "example" : "1.01ХХ — 1.09ХХ"
+          },
+          "materialGOST" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "ГОСТ, ТУ материала",
+            "nullable" : true,
+            "example" : "ГОСТ 1.0-92"
+          },
+          "sortament" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Сортамент",
+            "nullable" : true,
+            "example" : "Швеллер"
+          },
+          "sortamentGOST" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "ГОСТ, ТУ сортамента",
+            "nullable" : true,
+            "example" : "ГОСТ 8240-97"
+          },
+          "seriality" : {
+            "$ref" : "#/components/schemas/nomenclature-seriality"
+          },
+          "unifiedClassifier" : {
+            "$ref" : "#/components/schemas/nomenclature-uc"
+          },
+          "codeUC" : {
+            "$ref" : "#/components/schemas/nomenclature-codeUC"
+          },
+          "classifierEOP" : {
+            "$ref" : "#/components/schemas/nomenclature-eop"
+          },
+          "codeEOP" : {
+            "$ref" : "#/components/schemas/nomenclature-codeEOP"
+          },
+          "includedEOP" : {
+            "type" : "boolean",
+            "description" : "Признак того, что номенклатура включена в ЕОП",
+            "nullable" : true,
+            "example" : true
+          },
+          "oneTimePurchase" : {
+            "type" : "boolean",
+            "description" : "Признак того, что номенклатуру ввели в справочник в рамках разовой закупки. Допустимо к использованию только для покупной номенклатуры.",
+            "nullable" : true,
+            "example" : false
+          },
+          "groupCost" : {
+            "type" : "string",
+            "description" : "Ссылка на номенклатурную группу закупаемых ТМЦ. Обязательно для заполнения в случае если для номенклатуры выставлен признак «Покупная»",
+            "format" : "uuid",
+            "nullable" : true
+          },
+          "TNVED" : {
+            "$ref" : "#/components/schemas/nomenclature-tnved"
+          },
+          "OKVED" : {
+            "$ref" : "#/components/schemas/nomenclature-okved"
+          },
+          "OKPD2" : {
+            "$ref" : "#/components/schemas/nomenclature-okpd2"
+          },
+          "height" : {
+            "$ref" : "#/components/schemas/nomenclature-height"
+          },
+          "width" : {
+            "$ref" : "#/components/schemas/nomenclature-width"
+          },
+          "length" : {
+            "$ref" : "#/components/schemas/nomenclature-length"
+          },
+          "dimensionsUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-dimensionsUnit"
+          },
+          "dimensionsUnitCode" : {
+            "$ref" : "#/components/schemas/nomenclature-dimensionsUnitCode"
+          },
+          "weight" : {
+            "$ref" : "#/components/schemas/nomenclature-weight"
+          },
+          "weightUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-weightUnit"
+          },
+          "weightUnitCode" : {
+            "$ref" : "#/components/schemas/nomenclature-weightUnitCode"
+          },
+          "service" : {
+            "type" : "boolean",
+            "description" : "Признак услуги",
+            "nullable" : true,
+            "example" : false
+          },
+          "electronicCatalog" : {
+            "type" : "boolean",
+            "description" : "Признак включения номенклатуры в электронные каталоги",
+            "nullable" : true,
+            "example" : true
+          },
+          "image" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "Эскиз, фото или иное изображение номенклатуры при необходимости. Указывается ссылка на сетевой каталог хранения файла",
+            "nullable" : true,
+            "example" : "\\\\images\\product.jpg"
+          },
+          "comment" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "Любое дополнительное информационное описание, примечание по номенклатуре",
+            "nullable" : true,
+            "example" : "Комментарий к номенклатуре"
+          },
+          "properties" : {
+            "type" : "array",
+            "description" : "Массив характеристик номенклатуры. Список характеристик зависит от принадлежности к группе ЕОП",
+            "items" : {
+              "$ref" : "#/components/schemas/nomenclature_properties"
+            }
+          },
+          "alternativeUnit" : {
+            "type" : "array",
+            "description" : "Альтернативные единицы измерения",
+            "items" : {
+              "$ref" : "#/components/schemas/nomenclature_alternativeUnit"
+            }
+          },
+          "analogue" : {
+            "type" : "array",
+            "description" : "Аналоги и допустимые замены. Список ГУИД",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/nomenclature_analogue"
+            }
+          },
+          "occurrences" : {
+            "type" : "array",
+            "description" : "Список номенклатуры куда входит текущая номенклатура",
+            "items" : {
+              "type" : "string",
+              "description" : "ГУИД номенклатуры куда входит текущая номенклатура",
+              "format" : "uuid"
+            }
+          },
+          "spares" : {
+            "type" : "array",
+            "description" : "Список номенклатуры из которой состоит текущая номенклатура",
+            "items" : {
+              "type" : "string",
+              "description" : "Номенклатуры из которой состоит текущая номенклатура",
+              "format" : "uuid"
+            }
+          },
+          "suppliers" : {
+            "type" : "array",
+            "description" : "Список поставщиков номенклатуры для текущей бизнес единицы",
+            "items" : {
+              "type" : "string",
+              "description" : "ГУИД Контрагента являющегося поставщиком",
+              "format" : "uuid"
+            }
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'Номенклатура'"
+      },
+      "nomenclature0" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "guidBE" : {
+            "$ref" : "#/components/schemas/guidBE"
+          },
+          "unifiedClassifier" : {
+            "$ref" : "#/components/schemas/nomenclature-uc"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/nomenclature-name"
+          },
+          "nameFull" : {
+            "$ref" : "#/components/schemas/nomenclature-fullName"
+          },
+          "drawingDenotation" : {
+            "$ref" : "#/components/schemas/nomenclature-drawingDenotation"
+          },
+          "ownershipSign" : {
+            "$ref" : "#/components/schemas/nomenclature-ownershipSign"
+          },
+          "seriality" : {
+            "$ref" : "#/components/schemas/nomenclature-seriality"
+          },
+          "supplier" : {
+            "$ref" : "#/components/schemas/nomenclature-supplier"
+          },
+          "baseUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-baseUnit"
+          },
+          "height" : {
+            "$ref" : "#/components/schemas/nomenclature-height"
+          },
+          "width" : {
+            "$ref" : "#/components/schemas/nomenclature-width"
+          },
+          "length" : {
+            "$ref" : "#/components/schemas/nomenclature-length"
+          },
+          "dimensionsUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-dimensionsUnit"
+          },
+          "weight" : {
+            "$ref" : "#/components/schemas/nomenclature-weight"
+          },
+          "weightUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-weightUnit"
+          }
+        }
+      },
+      "nomenclature1" : {
+        "type" : "object",
+        "properties" : {
+          "guidBE" : {
+            "$ref" : "#/components/schemas/guidBE"
+          },
+          "unifiedClassifier" : {
+            "$ref" : "#/components/schemas/nomenclature-uc"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/nomenclature-name"
+          },
+          "nameFull" : {
+            "$ref" : "#/components/schemas/nomenclature-fullName"
+          },
+          "drawingDenotation" : {
+            "$ref" : "#/components/schemas/nomenclature-drawingDenotation"
+          },
+          "ownershipSign" : {
+            "$ref" : "#/components/schemas/nomenclature-ownershipSign"
+          },
+          "seriality" : {
+            "$ref" : "#/components/schemas/nomenclature-seriality"
+          },
+          "supplier" : {
+            "$ref" : "#/components/schemas/nomenclature-supplier"
+          },
+          "baseUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-baseUnit"
+          },
+          "height" : {
+            "$ref" : "#/components/schemas/nomenclature-height"
+          },
+          "width" : {
+            "$ref" : "#/components/schemas/nomenclature-width"
+          },
+          "length" : {
+            "$ref" : "#/components/schemas/nomenclature-length"
+          },
+          "dimensionsUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-dimensionsUnit"
+          },
+          "weight" : {
+            "$ref" : "#/components/schemas/nomenclature-weight"
+          },
+          "weightUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-weightUnit"
+          }
+        }
+      },
+      "nomenclature2" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "guidBE" : {
+            "$ref" : "#/components/schemas/guidBE"
+          },
+          "unifiedClassifier" : {
+            "$ref" : "#/components/schemas/nomenclature-uc"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/nomenclature-name"
+          },
+          "nameFull" : {
+            "$ref" : "#/components/schemas/nomenclature-fullName"
+          },
+          "drawingDenotation" : {
+            "$ref" : "#/components/schemas/nomenclature-drawingDenotation"
+          },
+          "ownershipSign" : {
+            "$ref" : "#/components/schemas/nomenclature-ownershipSign"
+          },
+          "seriality" : {
+            "$ref" : "#/components/schemas/nomenclature-seriality"
+          },
+          "supplier" : {
+            "$ref" : "#/components/schemas/nomenclature-supplier"
+          },
+          "baseUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-baseUnit"
+          },
+          "height" : {
+            "$ref" : "#/components/schemas/nomenclature-height"
+          },
+          "width" : {
+            "$ref" : "#/components/schemas/nomenclature-width"
+          },
+          "length" : {
+            "$ref" : "#/components/schemas/nomenclature-length"
+          },
+          "dimensionsUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-dimensionsUnit"
+          },
+          "weight" : {
+            "$ref" : "#/components/schemas/nomenclature-weight"
+          },
+          "weightUnit" : {
+            "$ref" : "#/components/schemas/nomenclature-weightUnit"
+          }
+        }
+      },
+      "nomenclature3" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "guidBE" : {
+            "$ref" : "#/components/schemas/guidBE"
+          },
+          "be" : {
+            "$ref" : "#/components/schemas/be"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          }
+        }
+      },
+      "basic-services" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Уникальный код услуги. Формируется вручную по шаблону:«~» + код группы затрат.",
+            "nullable" : false,
+            "readOnly" : true,
+            "example" : "0000000004"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование базовой услуги",
+            "nullable" : false,
+            "example" : "Наименование базовой услуги"
+          },
+          "nomenclature" : {
+            "type" : "string",
+            "description" : "Ссылка на эталонную запись номенклатуры услуги (владелец базовой услуги)",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "process" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование процесса",
+            "nullable" : false,
+            "example" : "Наименование процесса"
+          },
+          "estimate" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование сметы",
+            "nullable" : false,
+            "example" : "Наименование сметы"
+          },
+          "estimateNumber" : {
+            "minimum" : 0,
+            "maxLength" : 15,
+            "type" : "integer",
+            "description" : "Номер сметы",
+            "nullable" : false,
+            "example" : 456445
+          },
+          "re-exhibited" : {
+            "type" : "boolean",
+            "description" : "Признак оказания услуги в качестве агента",
+            "nullable" : false,
+            "example" : false
+          },
+          "internal" : {
+            "type" : "boolean",
+            "description" : "Признак собственной услуги",
+            "nullable" : false,
+            "example" : false
+          },
+          "codeUC" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Полный код внутри класса единого классификатора продукции к которому относиться номенклатура из реквизита nomenclature",
+            "nullable" : false,
+            "readOnly" : true,
+            "example" : "01.02.01"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'Базовые услуги'"
+      },
+      "unified-classifier" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "maxLength" : 14,
+            "type" : "string",
+            "description" : "Код класса ЕК",
+            "nullable" : false,
+            "example" : "01.02.01"
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Принадлежность группе иерархии классификатора ЕК",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование класса ЕК",
+            "nullable" : false,
+            "example" : "ННаименование класса ЕК"
+          },
+          "owner" : {
+            "type" : "string",
+            "description" : "Владелец группы классификатора, ответственный за правильность, актуальность и полноту рубрики ЕК",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "consolidatedGroup" : {
+            "type" : "boolean",
+            "description" : "Единый корпоративный код сводной группы ЕК, который присваивается всем локальным номенклатурным позициям данного класса",
+            "nullable" : false,
+            "example" : false
+          },
+          "OKP" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Код ОКП для исторической преемственности",
+            "nullable" : false,
+            "example" : "02 4101"
+          },
+          "TNVED" : {
+            "$ref" : "#/components/schemas/nomenclature-tnved"
+          },
+          "OKVED" : {
+            "$ref" : "#/components/schemas/nomenclature-okved"
+          },
+          "OKPD2" : {
+            "$ref" : "#/components/schemas/nomenclature-okpd2"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/dateOutputArchive"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'Единый классификатор номенклатуры'"
+      },
+      "EOP" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "maxLength" : 14,
+            "type" : "string",
+            "description" : "Код класса ЕОП",
+            "nullable" : false,
+            "example" : "01.02.01"
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Принадлежность группе иерархии классификатора ЕОП",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование класса ЕК",
+            "nullable" : false,
+            "example" : "Наименование класса ЕК"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/dateOutputArchive"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'Единый ограничительный перечень номенклатуры'"
+      },
+      "units" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "minimum" : 0,
+            "maxLength" : 4,
+            "type" : "integer",
+            "description" : "Код класса ЕОП",
+            "nullable" : false
+          },
+          "name" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Условное обозначение единицы измерения по ОКЕИ (национальное)",
+            "nullable" : false,
+            "example" : "кг"
+          },
+          "nameFull" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Полное наименование единицы измерения по ОКЕИ",
+            "nullable" : false,
+            "example" : "килограмм"
+          },
+          "internationalReduction" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "Кодовое буквенное обозначение единицы измерения (международное)",
+            "nullable" : false,
+            "example" : "KGM"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/dateOutputArchive"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'Единицы измерения'",
+        "readOnly" : true
+      },
+      "OKPD2" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "Код ОКПД2",
+            "nullable" : false,
+            "example" : "01.11.11.112"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование класса продукции",
+            "nullable" : false,
+            "example" : "Семена озимой твердой пшеницы"
+          },
+          "nameFull" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Полное наименование единицы измерения по ОКЕИ",
+            "nullable" : false,
+            "example" : "килограмм"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/dateOutputArchive"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'ОКПД2'"
+      },
+      "OKVED2" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "Код ОКВЭД2",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование ОКВЭД2",
+            "nullable" : false,
+            "example" : "Забор, очистка и распределение воды"
+          },
+          "nameFull" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Полное наименование единицы измерения по ОКЕИ",
+            "nullable" : false,
+            "example" : "килограмм"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/dateOutputArchive"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'ОКВЭД2'"
+      },
+      "TNVED" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "minimum" : 0,
+            "maxLength" : 10,
+            "type" : "integer",
+            "description" : "Код ТН ВЭД",
+            "nullable" : false,
+            "example" : 18399752
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование категории товарной номенклатуры",
+            "nullable" : false,
+            "example" : "Живые животные прочие: млекопитающие: кролики и зайцы: кролики домашние: для научно- исследовательских целей"
+          },
+          "nameFull" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Полное наименование единицы измерения по ОКЕИ",
+            "nullable" : false,
+            "example" : "килограмм"
+          },
+          "unit" : {
+            "type" : "string",
+            "description" : "ГУИД Единица измерения товарной номенклатуры",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "commodity" : {
+            "type" : "boolean",
+            "description" : "Признак сырьевой товар",
+            "nullable" : false,
+            "example" : false
+          },
+          "traceableItem" : {
+            "type" : "boolean",
+            "description" : "Признак прослеживаемого товара",
+            "nullable" : false,
+            "example" : false
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/dateOutputArchive"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'ТНВЭД'"
+      },
+      "user" : {
+        "type" : "object",
+        "properties" : {
+          "fio" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "ФИО пользователя",
+            "nullable" : false,
+            "example" : "Иванов Иван Иванович"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "e-mail пользователя. Является первичным ключем для помска пользователя в мастер системе",
+            "format" : "email",
+            "nullable" : false,
+            "example" : "ivanov@yandex.ru"
+          }
+        },
+        "description" : "Пользователь"
+      },
+      "change-request" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "be" : {
+            "$ref" : "#/components/schemas/be"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Номер заявки в мастер системе",
+            "readOnly" : true,
+            "example" : "000000011"
+          },
+          "status" : {
+            "type" : "integer",
+            "description" : "<p>Статус заявки<ol><li>Первичная обработка</li><li>Обработка</li><li>Утверждение</li><li>Уточнение</li><li>Завершена</li></ol></p>",
+            "example" : 1,
+            "enum" : [ 1, 2, 3, 4 ]
+          },
+          "autor" : {
+            "description" : "Автор заявки",
+            "anyOf" : [ {
+              "$ref" : "#/components/schemas/user"
+            } ]
+          },
+          "responsible" : {
+            "description" : "Ответственный за обработку заявки",
+            "anyOf" : [ {
+              "$ref" : "#/components/schemas/user"
+            } ]
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "Дата и время создание заявки в MDM системе",
+            "format" : "date",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "periodExecution" : {
+            "type" : "string",
+            "description" : "Указывается планируемый срок исполнения заявки Службой НСИ в соответствии с регламентом бизнес-процесса обработки заявок по справочнику «Номенклатура» в мастер-системе",
+            "format" : "date",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "comment" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "example" : "Комментарий к заявке"
+          },
+          "data" : {
+            "description" : "Данные по объекту заявки",
+            "anyOf" : [ {
+              "$ref" : "#/components/schemas/nomenclature"
+            } ]
+          }
+        },
+        "description" : "Заяка на изменение, добавление, удаление"
+      },
+      "partner" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "type" : "string",
+            "description" : "Уникальный идентификатор эталонной записи в мастер-системе, является первичным ключом синхронизации данных между мастер-системой и системами-подписчиками. Формируется и заполняется автоматически",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "полное наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "inn" : {
+            "minimum" : 0,
+            "maxLength" : 12,
+            "type" : "integer",
+            "description" : "ИНН Контрагента",
+            "example" : 7728212268
+          },
+          "kpp" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "КПП Контрагента",
+            "example" : 770101001
+          }
+        },
+        "description" : "Контрагент"
+      },
+      "ERROR" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "По возможности будем добавлять более подробное сообщение об ошибке",
+            "nullable" : true,
+            "example" : "Плохой запрос. Этот ответ означает, что сервер не понимает запрос из-за неверного синтаксиса. По возможности будем добавлять более подробное сообщение об ошибки"
+          }
+        }
+      },
+      "guid" : {
+        "type" : "string",
+        "description" : "Уникальный идентификатор эталонной записи в мастер-системе. Формируется и заполняется автоматически",
+        "format" : "uuid",
+        "nullable" : false,
+        "example" : "f9168c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+      },
+      "archive" : {
+        "type" : "boolean",
+        "description" : "<p>Признак вывода записи в Архив и запрета использования в транзакциях учетных систем</p><p>Элюдия: FAKE</br>1C МДМ: ВАрхиве</p>",
+        "nullable" : false,
+        "example" : false
+      },
+      "dateOutputArchive" : {
+        "type" : "string",
+        "description" : "<p>Дата вывода записи из обращения (ликвидация номенклатуры, признание неблагонадежным для продолжения взаимоотношений и т.п.). Заполненное значение несет в себе смысл даты начала запрета использования записи номенклатуры в транзакциях учетных систем</p><p>1C МДМ: ДатаВыводаВАрхив</p>",
+        "format" : "date",
+        "nullable" : true,
+        "example" : "2023-07-15"
+      },
+      "nomenclature-tnved" : {
+        "type" : "string",
+        "description" : "<p>ГУИД ТНВЭД</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-okved" : {
+        "type" : "string",
+        "description" : "<p>ГУИД ОКВЭД</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-okpd2" : {
+        "type" : "string",
+        "description" : "<p>ГУИД ОКПД 2</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-name" : {
+        "maxLength" : 150,
+        "type" : "string",
+        "description" : "<p>Краткое наименование номенклатуры. Используется для вывода названия номенклатуры в интерфейсных формах информационных систем, сортировки и поиска номенклатуры по названию</p><p>Элюдия: LABEL_SHORT</br>1С: Наименование</p>",
+        "nullable" : false,
+        "example" : "Болт 1.1.М20 х 800. ВСт3пс2 ГОСТ 24379.1-2012"
+      },
+      "nomenclature-fullName" : {
+        "maxLength" : 255,
+        "type" : "string",
+        "description" : "<p>Полное наименование номенклатуры. Используется для вывода названия номенклатуры в печатных формах документов</p><p>Элюдия: LABEL</br>1С: ПолноеНаименование</p>",
+        "nullable" : false,
+        "example" : "Болт 1.1.М20 х 800. ВСт3пс2 ГОСТ 24379.1-2012 (Полное наименование)"
+      },
+      "nomenclature-drawingDenotation" : {
+        "maxLength" : 255,
+        "type" : "string",
+        "description" : "<p>Чертежное обозначение. Обязательно для заполнения, если номенклатура изготавливается по КД</p><p>Элюдия: NO_DRAWING</br>1C МДМ: ЧертежноеОбозначение</p>",
+        "nullable" : true,
+        "example" : "24379.1-2012"
+      },
+      "nomenclature-ownershipSign" : {
+        "type" : "integer",
+        "description" : "<p>Признак того, что данная номенклатура производится какой-либо БЕ Компании.<ul><li> 0 - Покупная</li><li>1 - собственная</li></ul></p><p>1C МДМ: ПризнакСобственности</p>",
+        "nullable" : false,
+        "example" : 0,
+        "enum" : [ 0, 1 ]
+      },
+      "nomenclature-seriality" : {
+        "type" : "integer",
+        "description" : "<p>Признак серийности номенклатуры. Возможные значения:<ul><li>1.Серийная</li><li>2.Новая</li><li>3.Разовая</li><li>5.Прочая</li></ul></p><p>Элюдия: ID_VOC_GOODS_SERIAL</br>1C МДМ: Серийность</p>",
+        "nullable" : false,
+        "enum" : [ 1, 2, 3, 5 ]
+      },
+      "nomenclature-unit" : {
+        "type" : "string",
+        "description" : "<p>единица измерения номенклатуры (ГУИД)</p>",
+        "format" : "uuid",
+        "nullable" : false,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-baseUnit" : {
+        "type" : "string",
+        "description" : "<p>Основная единица измерения номенклатуры (ГУИД). Международные единицы измерения, включенные в ОКЕИ</p><p>1C МДМ: ЕдиницаИзмерения</p>",
+        "format" : "uuid",
+        "nullable" : false,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-baseUnitCode" : {
+        "maxLength" : 4,
+        "type" : "integer",
+        "description" : "<p>КОД ОКЕИ. Основная единица измерения номенклатуры. Международные единицы измерения, включенные в ОКЕИ</p><p>1C МДМ: ЕдиницаИзмерения</p>",
+        "nullable" : false,
+        "example" : 796
+      },
+      "nomenclature-height" : {
+        "minimum" : 0,
+        "type" : "number",
+        "description" : "<p>Габаритные размеры номенклатуры</p><p>1C МДМ: Высота</p>",
+        "format" : "number(15,3)",
+        "nullable" : true
+      },
+      "nomenclature-width" : {
+        "minimum" : 0,
+        "type" : "number",
+        "description" : "<p>Габаритные размеры номенклатуры</p><p>1C МДМ: Ширина</p>",
+        "format" : "number(15,3)",
+        "nullable" : true
+      },
+      "nomenclature-length" : {
+        "minimum" : 0,
+        "type" : "number",
+        "description" : "<p>Габаритные размеры номенклатуры</p><p>1C МДМ: Длина</p>",
+        "format" : "number(15,3)",
+        "nullable" : true
+      },
+      "nomenclature-dimensionsUnit" : {
+        "type" : "string",
+        "description" : "<p>Единица измерения габаритных размеров номенклатуры (ГУИД). Международные единицы измерения, включенные в ОКЕИ</p><p>1C МДМ: ЕдиницаИзмеренияГабаритныхРазмеров.Код</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-dimensionsUnitCode" : {
+        "maxLength" : 4,
+        "type" : "integer",
+        "description" : "<p>Единица измерения габаритных размеров номенклатуры (КОД ОКЕИ). Международные единицы измерения, включенные в ОКЕИ</p>",
+        "nullable" : false,
+        "example" : 796
+      },
+      "nomenclature-weight" : {
+        "minimum" : 0,
+        "type" : "number",
+        "description" : "<p>Вес номенклатуры</p><p>1C МДМ: Вес</p>",
+        "format" : "number(15,3)",
+        "nullable" : true
+      },
+      "nomenclature-weightUnit" : {
+        "type" : "string",
+        "description" : "<p>Единица измерения веса номенклатуры (ГУИД). Международные единицы измерения, включенные в ОКЕИ</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-weightUnitCode" : {
+        "maxLength" : 4,
+        "type" : "integer",
+        "description" : "<p>Единица измерения веса номенклатуры (КОД ОКЕИ). Международные единицы измерения, включенные в ОКЕИ</p>",
+        "nullable" : false,
+        "example" : 796
+      },
+      "nomenclature-code" : {
+        "maxLength" : 9,
+        "type" : "string",
+        "description" : "<p>Поле Код. В рамках перехода будет перенесен Код Эллюдии</p><p><p>Элюдия: ID</br>1С: Код</p>",
+        "nullable" : false,
+        "example" : "0000000004"
+      },
+      "nomenclature-dateOutputArchive" : {
+        "type" : "string",
+        "description" : "<p>Дата вывода записи из обращения (ликвидация номенклатуры, признание неблагонадежным для продолжения взаимоотношений и т.п.). Заполненное значение несет в себе смысл даты начала запрета использования записи номенклатуры в транзакциях учетных систем</p><p>1C МДМ: ДатаВыводаВАрхив</p>",
+        "format" : "date",
+        "nullable" : true,
+        "example" : "2023-07-15"
+      },
+      "nomenclature-uc" : {
+        "type" : "string",
+        "description" : "<p>ГУИД единого классификатора продукции</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-eop" : {
+        "type" : "string",
+        "description" : "<p>ГУИД классификатора ЕОП номенклатуры</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "nomenclature-codeUC" : {
+        "maxLength" : 50,
+        "type" : "string",
+        "description" : "<p>Полный код внутри класса единого классификатора продукции</p><p>Элюдия: ID_VOC </br>1C МДМ: КлассификаторНоменклатуры.КодЕК</p>",
+        "nullable" : false,
+        "example" : "01.02.01"
+      },
+      "nomenclature-codeEOP" : {
+        "maxLength" : 50,
+        "type" : "string",
+        "description" : "<p>Полный код внутри класса классификатора ЕОП</p>Элюдия: CODE_EOP</br>1C МДМ: Класс.китКод<p></p>",
+        "nullable" : false,
+        "example" : "07.05.06"
+      },
+      "nomenclature-supplier" : {
+        "type" : "string",
+        "description" : "<p>ГУИД организации производителя номенклатуры</p>",
+        "format" : "uuid",
+        "nullable" : true,
+        "example" : "8e055502-9c46-4de7-80d4-1417ee678ab3"
+      },
+      "be" : {
+        "type" : "string",
+        "description" : "ГУИД Бизнес единицы оформившей заявку",
+        "format" : "uuid",
+        "nullable" : false,
+        "writeOnly" : true,
+        "example" : "f9168c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+      },
+      "guidBE" : {
+        "type" : "string",
+        "description" : "Уникальный идентификатор номенклатуры в системе подписчики",
+        "format" : "uuid",
+        "nullable" : false,
+        "writeOnly" : true,
+        "example" : "f9168c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+      },
+      "X-NextPage" : {
+        "type" : "string",
+        "format" : "url",
+        "example" : "https://i1c.ddns.net:443/TEST_KIT_MDM/hs/klass/unified-classifier?step=200&nextPage=2"
+      },
+      "nomenclature_body" : {
+        "type" : "object",
+        "properties" : {
+          "autor" : {
+            "$ref" : "#/components/schemas/user"
+          },
+          "type" : {
+            "type" : "integer",
+            "description" : "<ul><li>0 - Формирование заявки – запрос существующей записи в MDM-системе</li><li>1 - Формирование заявки на добавление записи</li><li>2 - Формирование заявки на изменение записи</li><li>3 - Формирование заявки на вывод из обращения</li></ul>",
+            "example" : 0
+          },
+          "be" : {
+            "$ref" : "#/components/schemas/be"
+          },
+          "content" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "Комментарий",
+            "example" : "Комментарий"
+          },
+          "guid" : {
+            "type" : "string",
+            "description" : "ГУИД Заявки, если значение передано, то в мастер системе заявка будет иметь указанный ГУИД. Если нет, мастер система создаст свой ГУИД",
+            "format" : "uuid",
+            "nullable" : true
+          },
+          "data" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/nomenclature0"
+            }, {
+              "$ref" : "#/components/schemas/nomenclature1"
+            }, {
+              "$ref" : "#/components/schemas/nomenclature2"
+            }, {
+              "$ref" : "#/components/schemas/nomenclature3"
+            } ]
+          }
+        }
+      },
+      "nomenclature_properties" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "type" : "string",
+            "description" : "ГУИД характеристики в мастер системе. Параметр из списка возможных характеристик, задаваемых автоматически по данным класса номенклатуры ЕОП",
+            "format" : "uuid"
+          },
+          "name" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Наименование характеристики",
+            "readOnly" : true,
+            "example" : "Цвет"
+          },
+          "value" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Значение в соответствии с типом возможного значения, заданного для характеристики класса номенклатуры ЕОП",
+            "example" : "Синий"
+          },
+          "unit" : {
+            "$ref" : "#/components/schemas/nomenclature-unit"
+          }
+        }
+      },
+      "nomenclature_alternativeUnit" : {
+        "type" : "object",
+        "properties" : {
+          "unit" : {
+            "$ref" : "#/components/schemas/nomenclature-unit"
+          },
+          "conversionFactor" : {
+            "minimum" : 0,
+            "type" : "number",
+            "description" : "Коэффициент пересчета количества номенклатуры из альтернативной единицы измерения в базовую единицу. Количество (Базовая ЕИ) * Коэффициент пересчета = Количество (Альтернативная БЕ)",
+            "format" : "number(15,5)",
+            "example" : 2.278
+          },
+          "description" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Описание основного назначения альтернативной единицы измерения",
+            "example" : "Описание основного назначения альтернативной единицы измерения"
+          }
+        }
+      },
+      "nomenclature_analogue" : {
+        "type" : "object",
+        "properties" : {
+          "product" : {
+            "type" : "string",
+            "description" : "Ссылка на номенклатуру, являющуюся аналогом/допустимой заменой основной номенклатуры",
+            "format" : "uuid"
+          },
+          "analogue" : {
+            "type" : "boolean",
+            "description" : "Если признак выставлен, то номенклатура является полным аналогом основной. Невыставленный признак означает, что номенклатура является допустимой заменой основной номенклатуры при определенных условиях",
+            "example" : true
+          },
+          "basis" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Описание основания установления аналога",
+            "example" : "Описание основания установления аналога"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "UntypedError" : {
+        "description" : "Bad Request",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ERROR"
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "data" : {
+        "name" : "data",
+        "in" : "query",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 20,
+          "type" : "string",
+          "example" : "2017-07-21T17:32:28Z"
+        }
+      },
+      "step" : {
+        "name" : "step",
+        "in" : "query",
+        "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maximum" : 200,
+          "minimum" : 1,
+          "type" : "integer",
+          "example" : 200
+        }
+      },
+      "type-search" : {
+        "name" : "type",
+        "in" : "query",
+        "description" : "<p>Тип поиска</p><ul><li>0 - поиск по всем колонкам ИЛИ (Наименование номенклатурной позиции, Чертежное обозначение, Идентификатор в учетной системе, Корпоративный код номенклатуры, Полное наименование)</li><li>1 - поиск по \"Наименование номенклатурной позиции\"</li><li>2 - поиск по \"Чертежное обозначение\"</li><li>3 - поиск по \"Идентификатор в учетной системе\"</li><li>4 - поиск по \"Корпоративный код номенклатуры\"</li><li>5 - поиск по \"Полное наименование\"</li></ul>",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "example" : 0,
+          "enum" : [ 0, 1, 2, 3, 4, 5 ]
+        }
+      },
+      "type-list-of-changes" : {
+        "name" : "type",
+        "in" : "path",
+        "description" : "Тип измененных объектов",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "maxLength" : 50,
+          "type" : "string",
+          "enum" : [ "nomenclature", "basic-services", "unified-classifier", "eop", "units", "okpd2", "okved2", "tnved" ]
+        }
+      },
+      "search" : {
+        "name" : "data",
+        "in" : "query",
+        "description" : "Поисковой запрос",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 150,
+          "type" : "string",
+          "example" : "Болт"
+        }
+      },
+      "guid" : {
+        "name" : "guid",
+        "in" : "path",
+        "description" : "GUID объекта у мастер-системы",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      }
+    },
+    "headers" : {
+      "X-NextPage" : {
+        "description" : "URL для получения следующего пакета",
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/X-NextPage"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "basicAuth" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  },
+  "x-tagGroups" : [ {
+    "name" : "Заявки",
+    "tags" : [ "Заявка" ]
+  }, {
+    "name" : "Домен Номенклатура",
+    "tags" : [ "Номенклатура", "Классификаторы", "Общероссийские классификаторы" ]
+  }, {
+    "name" : "Домен Контрагенты",
+    "tags" : [ "Контрагенты" ]
+  } ]
+}
