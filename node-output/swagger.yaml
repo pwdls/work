@@ -175,7 +175,7 @@
         }, {
           "name" : "service",
           "in" : "query",
-          "description" : "<ul><li>Если параметр отсутствует, то поиск ведется по все МТР </li><li>0 - поиск ведется только по номенклатуре с параметром service = false</li>1 - поиск ведется только по услугам service = true </ul>",
+          "description" : "<ul><li>Если параметр отсутствует, то поиск ведется по все МТР </li><li>0 - поиск ведется только по номенклатуре с параметром service = false</li><li>1 - поиск ведется только по услугам service = true </ul>",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -875,6 +875,471 @@
         } ]
       }
     },
+    "/okopf" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех ОКОПФ",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OKOPF"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/okopf/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем ОКОПФ по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OKOPF"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/country" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех Страны",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/country"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/country/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получить данные Страны по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/country"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/region" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех Регионов",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/region"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/region/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получить данные Региона по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/region"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/bank" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех Банков",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bank"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/bank/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получить данные Банку по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bank"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/currency" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получаем массив всех Валют",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/currency"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/currency/{guid}" : {
+      "get" : {
+        "tags" : [ "Общероссийские классификаторы" ],
+        "summary" : "Получить данные Валюты по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/currency"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
     "/partner" : {
       "get" : {
         "tags" : [ "Контрагенты" ],
@@ -951,6 +1416,378 @@
               "applicatoin/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/partner"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/partner-concern-type" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получаем массив всех видов контрагента по отношению к Концерну",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "applicatoin/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/partnerConcernType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/partner-concern-type/{guid}" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить вид контрагента по отношению к Концерну по ГУИД",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "applicatoin/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/partnerConcernType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/contact" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получаем массив всех контактных лиц",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/contact"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/contact/{guid}" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить данные по контактному лицу",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/contact"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/contact-roles" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получаем массив всех ролей контактного лица",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/contact-roles"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/contact-roles/{guid}" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить данные по роли контактного лица",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/contact-roles"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/bankAccounts" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получаем массив всех банковских счетов",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bankAccounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/bankAccounts/{guid}" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить данные по банковским счетам",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bankAccounts"
                 }
               }
             }
@@ -1958,6 +2795,414 @@
         },
         "description" : "Контрагент"
       },
+      "contact" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "fio" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "ФИО контактного лица",
+            "nullable" : true,
+            "example" : "Иванов Иван Иванович"
+          },
+          "position" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Должность",
+            "nullable" : true,
+            "example" : "Менеджер по продажам"
+          },
+          "partner" : {
+            "type" : "string",
+            "description" : "ГУИД контрагента, к которой относится контактное лицо",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "description" : "Дата рождения",
+            "format" : "date",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "pol" : {
+            "maxLength" : 1,
+            "type" : "string",
+            "description" : "<p>Пол:<ul><li>М - мужской</li><li>Ж - женский</li></ul></p>",
+            "nullable" : false,
+            "enum" : [ "М", "Ж" ]
+          },
+          "role" : {
+            "type" : "array",
+            "description" : "Массив ролей контактного лица",
+            "items" : {
+              "$ref" : "#/components/schemas/guid"
+            }
+          }
+        }
+      },
+      "contact-roles" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Роли контактного лица",
+            "nullable" : true,
+            "example" : "Договорная работа"
+          }
+        }
+      },
+      "partnerConcernType" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование  вида контрагента по отношению к Концерну",
+            "nullable" : false,
+            "example" : "Поставщик"
+          },
+          "comment" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "Краткое описание вида контрагента",
+            "nullable" : false,
+            "example" : "Краткое описание вида контрагента"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код вида контрагент",
+            "nullable" : false,
+            "example" : "643"
+          },
+          "codeMnemonic" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Краткое символьное обозначение вида контрагента",
+            "nullable" : false,
+            "example" : "ПОСТ"
+          }
+        },
+        "description" : "Виды контрагентов по отношению к Концерну"
+      },
+      "bankAccounts" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "partner" : {
+            "type" : "string",
+            "description" : "ГУИД контрагента",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "type" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Вид банковского счета",
+            "nullable" : false,
+            "example" : "Депозитный"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование счета",
+            "nullable" : false,
+            "example" : "Депозитный 231231114123"
+          },
+          "number" : {
+            "maxLength" : 20,
+            "minLength" : 20,
+            "type" : "integer",
+            "description" : "Номер счета"
+          },
+          "currency" : {
+            "type" : "string",
+            "description" : "ГУИД валюты",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "currencyCode" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "integer",
+            "description" : "Код валюты",
+            "example" : 36
+          },
+          "bank" : {
+            "type" : "string",
+            "description" : "ГУИД банка",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "bankBic" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "БИК",
+            "example" : 41403838
+          },
+          "bankSettlement" : {
+            "type" : "string",
+            "description" : "ГУИД банка расчетов",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "bankSettlementBic" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "БИК банка расчетов",
+            "example" : 41403838
+          },
+          "dateОpening" : {
+            "type" : "string",
+            "description" : "Дата открытия счета",
+            "format" : "date",
+            "nullable" : false
+          },
+          "dateClosing" : {
+            "type" : "string",
+            "description" : "Дата закрытия счета",
+            "format" : "date",
+            "nullable" : false
+          }
+        },
+        "description" : "Банковские счета"
+      },
+      "bank" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "thisGroup" : {
+            "type" : "boolean",
+            "description" : "Признак родительской группы банка",
+            "nullable" : false,
+            "example" : false
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Группа банков (регион)",
+            "format" : "uuid",
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "bic" : {
+            "maxLength" : 9,
+            "minLength" : 2,
+            "type" : "integer",
+            "description" : "БИК. Является обязательным для заполнения для банков РФ",
+            "example" : 41403838
+          },
+          "swift" : {
+            "maxLength" : 11,
+            "type" : "string",
+            "description" : "SWIFT. Является обязательным для заполнения для иностранных банков",
+            "example" : "ANIIAT2G"
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Название банка",
+            "nullable" : true,
+            "example" : "АО УКБ \"БЕЛГОРОДСОЦБАНК\""
+          },
+          "corrAccount" : {
+            "maxLength" : 20,
+            "minLength" : 20,
+            "type" : "string",
+            "description" : "Корреспондентский счет банка",
+            "example" : "30101810100000000701"
+          },
+          "address" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Адрес расположения банка",
+            "example" : "БЕЛГОРОДСКИЙ ПР-Т, 73"
+          },
+          "city" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Город расположения банка",
+            "example" : "Г. БЕЛГОРОД"
+          },
+          "phones" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "Телефоны банка",
+            "example" : "(4722)322208,353116"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "GUID Страны",
+            "format" : "uuid",
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "countryCode" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "integer",
+            "description" : "Код Страны",
+            "example" : 643
+          },
+          "activityDiscontinued" : {
+            "type" : "boolean",
+            "description" : "Признак того, что банк по каким-либо причинам прекратил свою деятельность. В случае выставленного признака автоматически проставляется значение ВАрхиве=Да И ДатаВыводаВАрхив=ТекущаяДата()",
+            "example" : false
+          }
+        }
+      },
+      "currency" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование валюты",
+            "nullable" : false,
+            "example" : "Доллар США"
+          },
+          "code" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "integer",
+            "description" : "Цифровой код валюты",
+            "example" : 840
+          },
+          "codeSymbolic" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "string",
+            "description" : "Символьный код валюты",
+            "example" : "USD"
+          }
+        }
+      },
+      "country" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование страны в соответствии с ОКСМ",
+            "nullable" : false,
+            "example" : "РОССИЯ"
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Полное наименование страны мира",
+            "nullable" : false,
+            "example" : "Российская Федерация"
+          },
+          "code" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "integer",
+            "description" : "Трехзначный код страны в соответствии с ОКСМ",
+            "nullable" : false,
+            "example" : 643
+          },
+          "codeAlpha2" : {
+            "maxLength" : 2,
+            "minLength" : 2,
+            "type" : "string",
+            "description" : "Двузначный буквенный код альфа-2 страны по ОКСМ",
+            "nullable" : false,
+            "example" : "RU"
+          },
+          "codeAlpha3" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "string",
+            "description" : "Трехзначный буквенный код альфа-3 страны по ОКСМ",
+            "nullable" : false,
+            "example" : "RUS"
+          }
+        }
+      },
+      "region" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование  региона в соответствии с общероссийским справочником кодов регионов",
+            "nullable" : false,
+            "example" : "Магаданская обл"
+          },
+          "code" : {
+            "maxLength" : 3,
+            "minLength" : 2,
+            "type" : "string",
+            "description" : "Код региона в соответствии с общероссийским справочником кодов регионов",
+            "nullable" : false,
+            "example" : "01"
+          }
+        }
+      },
+      "OKOPF" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование  организационно-правовой формы собственности",
+            "nullable" : false,
+            "example" : "БУ"
+          },
+          "nameFull" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "Наименование  организационно-правовой формы собственности",
+            "nullable" : false,
+            "example" : "Бюджетные учреждения"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "integer",
+            "description" : "Мнемокод организационно-правовой формы собственности",
+            "nullable" : false,
+            "example" : 30000
+          }
+        }
+      },
       "ERROR" : {
         "type" : "object",
         "properties" : {
@@ -2401,7 +3646,7 @@
       "service" : {
         "name" : "service",
         "in" : "query",
-        "description" : "<ul><li>Если параметр отсутствует, то поиск ведется по все МТР </li><li>0 - поиск ведется только по номенклатуре с параметром service = false</li>1 - поиск ведется только по услугам service = true </ul>",
+        "description" : "<ul><li>Если параметр отсутствует, то поиск ведется по все МТР </li><li>0 - поиск ведется только по номенклатуре с параметром service = false</li><li>1 - поиск ведется только по услугам service = true </ul>",
         "required" : false,
         "style" : "form",
         "explode" : true,
