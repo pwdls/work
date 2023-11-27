@@ -37,7 +37,10 @@
     "description" : "Работа с общероссийскими классификаторами. Используются в рамках домена Номенклатура"
   }, {
     "name" : "Контрагенты",
-    "description" : "Домен Контрагенты. Будет полностью переписываться. Сейчас просто заглушка, так как используется в номенклатуре "
+    "description" : "Домен Контрагенты."
+  }, {
+    "name" : "Оргструктура",
+    "description" : "Домен Оргструктура."
   }, {
     "name" : "Вспомогательные",
     "description" : "Вспомогательные функции для работы с APi"
@@ -1808,6 +1811,192 @@
         } ]
       }
     },
+    "/bankAccountsType" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получаем массив всех банковских счетов",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bankAccountsType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/bankAccountsType/{guid}" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Получить данные по банковским счетам",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bankAccountsType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sfo" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Получаем массив всех Сфер функциональной ответственности",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/sfo"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sfo/{guid}" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Получить по ГУИД данные Сферы функциональной ответственности",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/sfo"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
     "/ping" : {
       "get" : {
         "tags" : [ "Вспомогательные" ],
@@ -2911,9 +3100,16 @@
             "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
           },
           "type" : {
-            "maxLength" : 100,
             "type" : "string",
             "description" : "Вид банковского счета",
+            "format" : "uuid",
+            "readOnly" : true,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "typeName" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование вида банковского счета",
             "nullable" : false,
             "example" : "Депозитный"
           },
@@ -2983,6 +3179,29 @@
             "description" : "Дата закрытия счета",
             "format" : "date",
             "nullable" : false
+          }
+        },
+        "description" : "Банковские счета"
+      },
+      "bankAccountsType" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "code" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "description" : "Код вида банковского счета",
+            "nullable" : false,
+            "example" : "000000002"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование вида банковского счета",
+            "nullable" : false,
+            "example" : "Депозитный"
           }
         },
         "description" : "Банковские счета"
@@ -3202,6 +3421,62 @@
             "example" : 30000
           }
         }
+      },
+      "sfo" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование СФО",
+            "nullable" : false,
+            "example" : "БУ"
+          },
+          "code" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Код СФО, сформированный по правилам использования в консолидированной отчетности",
+            "nullable" : false,
+            "example" : "1.02"
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Ссылка на верхний уровень иерархии",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "functions" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "Функции подразделения СФО",
+            "nullable" : false,
+            "example" : "Описание"
+          },
+          "signCFO" : {
+            "type" : "boolean",
+            "description" : "Признак ЦФО",
+            "nullable" : false,
+            "example" : false
+          },
+          "typeContract" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Типовой договор, Обязательство",
+            "nullable" : false,
+            "example" : "Нет"
+          }
+        },
+        "description" : "Сферы функциональной ответственности"
       },
       "ERROR" : {
         "type" : "object",
@@ -3682,5 +3957,8 @@
   }, {
     "name" : "Домен Контрагенты",
     "tags" : [ "Контрагенты" ]
+  }, {
+    "name" : "Домен Оргструктура",
+    "tags" : [ "Оргструктура" ]
   } ]
 }
