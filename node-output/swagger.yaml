@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "API Внешняя система => MDM",
-    "description" : "<p>Документация описывает механизм работы внешних систем с МДМ. То есть инициатором любого запроса является внешняя система</p> <p>Передача данных из МДМ во внешние систем, когда инициатором является МДМ описано в документации «<a href='https://app.swaggerhub.com/apis-docs/pwdls/MDMout/1.0.0' target='_blank'><b>API MDM => Внешняя система</b></a>»</p>",
+    "description" : "<p><b>Кодировка UTF-8</b></p> <p>Документация описывает механизм работы внешних систем с МДМ. То есть инициатором любого запроса является внешняя система</p> <p>Передача данных из МДМ во внешние систем, когда инициатором является МДМ описано в документации «<a href='https://app.swaggerhub.com/apis-docs/pwdls/MDMout/1.0.0' target='_blank'><b>API MDM => Внешняя система</b></a>»</p>\n    <p>Все даты преедаются в международном формате 2023-01-01T00:00:00 <br>\nпустые даты передаются как   0001-01-01T00:00:00 <br> пустые ссылки передаются как 00000000-0000-0000-0000-000000000000</p>",
     "contact" : {
       "name" : "Грибов Игорь",
       "url" : "https://t.me/IgorGribov",
@@ -41,6 +41,9 @@
   }, {
     "name" : "Оргструктура",
     "description" : "Домен Оргструктура."
+  }, {
+    "name" : "Фин. блок",
+    "description" : "Домен Фин. блок"
   }, {
     "name" : "Вспомогательные",
     "description" : "Вспомогательные функции для работы с APi"
@@ -199,49 +202,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/nomenclature2"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad Request",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ERROR"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "basicAuth" : [ ]
-        } ]
-      }
-    },
-    "/basic-services/{guid}" : {
-      "get" : {
-        "tags" : [ "Номенклатура" ],
-        "summary" : "Получаем базовую услугу по ГУИД",
-        "parameters" : [ {
-          "name" : "guid",
-          "in" : "path",
-          "description" : "GUID объекта у мастер-системы",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/basic-services"
                 }
               }
             }
@@ -1394,6 +1354,49 @@
         "security" : [ {
           "basicAuth" : [ ]
         } ]
+      },
+      "post" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Создаем заявку на: добавление Контрагентов",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "Тело запроса для создания заявки",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/partner_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "ГУИД созданной заявки",
+                  "format" : "uuid"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
       }
     },
     "/partner/{guid}" : {
@@ -1419,6 +1422,104 @@
               "applicatoin/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/partner"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/partner/search" : {
+      "get" : {
+        "tags" : [ "Контрагенты" ],
+        "summary" : "Поиск контрагента",
+        "description" : "<p>Поиск контрагента производиться по следующему методу</p><p>inn И kpp(если заполнено) ИЛИ code ИЛИ %name% ИЛИ registrationNumber</p><p>Если не один параметр не передан, система вернет ошибки 400 с текстом ошибки</p> <p>«Не предан ни один параметр поиска»</p>",
+        "parameters" : [ {
+          "name" : "inn",
+          "in" : "query",
+          "description" : "ИНН контрагента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 12,
+            "minLength" : 10,
+            "type" : "integer",
+            "example" : 7728212268
+          }
+        }, {
+          "name" : "kpp",
+          "in" : "query",
+          "description" : "КПП контрагента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "example" : 770101001
+          }
+        }, {
+          "name" : "registrationNumber",
+          "in" : "query",
+          "description" : "Код нерезидента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 30,
+            "type" : "string",
+            "example" : "Jgh313hd3"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Наименование контрагента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "example" : "Спартак"
+          }
+        }, {
+          "name" : "code",
+          "in" : "query",
+          "description" : "Код в 1с МДМ",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 30,
+            "type" : "string",
+            "example" : "124584"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "applicatoin/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/partner"
+                  }
                 }
               }
             }
@@ -1718,7 +1819,7 @@
         } ]
       }
     },
-    "/bankAccounts" : {
+    "/bank-accounts" : {
       "get" : {
         "tags" : [ "Контрагенты" ],
         "summary" : "Получаем массив всех банковских счетов",
@@ -1768,7 +1869,7 @@
         } ]
       }
     },
-    "/bankAccounts/{guid}" : {
+    "/bank-accounts/{guid}" : {
       "get" : {
         "tags" : [ "Контрагенты" ],
         "summary" : "Получить данные по банковским счетам",
@@ -1811,7 +1912,7 @@
         } ]
       }
     },
-    "/bankAccountsType" : {
+    "/bank-accounts-type" : {
       "get" : {
         "tags" : [ "Контрагенты" ],
         "summary" : "Получаем массив всех банковских счетов",
@@ -1861,7 +1962,7 @@
         } ]
       }
     },
-    "/bankAccountsType/{guid}" : {
+    "/bank-accounts-type/{guid}" : {
       "get" : {
         "tags" : [ "Контрагенты" ],
         "summary" : "Получить данные по банковским счетам",
@@ -1884,6 +1985,266 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/bankAccountsType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/organization" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Получаем массив всех Организаций",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/organization"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/organization/{guid}" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Получить по ГУИД данные Организации",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/organization"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/organization/search" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Поиск организации",
+        "description" : "<p>Поиск организации производиться по следующему методу</p><p>inn И kpp(если заполнено) ИЛИ registrationNumber</p><p>Если не один параметр не передан (inn или registrationNumber), система вернет ошибки 400 с текстом ошибки</p> <p>«Не предан ни один параметр поиска»</p>",
+        "parameters" : [ {
+          "name" : "inn",
+          "in" : "query",
+          "description" : "ИНН контрагента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 12,
+            "minLength" : 10,
+            "type" : "integer",
+            "example" : 7728212268
+          }
+        }, {
+          "name" : "kpp",
+          "in" : "query",
+          "description" : "КПП контрагента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "example" : 770101001
+          }
+        }, {
+          "name" : "registrationNumber",
+          "in" : "query",
+          "description" : "Код нерезидента",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 30,
+            "type" : "string",
+            "example" : "Jgh313hd3"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "applicatoin/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/organization"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/divisions" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Получаем массив всех Дивизионы",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/divisions"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/divisions/{guid}" : {
+      "get" : {
+        "tags" : [ "Оргструктура" ],
+        "summary" : "Получить по ГУИД данные Дивизиона",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/divisions"
                 }
               }
             }
@@ -1997,6 +2358,378 @@
         } ]
       }
     },
+    "/dds-articles" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получаем массив всех статей ДДС",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DDS-articles"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/dds-articles/{guid}" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получить по ГУИД данные статьи ДДС",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DDS-articles"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/dds-vid" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получаем массив всех видов статей ДДС",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DDS-vid"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/dds-vid/{guid}" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получить по ГУИД данные вида статьи ДДС",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DDS-vid"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/expenses-articles" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получаем массив всех статей затрат",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/expenses-articles"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/expenses-articles/{guid}" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получить по ГУИД данные статьи затрат",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/expenses-articles"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/other-income-expenses" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получаем массив всех эллементов Прочие доходы и расходы",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/other-income-expenses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/other-income-expenses/{guid}" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получить по ГУИД данные эллемента Прочие доходы и расходы",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/other-income-expenses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
     "/ping" : {
       "get" : {
         "tags" : [ "Вспомогательные" ],
@@ -2079,6 +2812,192 @@
                     "type" : "string",
                     "format" : "uuid"
                   }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/subconto" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получаем массив всех Субконто",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/subconto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/subconto/{guid}" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получить по ГУИД данные Субконто",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/subconto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/plan-schetov" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получаем массив всех Планов счетов",
+        "parameters" : [ {
+          "name" : "step",
+          "in" : "query",
+          "description" : "Максимальное количество возвращаемых элементов. Если не указан система возвращает не более 200",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 200,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 200
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "X-NextPage" : {
+                "$ref" : "#/components/headers/X-NextPage"
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/plan-schetov"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/plan-schetov/{guid}" : {
+      "get" : {
+        "tags" : [ "Фин. блок" ],
+        "summary" : "Получить по ГУИД данные Плана счетов",
+        "parameters" : [ {
+          "name" : "guid",
+          "in" : "path",
+          "description" : "GUID объекта у мастер-системы",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/plan-schetov"
                 }
               }
             }
@@ -2361,6 +3280,9 @@
           "unifiedClassifier" : {
             "$ref" : "#/components/schemas/nomenclature-uc"
           },
+          "classifierEOP" : {
+            "$ref" : "#/components/schemas/nomenclature-eop"
+          },
           "name" : {
             "$ref" : "#/components/schemas/nomenclature-name"
           },
@@ -2410,6 +3332,9 @@
           },
           "unifiedClassifier" : {
             "$ref" : "#/components/schemas/nomenclature-uc"
+          },
+          "classifierEOP" : {
+            "$ref" : "#/components/schemas/nomenclature-eop"
           },
           "name" : {
             "$ref" : "#/components/schemas/nomenclature-name"
@@ -2463,6 +3388,9 @@
           },
           "unifiedClassifier" : {
             "$ref" : "#/components/schemas/nomenclature-uc"
+          },
+          "classifierEOP" : {
+            "$ref" : "#/components/schemas/nomenclature-eop"
           },
           "name" : {
             "$ref" : "#/components/schemas/nomenclature-name"
@@ -2521,78 +3449,6 @@
             "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
           }
         }
-      },
-      "basic-services" : {
-        "type" : "object",
-        "properties" : {
-          "guid" : {
-            "$ref" : "#/components/schemas/guid"
-          },
-          "code" : {
-            "maxLength" : 9,
-            "type" : "string",
-            "description" : "Уникальный код услуги. Формируется вручную по шаблону:«~» + код группы затрат.",
-            "nullable" : false,
-            "readOnly" : true,
-            "example" : "0000000004"
-          },
-          "name" : {
-            "maxLength" : 150,
-            "type" : "string",
-            "description" : "Наименование базовой услуги",
-            "nullable" : false,
-            "example" : "Наименование базовой услуги"
-          },
-          "nomenclature" : {
-            "type" : "string",
-            "description" : "Ссылка на эталонную запись номенклатуры услуги (владелец базовой услуги)",
-            "format" : "uuid",
-            "nullable" : false
-          },
-          "process" : {
-            "maxLength" : 150,
-            "type" : "string",
-            "description" : "Наименование процесса",
-            "nullable" : false,
-            "example" : "Наименование процесса"
-          },
-          "estimate" : {
-            "maxLength" : 150,
-            "type" : "string",
-            "description" : "Наименование сметы",
-            "nullable" : false,
-            "example" : "Наименование сметы"
-          },
-          "estimateNumber" : {
-            "minimum" : 0,
-            "maxLength" : 15,
-            "type" : "integer",
-            "description" : "Номер сметы",
-            "nullable" : false,
-            "example" : 456445
-          },
-          "re-exhibited" : {
-            "type" : "boolean",
-            "description" : "Признак оказания услуги в качестве агента",
-            "nullable" : false,
-            "example" : false
-          },
-          "internal" : {
-            "type" : "boolean",
-            "description" : "Признак собственной услуги",
-            "nullable" : false,
-            "example" : false
-          },
-          "codeUC" : {
-            "maxLength" : 50,
-            "type" : "string",
-            "description" : "Полный код внутри класса единого классификатора продукции к которому относиться номенклатура из реквизита nomenclature",
-            "nullable" : false,
-            "readOnly" : true,
-            "example" : "01.02.01"
-          }
-        },
-        "description" : "Домен 'Номенклатура', объект 'Базовые услуги'"
       },
       "unified-classifier" : {
         "type" : "object",
@@ -2940,6 +3796,8 @@
             "description" : "Данные по объекту заявки",
             "anyOf" : [ {
               "$ref" : "#/components/schemas/nomenclature"
+            }, {
+              "$ref" : "#/components/schemas/partner"
             } ]
           }
         },
@@ -2949,11 +3807,552 @@
         "type" : "object",
         "properties" : {
           "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "code" : {
+            "maxLength" : 9,
             "type" : "string",
-            "description" : "Уникальный идентификатор эталонной записи в мастер-системе, является первичным ключом синхронизации данных между мастер-системой и системами-подписчиками. Формируется и заполняется автоматически",
+            "description" : "Код ИС Элюдия,  для исторической преемственности",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameAbbreviated" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "сокращенное наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameAbbreviatedHistory" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/partner_nameAbbreviatedHistory"
+            }
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "полное наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameFullHistory" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/partner_nameFullHistory"
+            }
+          },
+          "type" : {
+            "type" : "integer",
+            "description" : "<p><ul><li>1 - ЮрЛицо</li><li>2 - ФизЛицо</li></ul></p>",
+            "example" : 1,
+            "enum" : [ 1, 2 ]
+          },
+          "intragroup" : {
+            "type" : "boolean",
+            "description" : "Признак внутригруппового контрагента. В случае выставленного значения указывает, что контрагент входит в группу компаний КТЗ",
+            "nullable" : false,
+            "example" : false
+          },
+          "organization" : {
+            "type" : "string",
+            "description" : "Ссылка на БЕ для внтуригрупповых контрагентов",
             "format" : "uuid",
-            "readOnly" : true,
-            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+            "nullable" : false
+          },
+          "organizationCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код организации по МСФО",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "concernType" : {
+            "type" : "string",
+            "description" : "Вид контрагента по отношению к Концерну. Обязателен для заполнения для внутригрупповых контрагентов",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "concernTypeCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код вида контрагент по отношению к концерну",
+            "nullable" : false,
+            "example" : "643"
+          },
+          "noResident" : {
+            "type" : "boolean",
+            "description" : "Признак резиденства. В случае выставленного значение указывает. Что контрагент является резидентом",
+            "nullable" : false,
+            "example" : false
+          },
+          "inn" : {
+            "minimum" : 0,
+            "maxLength" : 12,
+            "type" : "integer",
+            "description" : "ИНН Контрагента",
+            "nullable" : false,
+            "example" : 7728212268
+          },
+          "kpp" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "КПП Контрагента",
+            "nullable" : false,
+            "example" : 770101001
+          },
+          "kppHistory" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/partner_kppHistory"
+            }
+          },
+          "kppAdditional" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "Дополнительный КПП крупного налогоплательщика",
+            "nullable" : false,
+            "example" : 770101001
+          },
+          "registrationNumber" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Идентификационный номер нерезидента, установленный в соответствии с законодательством страны резидентства контрагента. Заполняется для юридических лиц, нерезидентов РФ",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "ogrn" : {
+            "maxLength" : 13,
+            "minLength" : 13,
+            "type" : "integer",
+            "description" : "Основной государственный регистрационный номер. Заполняется для резидентов РФ",
+            "nullable" : false,
+            "example" : 1037832035603
+          },
+          "okpo" : {
+            "maxLength" : 14,
+            "minLength" : 14,
+            "type" : "integer",
+            "description" : "Код по общероссийскому классификатору предприятий и организаций. Заполняется для юридических лиц, резидентов РФ",
+            "nullable" : false,
+            "example" : 10378320356034
+          },
+          "okved" : {
+            "type" : "string",
+            "description" : "ГУИД ОКВЭД2",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "okvedCode" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "Код ОКВЭД2",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "separateUnit" : {
+            "type" : "boolean",
+            "description" : "Признак обособленного подразделения. Обязательно для заполнения в случае, если контрагент является обособленным подразделением. В данном случае в справочнике контрагентов должна существовать запись головного контрагента с таким же ИНН",
+            "nullable" : false,
+            "example" : false
+          },
+          "partnerHead" : {
+            "type" : "string",
+            "description" : "Ссылка на головного контрагента. Обязательно для заполнения ссылкой на существующего контрагента в случае, если текущий контрагент является обособленным подразделением",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "bank" : {
+            "type" : "string",
+            "description" : "Ссылка на банк.  Обязательно для заполнения ссылкой на существующий банк в случае, если текущий контрагент является банком",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "bankBIC" : {
+            "maxLength" : 9,
+            "minLength" : 2,
+            "type" : "integer",
+            "description" : "БИК. Является обязательным для заполнения для банков РФ",
+            "example" : 41403838
+          },
+          "okopf" : {
+            "type" : "string",
+            "description" : "Ссылка на организационно-правовую форму контрагента",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "okopfName" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование  организационно-правовой формы собственности",
+            "nullable" : false,
+            "example" : "БУ"
+          },
+          "reliabilitySupplier" : {
+            "type" : "number",
+            "description" : "Надежность контрагента как поставщика. Рассчитывается согласно внутренним регламентам компании",
+            "format" : "number(15,2)",
+            "nullable" : false,
+            "example" : 12.2
+          },
+          "reliabilityBuyer" : {
+            "type" : "number",
+            "description" : "Надежность контрагента как покупателя. Рассчитывается согласно внутренним регламентам компании",
+            "format" : "number(15,2)",
+            "nullable" : false,
+            "example" : 12.2
+          },
+          "verified" : {
+            "type" : "boolean",
+            "description" : "Признак проверки контрагента. В случае выставленного значения указывает, что контрагент проверен на актуальность и благонадежность",
+            "nullable" : false,
+            "example" : false
+          },
+          "dateVerified" : {
+            "type" : "string",
+            "description" : "Дата последней проверки контрагента. Заполняется в случае, если проверка контрагента была проведена. Системный реквизит заполняется автоматически",
+            "format" : "date",
+            "nullable" : false
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "Для резидентов указывается автоматически значением Россия. Для нерезидентов выбирается вручную из справочника стран",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "countryCode" : {
+            "maxLength" : 3,
+            "minLength" : 3,
+            "type" : "integer",
+            "description" : "Трехзначный код страны в соответствии с ОКСМ",
+            "nullable" : false,
+            "example" : 643
+          },
+          "region" : {
+            "type" : "string",
+            "description" : "Регион",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "regionCode" : {
+            "maxLength" : 3,
+            "minLength" : 2,
+            "type" : "string",
+            "description" : "Код региона в соответствии с общероссийским справочником кодов регионов",
+            "nullable" : false,
+            "example" : "01"
+          },
+          "contactInformation" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/contactInformation"
+            }
+          }
+        },
+        "description" : "Контрагент"
+      },
+      "organization" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "codeMSFO" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Код МСФО",
+            "nullable" : false,
+            "example" : "12548"
+          },
+          "partner" : {
+            "type" : "string",
+            "description" : "ГУИД Контрагента, которому соответствует организация",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "virtual" : {
+            "type" : "boolean",
+            "description" : "Признак «виртуальной» организации. Группа компаний, структурное подразделение БЕ и т.п., признанное организацией в рамках требований управленческого учета",
+            "nullable" : false,
+            "example" : false
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Организации",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameAbbreviated" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "сокращенное наименование Организации",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "полное наименование Организации",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameEnglish" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование международное на английском языке",
+            "example" : "JSC \\\"FC \\\"SPARTAK-MOSCOW\\\""
+          },
+          "type" : {
+            "type" : "integer",
+            "description" : "<p><ul><li>1 - ЮрЛицо</li><li>2 - ФизЛицо</li></ul></p>",
+            "example" : 1,
+            "enum" : [ 1, 2 ]
+          },
+          "noResident" : {
+            "type" : "boolean",
+            "description" : "Признак организации-нерезидента",
+            "nullable" : false,
+            "example" : false
+          },
+          "inn" : {
+            "minimum" : 0,
+            "maxLength" : 12,
+            "type" : "integer",
+            "description" : "ИНН Контрагента",
+            "nullable" : false,
+            "example" : 7728212268
+          },
+          "kpp" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "КПП Контрагента",
+            "nullable" : false,
+            "example" : 770101001
+          },
+          "kppAdditional" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "Дополнительный КПП крупного налогоплательщика",
+            "nullable" : false,
+            "example" : 770101001
+          },
+          "registrationNumber" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Идентификационный номер нерезидента, установленный в соответствии с законодательством страны резидентства контрагента. Заполняется для юридических лиц, нерезидентов РФ",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "separateUnit" : {
+            "type" : "boolean",
+            "description" : "Признак обособленного подразделения. Обязательно для заполнения в случае, если организация является обособленным подразделением. В данном случае обязательно заполнение головной организации",
+            "nullable" : false,
+            "example" : false
+          },
+          "organizationHead" : {
+            "type" : "string",
+            "description" : "Ссылка на головную организацию. Обязательно для заполнения, если текущая организация является обособленным подразделением",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "concernType" : {
+            "type" : "string",
+            "description" : "Вид контрагента по отношению к Концерну. Обязателен для заполнения для внутригрупповых контрагентов",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "concernTypeCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код вида контрагент по отношению к концерну",
+            "nullable" : false,
+            "example" : "643"
+          },
+          "concernTypeHistory" : {
+            "type" : "array",
+            "description" : "История изменения. Вид контрагента по отношению к Концерну",
+            "items" : {
+              "$ref" : "#/components/schemas/organization_concernTypeHistory"
+            }
+          },
+          "basis" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Основания отнесения к связанным сторонам (направление ФХД)",
+            "nullable" : false,
+            "example" : "связанная сторона с 15.03.2016г., на основании существенных сделок"
+          },
+          "division" : {
+            "type" : "string",
+            "description" : "Принадлежность дивизиону",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "divisionCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код Дивизиона, сформированный по правилам  использования в консолидированной отчетности",
+            "nullable" : false,
+            "example" : "3"
+          },
+          "divisionDate" : {
+            "type" : "string",
+            "description" : "Дата начала вхождения в дивизион",
+            "format" : "date",
+            "nullable" : false
+          },
+          "divisionHistory" : {
+            "type" : "array",
+            "description" : "История изменения. Принадлежность дивизиону",
+            "items" : {
+              "$ref" : "#/components/schemas/organization_divisionHistory"
+            }
+          },
+          "comment" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Дополнительная информация по организации",
+            "nullable" : false,
+            "example" : "K3338C5E-CEB2-4faa-B6BF-329BF39FA1E4"
+          },
+          "ogrn" : {
+            "maxLength" : 13,
+            "minLength" : 13,
+            "type" : "integer",
+            "description" : "Основной государственный регистрационный номер. Заполняется для резидентов РФ",
+            "nullable" : false,
+            "example" : 1037832035603
+          },
+          "dateRegistration" : {
+            "type" : "string",
+            "description" : "Дата государственной регистрации. Заполняется для резидентов РФ",
+            "format" : "date",
+            "nullable" : false
+          },
+          "okpo" : {
+            "maxLength" : 14,
+            "minLength" : 14,
+            "type" : "integer",
+            "description" : "Код по общероссийскому классификатору предприятий и организаций. Заполняется для юридических лиц, резидентов РФ",
+            "nullable" : false,
+            "example" : 10378320356034
+          },
+          "okved" : {
+            "type" : "string",
+            "description" : "ГУИД ОКВЭД2",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "okvedCode" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "Код ОКВЭД2",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "ifnsCode" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Код ИФНС. Заполняется для юридических лиц, резидентов РФ",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "ifnsName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование ИФНС. Заполняется для юридических лиц, резидентов РФ",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "taxCode" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Код налогового органа выдавшего свидетельство. Заполняется для юридических лиц, резидентов РФ",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "taxName" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование налогового органа выдавшего свидетельство. Заполняется для юридических лиц, резидентов РФ",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "certificateCode" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Серия и № свидетельства о постановке на учет в налоговом органе",
+            "nullable" : false,
+            "example" : "36.0"
+          },
+          "certificateDate" : {
+            "type" : "string",
+            "description" : "Дата выдачи свидетельства о постановке на учет в . Заполняется для юридических лиц, резидентов РФ налоговом органе",
+            "format" : "date",
+            "nullable" : false
+          },
+          "contactInformation" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/contactInformation"
+            }
+          }
+        },
+        "description" : "Организация"
+      },
+      "partnerCompany" : {
+        "type" : "object",
+        "properties" : {
+          "inn" : {
+            "maxLength" : 10,
+            "minLength" : 10,
+            "type" : "integer",
+            "description" : "ИНН Контрагента, ИНН - строго 10 символов",
+            "nullable" : false,
+            "example" : 7728212268
+          },
+          "kpp" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "КПП Контрагента",
+            "nullable" : false,
+            "example" : 770101001
+          },
+          "kppAdditional" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "Дополнительный КПП крупного налогоплательщика",
+            "nullable" : false,
+            "example" : 770101001
           },
           "name" : {
             "maxLength" : 100,
@@ -2967,22 +4366,169 @@
             "description" : "полное наименование Контрагента",
             "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
           },
-          "inn" : {
-            "minimum" : 0,
-            "maxLength" : 12,
-            "type" : "integer",
-            "description" : "ИНН Контрагента",
-            "example" : 7728212268
+          "bank" : {
+            "type" : "string",
+            "description" : "ГУИД банка",
+            "format" : "uuid",
+            "nullable" : false
           },
-          "kpp" : {
-            "maxLength" : 9,
-            "minLength" : 9,
-            "type" : "integer",
-            "description" : "КПП Контрагента",
-            "example" : 770101001
+          "contactInformation" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/contactInformation"
+            }
           }
         },
-        "description" : "Контрагент"
+        "description" : "Юридическое лицо"
+      },
+      "partnerIP" : {
+        "type" : "object",
+        "properties" : {
+          "inn" : {
+            "maxLength" : 12,
+            "minLength" : 12,
+            "type" : "integer",
+            "description" : "ИНН Контрагента, ИНН - строго 12 символов",
+            "nullable" : false,
+            "example" : 772821226812
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "полное наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          }
+        },
+        "description" : "Индивидуальный предприниматель"
+      },
+      "partnerNoResident" : {
+        "type" : "object",
+        "properties" : {
+          "registrationNumber" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Идентификационный номер нерезидента, установленный в соответствии с законодательством страны резидентства контрагента. Заполняется для юридических лиц, нерезидентов РФ",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "полное наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "nameAbbreviated" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "сокращенное наименование Контрагента",
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "ГУИД банка",
+            "format" : "uuid",
+            "nullable" : false
+          }
+        },
+        "description" : "Не резидент РФ"
+      },
+      "partnerFiz" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Физического лица",
+            "example" : "Иванов Иван Иванович"
+          },
+          "nameFull" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "наименование Физического лица",
+            "example" : "Иванов Иван Иванович"
+          },
+          "email" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "e-mail",
+            "example" : "test@mail.ru"
+          }
+        },
+        "description" : "Физ.Лицо"
+      },
+      "contactInformation" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "integer",
+            "description" : "<p>Перечисление.ТипыКонтактнойИнформации</p> <p><ul><li>1 - Адрес</li><li>2 - Телефон</li><li>3 - Адрес электронной почты</li><li>4 - Факс</li></ul></p>",
+            "nullable" : false,
+            "example" : 1,
+            "enum" : [ 1, 2, 3, 4 ]
+          },
+          "typeInformation" : {
+            "type" : "integer",
+            "description" : "<p>Перечисление.ТипыКонтактнойИнформации</p> <p><ul><li>1 - Юридический адрес</li><li>2 - Фактический адрес</li><li>3 - Почтовый адрес</li><li>4 - Телефон</li><li>5 - Факс</li><li>6 - Email</li><li>7 - Другое</li></ul></p>",
+            "nullable" : false,
+            "example" : 1,
+            "enum" : [ 1, 2, 3, 4, 5, 6, 7 ]
+          },
+          "performance" : {
+            "maxLength" : 500,
+            "type" : "string",
+            "description" : "Представление контактной информации для отображения в формах",
+            "nullable" : false,
+            "example" : "Представление контакта"
+          },
+          "country" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование Страны. Заполняется для адреса из КЛАДР/ФИАС. Заполняется страной регистрации для нерезидентов",
+            "nullable" : false,
+            "example" : "РОССИЯ"
+          },
+          "region" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Наименование Региона. Заполняется для адреса из КЛАДР/ФИАС",
+            "nullable" : false,
+            "example" : "Санкт-Петербург г"
+          },
+          "city" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Наименование города/населенного пункта. Заполняется для адреса из КЛАДР/ФИАС",
+            "nullable" : false,
+            "example" : "Санкт-Петербург г"
+          },
+          "email" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Электронная почта",
+            "nullable" : false,
+            "example" : "test@mail.ru"
+          },
+          "phone" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "description" : "Электронная почта",
+            "nullable" : false,
+            "example" : "test@mail.ru"
+          }
+        }
       },
       "contact" : {
         "type" : "object",
@@ -3018,7 +4564,7 @@
             "nullable" : false,
             "readOnly" : true
           },
-          "pol" : {
+          "sex" : {
             "maxLength" : 1,
             "type" : "string",
             "description" : "<p>Пол:<ul><li>М - мужской</li><li>Ж - женский</li></ul></p>",
@@ -3030,6 +4576,13 @@
             "description" : "Массив ролей контактного лица",
             "items" : {
               "$ref" : "#/components/schemas/guid"
+            }
+          },
+          "contactInformation" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/contactInformation"
             }
           }
         }
@@ -3422,6 +4975,47 @@
           }
         }
       },
+      "divisions" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование дивизиона",
+            "nullable" : false,
+            "example" : "Сельскохозяйственный дивизион"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код Дивизиона, сформированный по правилам  использования в консолидированной отчетности",
+            "nullable" : false,
+            "example" : "3"
+          },
+          "dateFrom" : {
+            "type" : "string",
+            "description" : "Дата начала действия дивизиона",
+            "format" : "date",
+            "nullable" : false
+          },
+          "dateBy" : {
+            "type" : "string",
+            "description" : "Дата окончания действия дивизиона",
+            "format" : "date",
+            "nullable" : false
+          }
+        },
+        "description" : "Дивизионы"
+      },
       "sfo" : {
         "type" : "object",
         "properties" : {
@@ -3477,6 +5071,470 @@
           }
         },
         "description" : "Сферы функциональной ответственности"
+      },
+      "DDS-articles" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование статьи ДДС",
+            "nullable" : false,
+            "example" : "Инвестиционная деятельность"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Уникальный код, автоматически сформированный по внутренним правилам мастер-системы",
+            "nullable" : false,
+            "example" : "1"
+          },
+          "codeDDS" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Код статьи ДДС,  используемый в сводной отчетности Компании",
+            "nullable" : true,
+            "example" : "2000000"
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Ссылка на верхнюю статью иерархии статей ДДС",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "parentCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Уникальный код родителя, автоматически сформированный по внутренним правилам мастер-системы",
+            "nullable" : false,
+            "example" : "1"
+          },
+          "parentCodeDDS" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Код статьи ДДС родителя,  используемый в сводной отчетности Компании",
+            "nullable" : true,
+            "example" : "2000000"
+          },
+          "consolidated" : {
+            "type" : "boolean",
+            "description" : "Признак консолидированной статьи ДДС",
+            "nullable" : true,
+            "example" : false
+          },
+          "typeDDS" : {
+            "type" : "integer",
+            "description" : "<p>Тип сататей ДДС: <ul><li>1 - Поступление</li><li>2 - Платежи</li></ul></p>",
+            "nullable" : false,
+            "example" : 1,
+            "enum" : [ 1, 2 ]
+          },
+          "vidDDS" : {
+            "type" : "string",
+            "description" : "ГУИД вида движения денежных средств. Ссылка на справочник «Виды движения денежных средств»",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "vidDDScode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код вида движения денежных средств. Ссылка на справочник «Виды движения денежных средств»",
+            "nullable" : false,
+            "example" : "1.21"
+          },
+          "dateStart" : {
+            "type" : "string",
+            "description" : "<p>Дата начала действия</p>",
+            "format" : "date",
+            "nullable" : true,
+            "example" : "2023-07-15"
+          },
+          "dateEnd" : {
+            "type" : "string",
+            "description" : "<p>Дата окончания действия</p>",
+            "format" : "date",
+            "nullable" : true,
+            "example" : "2023-07-15"
+          },
+          "localDDS" : {
+            "type" : "boolean",
+            "description" : "Признак использования в обороте внутри самой БЕ",
+            "nullable" : true,
+            "example" : false
+          },
+          "organization" : {
+            "type" : "string",
+            "description" : "ГУИД БЕ-производителя",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "organizationCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код БЕ-производителя",
+            "nullable" : false,
+            "example" : "12"
+          },
+          "organizationCodeMSFO" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Код МСФО БЕ-производителя",
+            "nullable" : false,
+            "example" : "12548"
+          },
+          "typeActivities" : {
+            "type" : "integer",
+            "description" : "<p>Вид деятельности: <ul><li>1 - Текущая</li><li>2 - Инвестиционная</li><li>3 - Финансовая</li></ul></p>",
+            "nullable" : false,
+            "example" : 1,
+            "enum" : [ 1, 2, 3 ]
+          }
+        }
+      },
+      "DDS-vid" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование вида статьи ДДС",
+            "nullable" : false,
+            "example" : "Прочие выплаты от операционной деятельности"
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код вида движения денежных средств. Ссылка на справочник «Виды движения денежных средств»",
+            "nullable" : false,
+            "example" : "1.21"
+          }
+        }
+      },
+      "subconto" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование Субконто",
+            "nullable" : false,
+            "example" : "(об) Прибыли и убытки"
+          },
+          "description" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "Описание Субконто",
+            "nullable" : false,
+            "example" : "Описание Субконто"
+          }
+        },
+        "description" : "Субконто"
+      },
+      "plan-schetov" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование Плана счетов",
+            "nullable" : false,
+            "example" : "Арендованные основные средства, признанные в качестве материально-производственных запасов"
+          },
+          "code" : {
+            "maxLength" : 11,
+            "type" : "string",
+            "description" : "Код Плана счетов",
+            "nullable" : false,
+            "example" : "1952"
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Ссылка на верхний План счета",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "parentCode" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код Плана счета родителя",
+            "nullable" : false,
+            "example" : "1"
+          },
+          "type" : {
+            "type" : "integer",
+            "description" : "<p>Признак счета: <ul><li>1. Активный</li><li>2. Пассивный</li><li>3. Активно-пассивный</li></ul></p>",
+            "nullable" : false,
+            "enum" : [ 1, 2, 3 ]
+          },
+          "group" : {
+            "type" : "boolean",
+            "description" : "Признак группового счета и запрета использования в проводках",
+            "nullable" : true,
+            "example" : false
+          },
+          "off-balance" : {
+            "type" : "boolean",
+            "description" : "Признак забалансового счета",
+            "nullable" : true,
+            "example" : false
+          },
+          "quantitative" : {
+            "type" : "boolean",
+            "description" : "Признак количественного учета по счету",
+            "nullable" : true,
+            "example" : false
+          },
+          "foreign-exchange" : {
+            "type" : "boolean",
+            "description" : "Признак валютного счета",
+            "nullable" : true,
+            "example" : false
+          },
+          "tax" : {
+            "type" : "boolean",
+            "description" : "Признак налогового учета",
+            "nullable" : true,
+            "example" : false
+          },
+          "long-term" : {
+            "type" : "boolean",
+            "description" : "Признак использования счета для учета долгосрочных активов и обязательств",
+            "nullable" : true,
+            "example" : false
+          },
+          "accounting-division" : {
+            "type" : "boolean",
+            "description" : "Признак использования счета для учета по подразделениям",
+            "nullable" : true,
+            "example" : false
+          },
+          "accounting-areas-activity" : {
+            "type" : "boolean",
+            "description" : "Признак использования счета для учета по направлениям деятельности",
+            "nullable" : true,
+            "example" : false
+          },
+          "subconto1" : {
+            "type" : "string",
+            "description" : "ГУИД на Субконто 1",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "subconto1Name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование Субконто1",
+            "nullable" : false,
+            "example" : "(об) Прибыли и убытки"
+          },
+          "subconto2" : {
+            "type" : "string",
+            "description" : "ГУИД на Субконто 1",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "subconto2Name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование Субконто2",
+            "nullable" : false,
+            "example" : "(об) Прибыли и убытки"
+          },
+          "subconto3" : {
+            "type" : "string",
+            "description" : "ГУИД на Субконто 3",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "subconto3Name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Наименование Субконто3",
+            "nullable" : false,
+            "example" : "(об) Прибыли и убытки"
+          }
+        },
+        "description" : "План счетов"
+      },
+      "expenses-articles" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование статьи",
+            "nullable" : false,
+            "example" : "Амортизационная премия зданий, сооружений, инвентаря(ИО)(А)"
+          },
+          "code" : {
+            "maxLength" : 11,
+            "type" : "string",
+            "description" : "Код статьи затрат,  используемый в сводной отчетности Компании",
+            "nullable" : false,
+            "example" : "1952"
+          },
+          "isGroup" : {
+            "type" : "boolean",
+            "description" : "Признак группы статей затрат",
+            "nullable" : true,
+            "example" : false
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Ссылка на верхнюю группу иерархии статей затрат",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "shpz" : {
+            "maxLength" : 17,
+            "type" : "string",
+            "description" : "ШПЗ - Шифр производственных затрат",
+            "nullable" : false,
+            "example" : "1952"
+          },
+          "characterCost" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Характер затрат",
+            "nullable" : false,
+            "example" : "Общепроизводственные",
+            "enum" : [ "Общепроизводственные", "Общехозяйственные", "Производственные", "Брак", "Коммерческие", "Прочие", "Неучитываемые" ]
+          },
+          "typeCost" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Вид затрат",
+            "nullable" : false,
+            "example" : "Материальные",
+            "enum" : [ "Материальные", "ОплатаТруда", "Амортизация", "Прочие", "ОтчисленияСЗаработнойПлаты" ]
+          },
+          "statusCost" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Статус материальных затрат",
+            "nullable" : false,
+            "example" : "Материальные",
+            "enum" : [ "Собственные", "ПринятыеВПереработку", "ВозвратныеОтходы", "ДСЕ", "ТиЭПокупные", "ТиЭСобственные", "УслугиВнутренние", "УслугиСторонние" ]
+          },
+          "typeActivities" : {
+            "$ref" : "#/components/schemas/typeActivities"
+          },
+          "typeExpenses" : {
+            "$ref" : "#/components/schemas/typeExpenses"
+          }
+        },
+        "description" : "Статьи затрат"
+      },
+      "other-income-expenses" : {
+        "type" : "object",
+        "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "archive" : {
+            "$ref" : "#/components/schemas/archive"
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "name" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "Наименование статьи",
+            "nullable" : false,
+            "example" : "Доходы и расходы по реализации имущественных прав, за исключением возникающих по реализации права требования долга"
+          },
+          "code" : {
+            "maxLength" : 11,
+            "type" : "string",
+            "description" : "Уникальный код, автоматически сформированный по внутренним правилам мастер-системы",
+            "nullable" : false,
+            "example" : "1952"
+          },
+          "isGroup" : {
+            "type" : "boolean",
+            "description" : "Признак группы Прочие доходы и расходы",
+            "nullable" : true,
+            "example" : false
+          },
+          "parent" : {
+            "type" : "string",
+            "description" : "Ссылка на верхнюю группу иерархии Прочие доходы и расходы",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "be338c5e-ceb2-4faa-b6bf-329bf39fa1e4"
+          },
+          "codeArticle" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Код статьи,  используемый в сводной отчетности Компании",
+            "nullable" : false,
+            "example" : "52"
+          },
+          "typeExpenses" : {
+            "$ref" : "#/components/schemas/typeExpenses"
+          },
+          "typeActivities" : {
+            "$ref" : "#/components/schemas/typeActivities"
+          }
+        },
+        "description" : "прочие доходы и расходы"
+      },
+      "typeActivities" : {
+        "type" : "integer",
+        "description" : "<p>Вид деятельности: <ul><li>1 - Текущая</li><li>2 - Инвестиционная</li><li>3 - Финансовая</li></ul></p>",
+        "nullable" : false,
+        "example" : 1,
+        "enum" : [ 1, 2, 3 ]
+      },
+      "typeExpenses" : {
+        "maxLength" : 150,
+        "type" : "string",
+        "description" : "Вид статьи прочих доходов и расходов",
+        "nullable" : false,
+        "example" : "Материальные",
+        "enum" : [ "ИзлишкиТоваровВыявленныеВРезультатеИнвентаризации", "БезвозмездноеПолучениеИмуществаРаботУслугИмущественныхПрав", "ВозмещениеУбытковКПолучениюУплате", "ВосстановлениеАмортизационнойПремии", "ДолевоеУчастиеВИностранныхОрганизациях", "ДолевоеУчастиеВРоссийскихОрганизациях", "КорректировкаПрибылиДоРыночныхЦен", "КурсовыеРазницы", "КурсовыеРазницыПоРасчетамВУЕ", "ЛиквидацияОсновныхСредств", "НалогиИСборы", "НДСПоСписаннойКредиторскойЗадолженности", "ОперацииСФинансовымиИнструментамиСрочныхСделокНеОбрНаОрганизованномРынке", "ОперацииСФинансовымиИнструментамиСрочныхСделокОбращающимисяНаОрганизованномРынке", "ОтчисленияВОценочныеРезервы", "ПереоценкаВнеоборотныхАктивов", "ПремияВыплаченнаяПокупателю", "ПрибыльУбытокПрошлыхЛет", "ПроцентыКПолучениюУплате", "ПроцентыНачисленныеВСоответствииСоСтатьей269", "ПроцентыПоГосударственнымЦеннымБумагам", "ПроцентыПоГосударственнымЦеннымБумагамПоСтавке0", "ПрочиеВнереализационныеДоходыРасходы", "ПрочиеКосвенныеРасходы", "ПрочиеУбыткиПриравненныеКВнереализационнымРасходам", "РазницаМеждуПервоначальнойИНоминальнойСтоимостьюПоДолговымЦеннымБумагам", "РасходыНаУслугиБанков", "РасходыОтСниженияСтоимостиАктивов", "РасходыПоПередачеТоваровРаботУслугБезвозмездноИДляСобственныхНужд", "РеализацияИмущественныхПравКромеПраваТребования", "РеализацияИмущественныхПравПоОбъектамОбслуживающихПроизводствИХозяйств", "РеализацияНематериальныхАктивов", "РеализацияОбъектовСтроительства", "РеализацияОсновныхСредств", "РеализацияПраваТребованияДоНаступленияСрокаПлатежа", "РеализацияПраваТребованияКакОказанияФинансовыхУслуг", "РеализацияПраваТребованияПослеНаступленияСрокаПлатежа", "РеализацияПрочегоИмущества", "РеализацияЦенныхБумаг", "СдачаИмуществаВАрендуИлиСубаренду", "СписаниеДебиторскойКредиторскойЗадолженности", "УчастиеВДругихОрганизациях", "ШтрафыПениИНеустойкиПоХозяйственнымДоговорамКПолучениюУплате", "ПрекращениеДоговоровАренды", "ПрочиеОперационныеДоходыРасходы", "ПрочиеДоходыРасходы", "АмортизационнаяПремия", "Амортизация", "ДобровольноеЛичноеСтрахование", "ЕСН", "КомандировочныеРасходы", "МатериальныеРасходы", "НИОКР", "НеУчитываемыеВЦеляхНалогообложения", "ОбщепроизводственныеРасходы", "ОбязательноеИДобровольноеСтрахованиеИмущества", "ОплатаТруда", "ОтчисленияСЗаработнойПлаты", "ПредставительскиеРасходы", "РасходыНаРекламу", "РемонтОсновныхСредств" ]
       },
       "ERROR" : {
         "type" : "object",
@@ -3727,7 +5785,7 @@
           },
           "type" : {
             "type" : "integer",
-            "description" : "<ul><li>0 - Формирование заявки – запрос существующей записи в MDM-системе</li><li>1 - Формирование заявки на добавление записи</li><li>2 - Формирование заявки на изменение записи</li><li>3 - Формирование заявки на вывод из обращения</li></ul>",
+            "description" : "<ul><li>0 - Формирование заявки – запрос существующей записи в MDM-системе</li><li>1 - Формирование заявки на добавление записи</li><li>2 - Формирование заявки на изменение записи</li><li>3 - Формирование заявки на вывод из обращения</li><li>4 - Формирование заявки на возврат в обращение</li></ul>",
             "example" : 0
           },
           "be" : {
@@ -3743,7 +5801,7 @@
             "type" : "string",
             "description" : "ГУИД Заявки, если значение передано, то в мастер системе заявка будет иметь указанный ГУИД. Если нет, мастер система создаст свой ГУИД",
             "format" : "uuid",
-            "nullable" : true
+            "nullable" : false
           },
           "data" : {
             "oneOf" : [ {
@@ -3754,6 +5812,46 @@
               "$ref" : "#/components/schemas/nomenclature2"
             }, {
               "$ref" : "#/components/schemas/nomenclature3"
+            } ]
+          }
+        }
+      },
+      "partner_body" : {
+        "type" : "object",
+        "properties" : {
+          "autor" : {
+            "$ref" : "#/components/schemas/user"
+          },
+          "type" : {
+            "type" : "integer",
+            "description" : "<ul><li>1 - Формирование заявки на добавление записи</li><li>2 - Формирование заявки на изменение записи</li><li>3 - Формирование заявки на вывод из обращения</li><li>4 - Формирование заявки на возврат в обращение</li></ul>",
+            "example" : 0
+          },
+          "be" : {
+            "$ref" : "#/components/schemas/be"
+          },
+          "content" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "Комментарий",
+            "example" : "Комментарий"
+          },
+          "guid" : {
+            "type" : "string",
+            "description" : "ГУИД Заявки, если значение передано, то в мастер системе заявка будет иметь указанный ГУИД. Если нет, мастер система создаст свой ГУИД",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "data" : {
+            "description" : "",
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/partnerCompany"
+            }, {
+              "$ref" : "#/components/schemas/partnerIP"
+            }, {
+              "$ref" : "#/components/schemas/partnerNoResident"
+            }, {
+              "$ref" : "#/components/schemas/partnerFiz"
             } ]
           }
         }
@@ -3823,6 +5921,106 @@
             "type" : "string",
             "description" : "Описание основания установления аналога",
             "example" : "Описание основания установления аналога"
+          }
+        }
+      },
+      "partner_nameAbbreviatedHistory" : {
+        "type" : "object",
+        "properties" : {
+          "date" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "example" : "2017-07-21T17:32:28Z"
+          },
+          "nameAbbreviated" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "сокращенное наименование Контрагента на дату",
+            "nullable" : false,
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          }
+        }
+      },
+      "partner_nameFullHistory" : {
+        "type" : "object",
+        "properties" : {
+          "date" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "example" : "2017-07-21T17:32:28Z"
+          },
+          "nameFull" : {
+            "maxLength" : 150,
+            "type" : "string",
+            "description" : "полное наименование Контрагента на дату",
+            "nullable" : false,
+            "example" : "АО \\\"ФК \\\"СПАРТАК-МОСКВА\\\""
+          }
+        }
+      },
+      "partner_kppHistory" : {
+        "type" : "object",
+        "properties" : {
+          "date" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "example" : "2017-07-21T17:32:28Z"
+          },
+          "kpp" : {
+            "maxLength" : 9,
+            "minLength" : 9,
+            "type" : "integer",
+            "description" : "КПП Контрагента на дату",
+            "nullable" : false,
+            "example" : 770101001
+          }
+        }
+      },
+      "organization_concernTypeHistory" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "Вид контрагента по отношению к Концерну. Обязателен для заполнения для внутригрупповых контрагентов",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код вида контрагент по отношению к концерну",
+            "nullable" : false,
+            "example" : "643"
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "Дата начала установления зависимости",
+            "format" : "date",
+            "nullable" : false
+          }
+        }
+      },
+      "organization_divisionHistory" : {
+        "type" : "object",
+        "properties" : {
+          "division" : {
+            "type" : "string",
+            "description" : "Принадлежность дивизиону",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "code" : {
+            "maxLength" : 9,
+            "type" : "string",
+            "description" : "Код Дивизиона, сформированный по правилам  использования в консолидированной отчетности",
+            "nullable" : false,
+            "example" : "643"
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "Дата начала вхождения в дивизион",
+            "format" : "date",
+            "nullable" : false
           }
         }
       }
@@ -3918,6 +6116,73 @@
           "format" : "uuid"
         }
       },
+      "inn" : {
+        "name" : "inn",
+        "in" : "query",
+        "description" : "ИНН контрагента",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 12,
+          "minLength" : 10,
+          "type" : "integer",
+          "example" : 7728212268
+        }
+      },
+      "kpp" : {
+        "name" : "kpp",
+        "in" : "query",
+        "description" : "КПП контрагента",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 9,
+          "minLength" : 9,
+          "type" : "integer",
+          "example" : 770101001
+        }
+      },
+      "namePartner" : {
+        "name" : "name",
+        "in" : "query",
+        "description" : "Наименование контрагента",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 150,
+          "type" : "string",
+          "example" : "Спартак"
+        }
+      },
+      "registrationNumber" : {
+        "name" : "registrationNumber",
+        "in" : "query",
+        "description" : "Код нерезидента",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 30,
+          "type" : "string",
+          "example" : "Jgh313hd3"
+        }
+      },
+      "partnerCode" : {
+        "name" : "code",
+        "in" : "query",
+        "description" : "Код в 1с МДМ",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maxLength" : 30,
+          "type" : "string",
+          "example" : "124584"
+        }
+      },
       "service" : {
         "name" : "service",
         "in" : "query",
@@ -3957,6 +6222,9 @@
   }, {
     "name" : "Домен Контрагенты",
     "tags" : [ "Контрагенты" ]
+  }, {
+    "name" : "Домен Фин. блок",
+    "tags" : [ "Фин. блок" ]
   }, {
     "name" : "Домен Оргструктура",
     "tags" : [ "Оргструктура" ]
