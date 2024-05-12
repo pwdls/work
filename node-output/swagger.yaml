@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "API Внешняя система => MDM",
-    "description" : "<p><b>Кодировка UTF-8</b></p> <p>Документация описывает механизм работы внешних систем с МДМ. То есть инициатором любого запроса является внешняя система</p> <p>Передача данных из МДМ во внешние систем, когда инициатором является МДМ описано в документации «<a href='https://app.swaggerhub.com/apis-docs/pwdls/MDMout/1.0.0' target='_blank'><b>API MDM => Внешняя система</b></a>»</p>\n    <p>Все даты преедаются в международном формате 2023-01-01T00:00:00 <br>\nпустые даты передаются как   0001-01-01T00:00:00 <br> пустые ссылки передаются как 00000000-0000-0000-0000-000000000000</p>",
+    "description" : "<p><b>Кодировка UTF-8</b></p> <p>Документация описывает механизм работы внешних систем с МДМ. То есть инициатором любого запроса является внешняя система</p> <p>Передача данных из МДМ во внешние систем, когда инициатором является МДМ описано в документации «<a href='https://app.swaggerhub.com/apis-docs/pwdls/MDMout/1.0.0' target='_blank'><b>API MDM => Внешняя система</b></a>»</p>\n    <p>Все даты передаются в международном формате 2023-01-01T00:00:00Z <br>\nпустые даты передаются как   0001-01-01T00:00:00 <br> пустые ссылки передаются как 00000000-0000-0000-0000-000000000000</p>",
     "contact" : {
       "name" : "Грибов Игорь",
       "url" : "https://t.me/IgorGribov",
@@ -3216,6 +3216,13 @@
             "nullable" : true,
             "example" : "Комментарий к номенклатуре"
           },
+          "be" : {
+            "type" : "array",
+            "description" : "Данные по подписчикам на эталонную позицию",
+            "items" : {
+              "$ref" : "#/components/schemas/nomenclature_be"
+            }
+          },
           "properties" : {
             "type" : "array",
             "description" : "Массив характеристик номенклатуры. Список характеристик зависит от принадлежности к группе ЕОП",
@@ -3520,7 +3527,7 @@
             "$ref" : "#/components/schemas/guid"
           },
           "code" : {
-            "maxLength" : 14,
+            "maxLength" : 20,
             "type" : "string",
             "description" : "Код класса ЕОП",
             "nullable" : false,
@@ -3817,10 +3824,10 @@
           },
           "code" : {
             "maxLength" : 9,
-            "type" : "string",
+            "type" : "integer",
             "description" : "Код ИС Элюдия,  для исторической преемственности",
             "nullable" : false,
-            "example" : "12"
+            "example" : 12
           },
           "name" : {
             "maxLength" : 100,
@@ -4131,6 +4138,12 @@
             "description" : "<p><ul><li>1 - ЮрЛицо</li><li>2 - ФизЛицо</li></ul></p>",
             "example" : 1,
             "enum" : [ 1, 2 ]
+          },
+          "typeBE" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Тип БЕ",
+            "example" : "Прочие"
           },
           "noResident" : {
             "type" : "boolean",
@@ -4929,6 +4942,17 @@
           "guid" : {
             "$ref" : "#/components/schemas/guid"
           },
+          "parentGuid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
+          "parentCode" : {
+            "maxLength" : 3,
+            "minLength" : 2,
+            "type" : "string",
+            "description" : "Код региона родителя в соответствии с общероссийским справочником кодов регионов",
+            "nullable" : false,
+            "example" : "01"
+          },
           "name" : {
             "maxLength" : 150,
             "type" : "string",
@@ -5200,6 +5224,13 @@
             "nullable" : false,
             "example" : 1,
             "enum" : [ 1, 2, 3 ]
+          },
+          "codeEludia" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "Код Элюдии",
+            "nullable" : false,
+            "example" : "1232123"
           }
         }
       },
@@ -5565,8 +5596,7 @@
         "type" : "string",
         "description" : "<p>Дата вывода записи из обращения (ликвидация номенклатуры, признание неблагонадежным для продолжения взаимоотношений и т.п.). Заполненное значение несет в себе смысл даты начала запрета использования записи номенклатуры в транзакциях учетных систем</p><p>1C МДМ: ДатаВыводаВАрхив</p>",
         "format" : "date",
-        "nullable" : true,
-        "example" : "2023-07-15"
+        "nullable" : true
       },
       "nomenclature-tnved" : {
         "type" : "string",
@@ -5702,10 +5732,10 @@
       },
       "nomenclature-code" : {
         "maxLength" : 9,
-        "type" : "string",
+        "type" : "integer",
         "description" : "<p>Поле Код. В рамках перехода будет перенесен Код Эллюдии</p><p><p>Элюдия: ID</br>1С: Код</p>",
         "nullable" : false,
-        "example" : "0000000004"
+        "example" : 123123
       },
       "nomenclature-dateOutputArchive" : {
         "type" : "string",
@@ -5853,6 +5883,59 @@
             }, {
               "$ref" : "#/components/schemas/partnerFiz"
             } ]
+          }
+        }
+      },
+      "nomenclature_be" : {
+        "type" : "object",
+        "properties" : {
+          "codeIS" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Код информационной системы",
+            "nullable" : false,
+            "example" : "001"
+          },
+          "guidBE" : {
+            "maxLength" : 36,
+            "type" : "string",
+            "description" : "ГУИД номенклатуры в бизнес еденице",
+            "nullable" : false,
+            "example" : "~~000000003"
+          },
+          "organization" : {
+            "type" : "string",
+            "description" : "ГУИД организации",
+            "format" : "uuid",
+            "nullable" : false,
+            "example" : "2c205d81-a4cb-11ee-b5b4-005056013b0c"
+          },
+          "supplier" : {
+            "$ref" : "#/components/schemas/nomenclature-supplier"
+          },
+          "drawingDenotation" : {
+            "$ref" : "#/components/schemas/nomenclature-drawingDenotation"
+          },
+          "ownershipSign" : {
+            "$ref" : "#/components/schemas/nomenclature-ownershipSign"
+          },
+          "seriality" : {
+            "$ref" : "#/components/schemas/nomenclature-seriality"
+          },
+          "includedEOP" : {
+            "type" : "boolean",
+            "description" : "Признак того, что номенклатура включена в ЕОП",
+            "nullable" : true,
+            "example" : true
+          },
+          "dateOutputArchive" : {
+            "$ref" : "#/components/schemas/nomenclature-dateOutputArchive"
+          },
+          "codeOld" : {
+            "type" : "integer",
+            "description" : "ГУИД код старой номенклатуры",
+            "nullable" : false,
+            "example" : 1234321
           }
         }
       },
