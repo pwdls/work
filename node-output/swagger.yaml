@@ -4343,6 +4343,9 @@
       "partnerCompany" : {
         "type" : "object",
         "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
           "inn" : {
             "maxLength" : 10,
             "minLength" : 10,
@@ -4398,6 +4401,9 @@
       "partnerIP" : {
         "type" : "object",
         "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
           "inn" : {
             "maxLength" : 12,
             "minLength" : 12,
@@ -4424,6 +4430,9 @@
       "partnerNoResident" : {
         "type" : "object",
         "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
           "registrationNumber" : {
             "maxLength" : 50,
             "type" : "string",
@@ -4461,6 +4470,9 @@
       "partnerFiz" : {
         "type" : "object",
         "properties" : {
+          "guid" : {
+            "$ref" : "#/components/schemas/guid"
+          },
           "name" : {
             "maxLength" : 100,
             "type" : "string",
