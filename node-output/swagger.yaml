@@ -5945,7 +5945,7 @@
           "type" : {
             "type" : "integer",
             "description" : "<ul><li>1 - Формирование заявки на добавление записи</li></ul>",
-            "example" : 0
+            "example" : 1
           },
           "be" : {
             "$ref" : "#/components/schemas/be"
