@@ -316,6 +316,48 @@
         "security" : [ {
           "basicAuth" : [ ]
         } ]
+      },
+      "post" : {
+        "tags" : [ "Классификаторы" ],
+        "summary" : "Создаем заявку на новую запись Единого классификатора",
+        "requestBody" : {
+          "description" : "Тело запроса для создания заявки",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/unifiedclassifier_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "ГУИД созданной заявки",
+                  "format" : "uuid"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ERROR"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
       }
     },
     "/unified-classifier/{guid}" : {
@@ -3520,6 +3562,42 @@
         },
         "description" : "Домен 'Номенклатура', объект 'Единый классификатор номенклатуры'"
       },
+      "unified-classifier_type1" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "maxLength" : 14,
+            "type" : "string",
+            "description" : "Код класса ЕК",
+            "nullable" : false,
+            "example" : "01.02.01"
+          },
+          "name" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "description" : "Наименование класса ЕК",
+            "nullable" : false,
+            "example" : "ННаименование класса ЕК"
+          },
+          "OKP" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Код ОКП для исторической преемственности",
+            "nullable" : false,
+            "example" : "02 4101"
+          },
+          "TNVED" : {
+            "$ref" : "#/components/schemas/nomenclature-tnved"
+          },
+          "OKVED" : {
+            "$ref" : "#/components/schemas/nomenclature-okved"
+          },
+          "OKPD2" : {
+            "$ref" : "#/components/schemas/nomenclature-okpd2"
+          }
+        },
+        "description" : "Домен 'Номенклатура', объект 'Единый классификатор номенклатуры'"
+      },
       "EOP" : {
         "type" : "object",
         "properties" : {
@@ -5854,6 +5932,39 @@
               "$ref" : "#/components/schemas/nomenclature2"
             }, {
               "$ref" : "#/components/schemas/nomenclature3"
+            } ]
+          }
+        }
+      },
+      "unifiedclassifier_body" : {
+        "type" : "object",
+        "properties" : {
+          "autor" : {
+            "$ref" : "#/components/schemas/user"
+          },
+          "type" : {
+            "type" : "integer",
+            "description" : "<ul><li>1 - Формирование заявки на добавление записи</li></ul>",
+            "example" : 0
+          },
+          "be" : {
+            "$ref" : "#/components/schemas/be"
+          },
+          "content" : {
+            "maxLength" : 1024,
+            "type" : "string",
+            "description" : "Комментарий",
+            "example" : "Комментарий"
+          },
+          "guid" : {
+            "type" : "string",
+            "description" : "ГУИД Заявки, если значение передано, то в мастер системе заявка будет иметь указанный ГУИД. Если нет, мастер система создаст свой ГУИД",
+            "format" : "uuid",
+            "nullable" : false
+          },
+          "data" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/unified-classifier_type1"
             } ]
           }
         }
